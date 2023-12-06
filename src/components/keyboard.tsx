@@ -5,13 +5,24 @@ function Keyboard() {
         perspective: '10000px',
         // transformStyle: 'preserve-3d',
         transform: 'rotateX(40deg) rotateY(0deg) rotateZ(-30deg)',
+        // transform: 'rotateX(50deg) rotateY(0deg) rotateZ(0deg)',
     }
 
     return (
         <>
             <div className="main flex" id="m">
                 <div className="keyboard flex" id="k" style={keyboardStyle}>
-                    <div className="screen flex" id="s"></div>
+                    <div className="screen flex" id="s">
+                        <a
+                            className="ml-10 h-12 w-36 bg-[#000000] mt-7 rounded-xl flex flex-row pr-1 transition-colors hover:bg-[#85e7ff] "
+                            href="https://github.com/Taihenc"
+                        >
+                            <div className="h-7 w-7 bg-[url('/github-mark-white.png')] bg-cover bg-center my-auto ml-4"></div>
+                            <div className="my-auto font-inter font-bold text-white ml-3 text-xl">
+                                github
+                            </div>
+                        </a>
+                    </div>
                     <div className="keyboard__front face"></div>
                     <div className="keyboard__back face"></div>
                     <div className="keyboard__right face"></div>
