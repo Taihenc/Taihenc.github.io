@@ -1,7 +1,7 @@
 /* Variables */
 
-$bg-1: #1a1919;
-$bg-2: #0d0c0c;
+$bg-1: #555644;
+$bg-2: #3d3c0c;
 
 $keyboard-1: #cbcbcb;
 $keyboard-2: #a0a0a0;
@@ -19,7 +19,7 @@ $orange-1: #ffa28e;
 $orange-2: #b46266;
 $orange-3: #8e3e43;
 
-$light-1: #989832;
+$light-1: #c56708;
 
 $screen-1: #cb8130;
 
@@ -85,6 +85,26 @@ $depth-kb: 25px;
     /* animation: screen 1s ease-in alternate infinite; */
 }
 
+#light {
+    display: none;
+    width: 1000px;
+    height: 800px;
+    transform-origin: top left;
+    transform: translateX(-1%) translateY(-35%) translateZ(50px) rotate(19deg);
+    background: radial-gradient(
+        ellipse at top left,
+        rgba($light-1, 1) 0%,
+        rgba($light-1, 0.1) 50%,
+        /* Transparent at the outer edge */
+    );
+    clip-path: ellipse(90% 90% at -1% 0%);
+    border: solid 10px rgb($light-1, 0.01);
+    filter: drop-shadow(0px 0px 20px rgba($light-1, 0.4));
+    overflow: visible;
+    opacity: 0.8;
+    animation: screen 2s ease-in alternate infinite;
+}
+
 .keyboard {
     width: $width-kb;
     height: $height-kb;
@@ -121,6 +141,9 @@ $depth-kb: 25px;
         transform: rotateY(180deg) translateZ($depth-kb / 2);
         background-color: $keyboard-2;
 
+        opacity: 0.5;
+        /* border: solid 10px rgb($light-1, 0.01); */
+        filter: drop-shadow(0px 0px 20px rgba($bg-2, 1));
         box-shadow: -20px 40px 0 $bg-2, 0px 40px 0 $bg-2, 5px -0px 0 $bg-2,
             5px 40px 0 $bg-2;
     }
@@ -314,14 +337,23 @@ $depth-ky: 15px;
 }
 /*=================================*/
 /*=================================*/
-/* @keyframes screen {
-    0%,
-    90%,
-    96% {
-        background-color: $blue-1;
+@keyframes screen {
+    0% {
+        opacity: 0.8;
     }
-    93%,
-    100% {
-        background-color: rgba($blue-2, 0.8);
+    69% {
+        opacity: 0.8;
     }
-} */
+    70% {
+        opacity: 0;
+    }
+    71% {
+        opacity: 0.8;
+    }
+    79% {
+        opacity: 0;
+    }
+    80% {
+        opacity: 0.8;
+    }
+}

@@ -1,12 +1,9 @@
-import './App.css'
-import Keyboard from './components/keyboard.tsx'
+import Home from './components/Home.tsx'
 
-function App() {
+export default function App() {
   return (
     <>
-      <Keyboard />
+      <Home />
     </>
   )
 }
-
-export default App
