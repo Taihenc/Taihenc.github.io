@@ -3,23 +3,25 @@
 $bg-1: #1a1919;
 $bg-2: #0d0c0c;
 
-$keyboard-1: #fffffb;
-$keyboard-2: #eae7e5;
-$keyboard-3: #9c9c9c;
+$keyboard-1: #cbcbcb;
+$keyboard-2: #a0a0a0;
+$keyboard-3: #6b6b6b;
 
-$key-1: #fffffb;
-$key-2: #b8b8b8;
-$key-3: #838383;
+$key-1: #a0a0a8;
+$key-2: #5d5e62;
+$key-3: #2e2e32;
 
-$blue-1: #a9dffd;
-$blue-2: #8fd2f8;
-$blue-3: #426585;
+$blue-1: #606066;
+$blue-2: #3d3d40;
+$blue-3: #48484f;
 
 $orange-1: #ffa28e;
 $orange-2: #b46266;
 $orange-3: #8e3e43;
 
-$screen-1: #4d4a5d;
+$light-1: #989832;
+
+$screen-1: #cb8130;
 
 /* Reset */
 *,
@@ -30,23 +32,8 @@ $screen-1: #4d4a5d;
     box-sizing: border-box;
     transform-style: preserve-3d;
 }
-/* Generic */
-body {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: $bg-1;
-    overflow: hidden;
 
-    font-family: sans-serif;
-    font-weight: bolder;
-    color: rgba($key-1, 0.7);
-    text-transform: uppercase;
-    letter-spacing: 2px;
-}
-.main {
+/* .main {
     width: 800px;
     height: 600px;
     position: relative;
@@ -65,8 +52,8 @@ body {
     @media (max-width: 500px) {
         transform: scale(0.3);
     }
-}
-.flex {
+} */
+.keyboard-flex {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -84,17 +71,18 @@ $height-kb: 160px;
 $depth-kb: 25px;
 
 .screen {
-    width: $width-kb / 1.65;
-    height: $height-kb * 1.5;
-    transform: translateZ(100px) translateY(-200px) translateZ(50px)
-        rotateX(270deg);
+    position: fixed;
+    width: 1920px;
+    height: 1080px;
+    /* transform: translateZ(100px) translateY(-200px) translateZ(50px)
+        rotateX(270deg); */
     background-color: $blue-1;
     border-radius: 10px;
 
     box-shadow: 0 0 5px rgba($blue-1, 0.8), 0 0 10px rgba($blue-1, 0.7),
         0 0 15px rgba($blue-1, 0.6), 0 0 20px rgba($blue-1, 0.5),
         0 0 40px rgba($blue-1, 0.4), 0 0 60px rgba($blue-1, 0.3);
-    animation: screen 1s ease-in alternate infinite;
+    /* animation: screen 1s ease-in alternate infinite; */
 }
 
 .keyboard {
@@ -221,6 +209,8 @@ $depth-ky: 15px;
             lighten($blue-1, 15),
             $key-1
         );
+        /* filter: drop-shadow(0 0 5px rgba($light-1, 0.2));
+        filter: brightness(-10); */
 
         &--w2 {
             width: $width-ky * 2;
@@ -324,7 +314,7 @@ $depth-ky: 15px;
 }
 /*=================================*/
 /*=================================*/
-@keyframes screen {
+/* @keyframes screen {
     0%,
     90%,
     96% {
@@ -334,4 +324,4 @@ $depth-ky: 15px;
     100% {
         background-color: rgba($blue-2, 0.8);
     }
-}
+} */
