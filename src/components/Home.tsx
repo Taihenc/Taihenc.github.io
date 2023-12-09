@@ -17,7 +17,12 @@ export default function Home() {
         <NavBar />
         <div className="w-[100vw] h-[100vh] flex items-center justify-center ">
           <div className="mockup-code h-[70vh] bg-opacity-60 max-w-[90%]">
-            <TypingEffect text={["HI", "My", ""]} />
+            <TypingEffect text={[
+              "Hello, My name's Peerapat Pacharamontree",
+              "My nickname is Atom.",
+              "BTW I usually go by the name 'Taihen' when surfing the internet",
+              " ",
+            ]} />
           </div>
           <div className="h-min w-min absolute  bottom-20 md:right-20 md:bottom-40">
             <Keyboard />

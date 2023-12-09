@@ -15,18 +15,11 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, onCh
     let currentIndex = 0;
 
     const intervalId = setInterval(() => {
-      console.log(`currentIndex: ${currentIndex}, text.length: ${text.length}`);
       if (currentIndex < text.length) {
-        console.log(typedText);
         const currentText = text[currentIndex];
         const currentTypedText = typedText[currentIndex] || '';
-        console.log(currentText);
-        console.log(currentTypedText)
-        // clearInterval(intervalId);
-        console.log(currentText.length, currentTypedText.length);
         if (currentTypedText.length < currentText.length) {
           const char = currentText.charAt(currentTypedText.length);
-          console.log(`previous: ${typedText}`);
           setTypedText((prev) => [
             ...prev.slice(0, currentIndex),
             currentTypedText + char,
@@ -48,7 +41,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, onCh
     }, 100); // Adjust the speed of typing
 
     return () => clearInterval(intervalId);
-  }, [text, endRemoveCursor, onCharTypedEnd, typedText]);
+  }, [typedText]);
 
   return (
     <>
