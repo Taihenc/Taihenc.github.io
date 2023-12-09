@@ -52,7 +52,7 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTe
         .filter((typed) => typed !== undefined)
         .map((typed, index) => (
           <pre key={index} data-prefix={(isTerminal) ? `$` : `${index + 1}`} className='w-full inline-flex whitespace-pre-wrap break-all'>
-            <code ref={codeRefs[index]} className={isTerminal ? 'terminal' : 'cursor'}>
+            <code ref={codeRefs[index]} className={isTerminal ? 'terminal text-green-200' : 'cursor'}>
               {typed}
             </code>
           </pre>
