@@ -1,0 +1,26 @@
+.cursor::after {
+    content: '|';
+    animation: cursor 1s infinite step-start;
+}
+
+.terminal::after {
+    content: '';
+    top: 0.25em;
+    /* transform: translateY(25%); */
+    position: absolute;
+    display: inline-block;
+    width: 8px; /* Adjust the width of the cursor */
+    height: 1.2em; /* Adjust the height of the cursor */
+    background-color: #c4c4c4; /* Set the color of the cursor */
+    animation: cursor 1s infinite step-start;
+}
+
+.mockup-code pre[data-prefix]:before {
+    min-width: 2rem;
+}
+
+@keyframes cursor {
+    25% {
+        opacity: 0;
+    }
+}
