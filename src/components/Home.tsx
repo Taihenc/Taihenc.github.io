@@ -1,7 +1,6 @@
 import Keyboard from "./Keyboard"
 import NavBar from "./Navbar"
-import { Fragment, useState } from "react"
-import { Transition } from "@headlessui/react"
+import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TypingEffect from "./TypingEffect"
 import '../styles/mockup-animate.css'
