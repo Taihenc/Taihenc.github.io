@@ -1,0 +1,14 @@
+.cursor::after {
+    content: '|';
+    animation: cursor 1s infinite step-start;
+}
+
+.mockup-code pre[data-prefix]:before {
+    min-width: 2rem;
+}
+
+@keyframes cursor {
+    25% {
+        opacity: 0;
+    }
+}
