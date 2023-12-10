@@ -562,13 +562,7 @@ export function KeyboardEvent(character: string) {
 Designed by: Miguel E.
 Original image: https://dribbble.com/shots/6276517-Hello
 */
-
-    const m = document.querySelector("#m")!;
-    const k = document.querySelector("#k")!;
-    const s = document.querySelector("#s")!;
-
     const kd = document.querySelectorAll(".key")
-    let con = 0;
 
     let removeKey = (character: string) => {
         let kc = (character == '13') ? 13 : character.toUpperCase().charCodeAt(0);
