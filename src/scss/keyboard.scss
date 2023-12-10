@@ -108,7 +108,11 @@ $depth-kb: 25px;
 .keyboard {
     width: $width-kb;
     height: $height-kb;
-    transform: perspective(10000px) rotateX(50deg) rotateZ(-25deg);
+    /* transition-duration: 0.1s; */
+    /* transition-timing-function: ease; */
+    /* transition-property: transform; */
+    /* perspective: 1000px;
+    transform: rotateX(50deg) rotateZ(-45deg) rotateY(0deg); */
 
     &__front {
         width: $width-kb;
@@ -355,5 +359,18 @@ $depth-ky: 15px;
     }
     80% {
         opacity: 0.8;
+    }
+}
+
+.keyboard-animation-default {
+    animation: keyboard 5s ease-in-out infinite alternate;
+}
+
+@keyframes keyboard {
+    0% {
+        rotate: z 0deg;
+    }
+    100% {
+        rotate: z 5deg;
     }
 }

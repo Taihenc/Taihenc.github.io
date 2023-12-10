@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import "../styles/cursor-style.css"
+import { KeyboardEvent } from './Keyboard';
 
 interface TypingEffectProps {
   text: string[];
@@ -30,7 +31,9 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTe
             currentTypedText + ((currentText === " ") ? '' : char),
             ...prev.slice(currentIndex + 1),
           ]);
+          KeyboardEvent(char);
         } else {
+          KeyboardEvent('13');
           setCurrentIndex((prev) => prev + 1);
         }
       } else {

@@ -55,7 +55,7 @@ export default function Home() {
               </a>}
             </div>
           </div>}
-          <div className="h-min w-min absolute  bottom-20 md:right-20 md:bottom-40">
+          <div className="h-min w-min absolute  bottom-20 md:right-20 md:bottom-40 keyboard-animation-default">
             <Keyboard />
           </div>
         </div>
