@@ -2,7 +2,7 @@
     /* opacity: 0; */
     overflow: hidden;
     height: 3.5rem;
-    transition: all 10s ease-in-out;
+    transition: all 1s ease-in-out;
     transition-property: all;
     animation: mockup-show 0.5s ease-in-out;
     animation-fill-mode: forwards;
@@ -12,10 +12,20 @@
     /* opacity: 0; */
     overflow: hidden;
     height: 0px;
-    transition: all 10s ease-in;
+    transition: all 1s ease-in;
     transition-property: all;
     animation: github-show 0.5s ease-in;
     animation-fill-mode: forwards;
+}
+
+.mockup-browser .mockup-browser-toolbar .input {
+    animation: mockup-input-show 0.5s ease-in;
+}
+/* Hot fix magnify icon */
+.mockup-browser .mockup-browser-toolbar .input:before {
+    transform: translateX(var(--tw-translate-x, 0))
+        translateY(var(--tw-translate-y))
+        scale(var(--tw-scale-x, 1), var(--tw-scale-y, 1)) !important;
 }
 
 @keyframes mockup-show {
@@ -35,5 +45,16 @@
     100% {
         opacity: 1;
         height: 3.75rem;
+    }
+}
+
+@keyframes mockup-input-show {
+    0% {
+        opacity: 0;
+        width: 0;
+    }
+    100% {
+        opacity: 1;
+        width: 11rem;
     }
 }

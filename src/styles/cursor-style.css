@@ -5,8 +5,8 @@
 
 .terminal::after {
     content: '';
-    top: 0.25em;
-    /* transform: translateY(25%); */
+    /* top: 0.25em; */
+    transform: translateY(10%);
     position: absolute;
     display: inline-block;
     width: 8px; /* Adjust the width of the cursor */
