@@ -29,10 +29,10 @@ function classNames(...classes: any) {
 
 export default function NavBar() {
   return (
-    <Disclosure as="nav" className="bg-transpalent fixed w-full top-0 flex justify-center pt-4">
+    <Disclosure as="nav" className="bg-transpalent fixed w-full top-0 flex justify-end md:justify-center md:pt-4">
       {({ open }) => (
         <>
-          <div className=" max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className=" max-w-7xl px-2 sm:px-6 lg:px-8 mr-12 md:mr-0">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
