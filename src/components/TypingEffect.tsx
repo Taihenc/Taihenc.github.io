@@ -7,9 +7,11 @@ interface TypingEffectProps {
   endRemoveCursor?: boolean;
   isTerminal?: boolean;
   onCharTypedEnd?: () => void;
+  onCharTyped?: (char: string) => void;
+  isPlainText?: boolean;
 }
 
-const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTerminal, onCharTypedEnd }) => {
+const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTerminal, onCharTypedEnd, onCharTyped, isPlainText }) => {
   const [typedText, setTypedText] = useState<string[]>([]);
   const codeRefs = Array.from({ length: text.length }, () => useRef<HTMLElement>(null));
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -31,9 +33,13 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTe
             currentTypedText + ((currentText === " ") ? '' : char),
             ...prev.slice(currentIndex + 1),
           ]);
-          KeyboardEvent(char);
+          if (onCharTyped) {
+            onCharTyped(char);
+          }
         } else {
-          KeyboardEvent('13');
+          if (onCharTyped) {
+            onCharTyped('Enter');
+          }
           setCurrentIndex((prev) => prev + 1);
         }
       } else {
@@ -44,17 +50,24 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTe
           onCharTypedEnd();
         }
       }
-    }, 20);
+    }, 30);
 
     return () => clearInterval(intervalId);
   }, [typedText, currentIndex]);
 
+  if (isPlainText) {
+    return (
+      <>
+        {typedText}
+      </>
+    );
+  }
   return (
     <>
       {typedText
         .filter((typed) => typed !== undefined)
         .map((typed, index) => (
-          <pre key={index} data-prefix={(isTerminal) ? `$` : `${index + 1}`} className='w-full inline-flex whitespace-pre-wrap break-all'>
+          <pre key={index} data-prefix={(isTerminal) ? `$` : `${index + 1}`} className='w-full relative inline-flex whitespace-pre-wrap break-all'>
             <code ref={codeRefs[index]} className={isTerminal ? 'terminal text-green-200' : 'cursor'}>
               {typed}
             </code>
