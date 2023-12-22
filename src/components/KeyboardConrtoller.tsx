@@ -61,6 +61,9 @@ const keyMap: { [key: string]: string } = {
   '=': 'Equal',
   '[': 'BracketLeft',
   ']': 'BracketRight',
+  '(': 'BracketLeft',
+  ')': 'BracketRight',
+  ':': 'Semicolon',
   ';': 'Semicolon',
   '\'': 'Quote',
   '`': 'Backquote',
@@ -144,13 +147,13 @@ export const createKeyboardController = (): KeyboardController => {
     const mesh = keyboardRef.current[keyMap[key]].current;
 
     if (mesh) {
-      let initialPosition = mesh.position.y;
-      let targetPosition = initialPosition - 0.005;
+      const initialPosition = mesh.position.y;
+      const targetPosition = initialPosition - 0.005;
       const defaultMaterial = mesh.material;
 
       // Use three.js animation system
       const animationDuration = 10; // in milliseconds
-      let startTime = performance.now();
+      const startTime = performance.now();
 
       const animate = (time: number) => {
         const elapsed = time - startTime;
@@ -167,15 +170,18 @@ export const createKeyboardController = (): KeyboardController => {
           requestAnimationFrame(animate);
         } else {
           // Animation complete, reverse the animation
+          mesh.position.y = initialPosition;
+          mesh.material = defaultMaterial;
+          // // Swap initial and target positions for the return animation
+          // const temp = initialPosition;
+          // initialPosition = targetPosition;
+          // targetPosition = temp;
 
-          // Swap initial and target positions for the return animation
-          const temp = initialPosition;
-          initialPosition = targetPosition;
-          targetPosition = temp;
+          // startTime = time; // Reset the start time for the return animation
 
-          startTime = time; // Reset the start time for the return animation
 
-          requestAnimationFrame(returnAnimation);
+
+          // requestAnimationFrame(returnAnimation);
         }
       };
 
