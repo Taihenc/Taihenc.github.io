@@ -1,9 +1,10 @@
 import * as THREE from "three";
-import React, { useRef, JSX as ReactJSX } from "react";
+import React, { useRef, JSX as ReactJSX, useEffect } from "react";
 
 
 export interface KeyboardController {
   keyboardRef: React.MutableRefObject<{ [key: string]: React.RefObject<THREE.Mesh> }>,
+  keyboardGroupRef: React.RefObject<THREE.Group>,
   press(key: string): void;
 }
 
@@ -77,6 +78,23 @@ const keyMap: { [key: string]: string } = {
   'Escape': 'Escape',
 };
 
+export const IdleAnimation = (keyboardGroupRef: React.RefObject<THREE.Group>) => {
+  console.log(keyboardGroupRef.current)
+  if (keyboardGroupRef.current) {
+    // animation here
+    const group = keyboardGroupRef.current!;
+
+    const animate = () => {
+      requestAnimationFrame(animate);
+
+      // Add animation logic here
+      group.position.y = Math.sin(Date.now() * 0.002) * 0.05; // Adjust the factor for desired amplitude
+      group.rotation.y = Math.sin(Date.now() * 0.001) * 0.05; // Adjust the factor for desired amplitude
+    };
+    requestAnimationFrame(animate);
+  }
+}
+
 export const createKeyboardController = (): KeyboardController => {
   const keyboardRef = useRef<{ [key: string]: React.RefObject<THREE.Mesh> }>({
     'KeyA': useRef<THREE.Mesh>(null),
@@ -137,6 +155,8 @@ export const createKeyboardController = (): KeyboardController => {
     'Backquote': useRef<THREE.Mesh>(null),
   });
 
+  const keyboardGroupRef = useRef<THREE.Group>(null);
+
   const press = (key: string): void => {
     // console.log(key);
     // const mesh = keyboardRef.current.ESC.current;
@@ -152,7 +172,7 @@ export const createKeyboardController = (): KeyboardController => {
       const defaultMaterial = mesh.material;
 
       // Use three.js animation system
-      const animationDuration = 10; // in milliseconds
+      const animationDuration = 120; // in milliseconds
       const startTime = performance.now();
 
       const animate = (time: number) => {
@@ -214,6 +234,7 @@ export const createKeyboardController = (): KeyboardController => {
 
   return {
     keyboardRef,
+    keyboardGroupRef,
     press,
   };
 };

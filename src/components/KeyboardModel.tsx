@@ -102,7 +102,7 @@ export function Model(props: ModelProps) {
   const meshRefs = props.controller.keyboardRef
 
   return (
-    <group {...props} dispose={null}>
+    <group {...props} ref={props.controller.keyboardGroupRef} rotation={[0, 0, 0]} dispose={null}>
       <group name="Scene">
         <mesh ref={meshRefs.current.plate} name="plate" geometry={nodes.plate.geometry} material={materials.PaletteMaterial001} position={[0.001, -0.013, -0.001]} />
         <group name="Cube026" position={[-0.097, -0.005, -0.03]} rotation={[-3.089, 0, 0]} scale={0.5}>
