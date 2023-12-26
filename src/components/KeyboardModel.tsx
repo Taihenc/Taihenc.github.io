@@ -101,6 +101,10 @@ export function Model(props: ModelProps) {
 
   const meshRefs = props.controller.keyboardRef
 
+  useEffect(() => {
+    props.keyboardGroupRefCallback ? props.keyboardGroupRefCallback(props.controller.keyboardGroupRef) : null
+  }, []);
+
   return (
     <group {...props} ref={props.controller.keyboardGroupRef} rotation={[0, 0, 0]} dispose={null}>
       <group name="Scene">

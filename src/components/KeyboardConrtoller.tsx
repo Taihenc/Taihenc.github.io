@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useRef, JSX as ReactJSX, useEffect } from "react";
+import React, { useRef } from "react";
 
 
 export interface KeyboardController {
@@ -14,6 +14,7 @@ export interface ModelProps extends GroupProps {
   position: [number, number, number];
   scale: [number, number, number];
   controller: KeyboardController;
+  keyboardGroupRefCallback?: (keyboardGroupRef: React.RefObject<THREE.Group>) => void;
 }
 
 const keyMap: { [key: string]: string } = {
@@ -85,17 +86,13 @@ const keyDefaultY: { [key: string]: number } = {};
 const keyDefaultMaterial: { [key: string]: THREE.Material } = {};
 
 export const IdleAnimation = (keyboardGroupRef: React.RefObject<THREE.Group>) => {
-  console.log(keyboardGroupRef.current)
   if (keyboardGroupRef.current) {
-    // animation here
     const group = keyboardGroupRef.current!;
 
     const animate = () => {
       requestAnimationFrame(animate);
-
-      // Add animation logic here
-      group.position.y = Math.sin(Date.now() * 0.002) * 0.05; // Adjust the factor for desired amplitude
-      group.rotation.y = Math.sin(Date.now() * 0.001) * 0.05; // Adjust the factor for desired amplitude
+      group.position.y = Math.sin(Date.now() * 0.002) * 0.05;
+      group.rotation.y = Math.sin(Date.now() * 0.001) * 0.05;
     };
     requestAnimationFrame(animate);
   }
