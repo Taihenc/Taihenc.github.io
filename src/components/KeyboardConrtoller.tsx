@@ -78,6 +78,12 @@ const keyMap: { [key: string]: string } = {
   'Escape': 'Escape',
 };
 
+const keyStatus: { [key: string]: boolean } = {};
+
+const keyDefaultY: { [key: string]: number } = {};
+
+const keyDefaultMaterial: { [key: string]: THREE.Material } = {};
+
 export const IdleAnimation = (keyboardGroupRef: React.RefObject<THREE.Group>) => {
   console.log(keyboardGroupRef.current)
   if (keyboardGroupRef.current) {
@@ -96,6 +102,7 @@ export const IdleAnimation = (keyboardGroupRef: React.RefObject<THREE.Group>) =>
 }
 
 export const createKeyboardController = (): KeyboardController => {
+
   const keyboardRef = useRef<{ [key: string]: React.RefObject<THREE.Mesh> }>({
     'KeyA': useRef<THREE.Mesh>(null),
     'KeyB': useRef<THREE.Mesh>(null),
@@ -158,20 +165,20 @@ export const createKeyboardController = (): KeyboardController => {
   const keyboardGroupRef = useRef<THREE.Group>(null);
 
   const press = (key: string): void => {
-    // console.log(key);
-    // const mesh = keyboardRef.current.ESC.current;
     if (key != 'Enter' && key != ' ') { key = key.toLowerCase(); }
     if (keyboardRef.current[keyMap[key]] == undefined) {
       console.log(key);
+      return;
     }
     const mesh = keyboardRef.current[keyMap[key]].current;
 
     if (mesh) {
-      const initialPosition = mesh.position.y;
+      keyDefaultY[key] = keyDefaultY[key] ?? mesh.position.y;
+      keyDefaultMaterial[key] = keyDefaultMaterial[key] ?? mesh.material;
+      const initialPosition = keyDefaultY[key];
       const targetPosition = initialPosition - 0.005;
-      const defaultMaterial = mesh.material;
+      const defaultMaterial = keyDefaultMaterial[key];
 
-      // Use three.js animation system
       const animationDuration = 120; // in milliseconds
       const startTime = performance.now();
 
@@ -192,41 +199,11 @@ export const createKeyboardController = (): KeyboardController => {
           // Animation complete, reverse the animation
           mesh.position.y = initialPosition;
           mesh.material = defaultMaterial;
-          // // Swap initial and target positions for the return animation
-          // const temp = initialPosition;
-          // initialPosition = targetPosition;
-          // targetPosition = temp;
-
-          // startTime = time; // Reset the start time for the return animation
-
-
-
-          // requestAnimationFrame(returnAnimation);
+          keyStatus[key] = false;
         }
       };
-
-      const returnAnimation = (time: number) => {
-        const elapsed = time - startTime;
-        const progress = Math.min(1, elapsed / animationDuration);
-
-        // Ease out the return animation
-        const easedProgress = 1 - Math.pow(1 - progress, 3);
-
-        // Interpolate the position for the return animation
-        mesh.position.y = initialPosition + easedProgress * (targetPosition - initialPosition);
-
-        mesh.material = defaultMaterial;
-        if (progress < 1) {
-          requestAnimationFrame(returnAnimation);
-        } else {
-          // Return animation complete, you can perform any cleanup here
-
-          // Optionally, you can reset the material to the default after the key is released
-          // mesh.material = defaultMaterial;
-        }
-      };
-
       // Start the initial animation
+      keyStatus[key] = true;
       requestAnimationFrame(animate);
     }
   };
