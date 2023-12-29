@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 
 export interface KeyboardController {
@@ -85,16 +85,37 @@ const keyDefaultY: { [key: string]: number } = {};
 
 const keyDefaultMaterial: { [key: string]: THREE.Material } = {};
 
+// const keyboardGroupInitialPosition = [0, 0, 0];
+
 export const IdleAnimation = (keyboardGroupRef: React.RefObject<THREE.Group>) => {
   if (keyboardGroupRef.current) {
     const group = keyboardGroupRef.current!;
-
+    const groupInitialPosition = group.position.clone();
     const animate = () => {
       requestAnimationFrame(animate);
-      group.position.y = Math.sin(Date.now() * 0.002) * 0.05;
+      group.position.y = groupInitialPosition.y + Math.sin(Date.now() * 0.002) * 0.05;
       group.rotation.y = Math.sin(Date.now() * 0.001) * 0.05;
     };
     requestAnimationFrame(animate);
+
+    // keyboard rotate on mouse move
+    const updateKeyboardStyle = (x: number, y: number) => {
+      let r_x = (x * 10);
+      let r_y = 0;
+      let r_z = (y * 10);
+
+      group.rotation.x = r_x * (Math.PI / 180);
+      // group.rotation.y = r_y * (Math.PI / 180);
+      group.rotation.z = r_z * (Math.PI / 180);
+    };
+
+    const handleMouseMove = (e: MouseEvent) => {
+      let x = e.pageX / window.innerWidth;
+      let y = e.pageY / window.innerHeight;
+      requestAnimationFrame(() => updateKeyboardStyle(x, y));
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
   }
 }
 
@@ -176,7 +197,7 @@ export const createKeyboardController = (): KeyboardController => {
       const targetPosition = initialPosition - 0.005;
       const defaultMaterial = keyDefaultMaterial[key];
 
-      const animationDuration = 120; // in milliseconds
+      const animationDuration = 130; // in milliseconds
       const startTime = performance.now();
 
       const animate = (time: number) => {

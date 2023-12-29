@@ -1,11 +1,24 @@
 .mockup-show {
     /* opacity: 0; */
     overflow: hidden;
-    height: 3.5rem;
+    /* height: 0rem; */
+    width: 0rem;
     transition: all 1s ease-in-out;
     transition-property: all;
     animation: mockup-show 0.5s ease-in-out;
-    animation-fill-mode: forwards;
+    animation-fill-mode: forwards !important;
+    overflow: hidden;
+    overflow-x: hidden;
+}
+
+/* to hide scrollbar when animating */
+.mockup-show > div {
+    overflow: hidden;
+}
+
+/* Hot fix prefix width glitch (fix the wrapped line prefix width)   */
+.mockup-code pre[data-prefix]:before {
+    min-width: 2rem;
 }
 
 .github-show {
@@ -34,7 +47,8 @@
     }
     100% {
         opacity: 1;
-        height: 15rem;
+        /* height: 15rem; */
+        width: 25rem;
     }
 }
 

@@ -7,11 +7,9 @@ import '../styles/mockup-animate.css'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Model } from "./KeyboardModel"
-import { createKeyboardController } from "./KeyboardConrtoller"
+import { IdleAnimation, createKeyboardController } from "./KeyboardConrtoller"
 import * as THREE from 'three'
-import { useFrame } from "@react-three/fiber"
 import { useRef } from "react"
-import { ThreeElements } from "@react-three/fiber"
 
 export default function Home() {
   const [finished, setFinished] = useState(false);
@@ -32,9 +30,9 @@ export default function Home() {
       <div className="absolute bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-[100vw] h-[100vh] overflow-hidden"> </div>
       <div className="w-full h-[100vh] backdrop-blur-sm">
         <NavBar />
-        <div className="w-[100vw] h-[100vh] relative pt-14 md:pt-20 flex items-start justify-center md:justify-start md:pl-28 ">
-          <div className="mockup-code h-[70vh] bg-opacity-60 w-[50rem] md:static flex flex-col max-w-[90%] bg-base-100">
-            <div className="w-fit shrink-[10] overflow-y-auto" ref={scrollingDivRef}>
+        <div className="w-[100vw] h-[100vh] relative pt-14 md:pt-20 flex items-start justify-center md:items-center md:p-16 md:gap-4 ">
+          <div className="transition-all mockup-code h-[70vh] bg-opacity-60 w-[90%] md:static md:w-[40rem] shrink-[1] flex flex-col max-w-[50rem] bg-base-100">
+            <div className="transition-all w-fit overflow-y-auto" ref={scrollingDivRef}>
               <TypingEffect text={[
                 "Hello, My name's Peerapat Pacharamontree",
                 "My nickname is Atom.",
@@ -53,7 +51,7 @@ export default function Home() {
               ]} isTerminal onCharTypedEnd={() => setLoadURL(true)} onCharTyped={keyboardRef.press} />}
             </div>
           </div>
-          {initBrowser && <div className="mockup-show mockup-browser w-[20rem] max-w-[80%] absolute top-3/4 -translate-y-1/2 shrink flex flex-col self-center bg-base-100 md:bg-opacity-60 border-none md:absolute md:left-[60rem] md:mb-80">
+          {initBrowser && <div className="mockup-show mockup-browser h-60 max-w-[80%] absolute top-[45%] -translate-y-1/2 bg-opacity-95 shrink-[2] border-none flex flex-col self-center bg-base-100 md:translate-y-10 md:bg-opacity-60 md:static md:self-start">
             <div className="mockup-browser-toolbar">
               <div className="input">{loadURL && <TypingEffect text={['https://github.com/Taihenc']} isPlainText onCharTyped={keyboardRef.press} />}</div>
             </div>
@@ -67,13 +65,13 @@ export default function Home() {
               </a>}
             </div>
           </div>}
-          <div className="w-[20rem] h-[15rem] absolute bottom-5 md:right-20 md:bottom-40">
+          <div className="w-[70%] max-w-xl aspect-[2/1] absolute bottom-5 md:right-4 md:bottom-8">
             <Canvas
-              camera={{ position: [-1, 2, 1.35], rotation: [0, 0, 0], fov: 40 }}
+              camera={{ position: [-2, 2, 2], rotation: [0, 0, 0], fov: 30 }}
             >
-              <ambientLight intensity={0.1} />
-              <directionalLight color={new THREE.Color(201, 149, 37)} position={[0, 5, -5]} intensity={0.01} />
-              <Model position={[0, 0, 0]} scale={[10, 10, 10]} controller={keyboardRef} />
+              <ambientLight intensity={0.2} />
+              <directionalLight color={new THREE.Color(201, 149, 37)} position={[-2, 5, -5]} intensity={0.01} />
+              <Model position={[0, 0.25, 0]} rotation={[0, 1, 0]} scale={[10, 10, 10]} controller={keyboardRef} keyboardGroupRefCallback={IdleAnimation} />
               <OrbitControls />
             </Canvas>
           </div>
