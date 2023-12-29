@@ -87,7 +87,7 @@ type GLTFResult = GLTF & {
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function Model(props: ModelProps) {
-  const { nodes, materials } = useGLTF('/public/assets/keyboard-transformed.glb') as GLTFResult
+  const { nodes, materials } = useGLTF('/assets/keyboard-transformed.glb') as GLTFResult
 
   const meshRefs = props.controller.keyboardRef
 
