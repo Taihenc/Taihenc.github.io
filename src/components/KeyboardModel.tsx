@@ -5,11 +5,10 @@ Files: .\public\assets\keyboard.gltf [129.01KB] > keyboard-transformed.glb [96.7
 */
 
 import * as THREE from 'three'
-import React, { useRef } from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 import { useEffect } from 'react'
-import { KeyboardController, ModelProps } from './KeyboardConrtoller'
+import { ModelProps } from './KeyboardConrtoller'
 
 // Hot fix unkonwn type
 interface CustomMesh extends THREE.Mesh {
@@ -85,7 +84,7 @@ type GLTFResult = GLTF & {
   }
 }
 
-type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
+// type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function Model(props: ModelProps) {
   const { nodes, materials } = useGLTF('/public/assets/keyboard-transformed.glb') as GLTFResult

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import "../styles/cursor-style.css"
-import { KeyboardEvent } from './Keyboard';
 
 interface TypingEffectProps {
   text: string[];

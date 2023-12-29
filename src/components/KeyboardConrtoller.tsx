@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import React, { useRef, useEffect } from "react";
+import React, { useRef } from "react";
 
 
 export interface KeyboardController {
@@ -101,7 +101,7 @@ export const IdleAnimation = (keyboardGroupRef: React.RefObject<THREE.Group>) =>
     // keyboard rotate on mouse move
     const updateKeyboardStyle = (x: number, y: number) => {
       let r_x = (x * 10);
-      let r_y = 0;
+      // let r_y = 0;
       let r_z = (y * 10);
 
       group.rotation.x = r_x * (Math.PI / 180);
