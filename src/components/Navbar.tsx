@@ -2,25 +2,17 @@ import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
 const handleClickScrollAboutMe = () => {
-  const element = document.getElementById("aboutme");
-  if (element) {
-    // 👇 Will scroll smoothly to the top of the next section
-    element.scrollIntoView({ behavior: "smooth" });
-  }
+
 };
 
-const handleClickScrollContractMe = () => {
-  const element = document.getElementById("ContactMe");
-  if (element) {
-    // 👇 Will scroll smoothly to the top of the next section
-    element.scrollIntoView({ behavior: "smooth" });
-  }
+const handleClickScrollContactMe = () => {
+
 };
 
 const navigation = [
   { name: "Home", href: "", current: true },
   { name: "About me", href: handleClickScrollAboutMe, current: false },
-  { name: "Contract me", href: handleClickScrollContractMe, current: false },
+  { name: "Contact me", href: handleClickScrollContactMe, current: false },
 ];
 
 function classNames(...classes: any) {
