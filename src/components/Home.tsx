@@ -29,46 +29,48 @@ export default function Home() {
       <div className="absolute bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-[100vw] h-[100vh] overflow-hidden"> </div>
       <div className="w-full h-[100vh] backdrop-blur-sm">
         <NavBar />
-        <div className="w-[100vw] h-[100vh] relative pt-14 md:pt-20 flex items-start justify-center md:items-center md:p-16 md:gap-4 ">
-          <div className="transition-all mockup-code h-[70vh] bg-opacity-60 w-[90%] md:static md:w-[40rem] shrink-[1] flex flex-col max-w-[50rem] bg-base-100">
-            <div className="transition-all w-fit overflow-y-auto" ref={scrollingDivRef}>
-              <TypingEffect text={[
-                "Hello, My name's Peerapat Pacharamontree",
-                "My nickname is Atom.",
-                "BTW I usually go by the name 'Taihen' when surfing the internet",
-                " ",
-                "I'm a 1st year student at Chulalongkorn University",
-              ]} endRemoveCursor onCharTypedEnd={() => setFinished(true)} onCharTyped={keyboardRef.press} textHighlight={[
-                { word: "Peerapat Pacharamontree", className: 'text-red-200' },
-                { word: "Atom", className: 'text-red-200' },
-                { word: "Taihen", className: 'text-yellow-300' },
-                { word: "Chulalongkorn University", className: 'text-pink-300' },
-              ]} />
-              <pre><code></code></pre>
-              <pre><code></code></pre>
-              <pre><code></code></pre>
-              {finished && <TypingEffect text={[
-                "Initiate(BrowserWindow())",
-              ]} isTerminal endRemoveCursor onCharTypedEnd={() => setInitBrowser(true)} onCharTyped={keyboardRef.press} />}
-              {initBrowser && <TypingEffect text={[
-                "Browser.loadURL('https://taihenc.github.io')",
-              ]} isTerminal onCharTypedEnd={() => setLoadURL(true)} onCharTyped={keyboardRef.press} />}
+        <div className="w-[100vw] h-[100vh] relative pt-14 flex items-start justify-center md:items-center md:pt-20 md:p-16 ">
+          <div className="flex md:gap-4 w-full justify-center">
+            <div className="transition-all mockup-code h-[70vh] bg-opacity-60 w-[90%] md:static md:w-[40rem] shrink-[1] flex flex-col max-w-[50rem] bg-base-100">
+              <div className="transition-all w-fit overflow-y-auto" ref={scrollingDivRef}>
+                <TypingEffect text={[
+                  "Hello, My name's Peerapat Pacharamontree",
+                  "My nickname is Atom.",
+                  "BTW I usually go by the name 'Taihen' when surfing the internet",
+                  " ",
+                  "I'm a 1st year student at Chulalongkorn University",
+                ]} endRemoveCursor onCharTypedEnd={() => setFinished(true)} onCharTyped={keyboardRef.press} textHighlight={[
+                  { word: "Peerapat Pacharamontree", className: 'text-red-200' },
+                  { word: "Atom", className: 'text-red-200' },
+                  { word: "Taihen", className: 'text-yellow-300' },
+                  { word: "Chulalongkorn University", className: 'text-pink-300' },
+                ]} />
+                <pre><code></code></pre>
+                <pre><code></code></pre>
+                <pre><code></code></pre>
+                {finished && <TypingEffect text={[
+                  "Initiate(BrowserWindow())",
+                ]} isTerminal endRemoveCursor onCharTypedEnd={() => setInitBrowser(true)} onCharTyped={keyboardRef.press} />}
+                {initBrowser && <TypingEffect text={[
+                  "Browser.loadURL('https://taihenc.github.io')",
+                ]} isTerminal onCharTypedEnd={() => setLoadURL(true)} onCharTyped={keyboardRef.press} />}
+              </div>
             </div>
+            {initBrowser && <div className="mockup-show mockup-browser h-60 max-w-[80%] absolute top-[45%] -translate-y-1/2 bg-opacity-95 shrink-[2] border-none flex flex-col self-center bg-base-100 md:translate-y-0 md:bg-opacity-60 md:static md:self-start">
+              <div className="mockup-browser-toolbar">
+                <div className="input">{loadURL && <TypingEffect text={['https://github.com/Taihenc']} isPlainText onCharTyped={keyboardRef.press} />}</div>
+              </div>
+              <div className="w-full h-full flex items-center justify-center">
+                {loadURL && <a href="https://github.com/Taihenc" className="github-show w-fit h-0 p-2 pt-3 pl-4 pr-4 flex justify-center items-center gap-2 bg-black text-white rounded-md text-lg opacity-70 hover:text-red-200">
+                  <FontAwesomeIcon icon={['fab', 'github']} className="text-4xl animate-bounce" />
+                  <div className="flex flex-col justify-center align-middle text-center gap-0">
+                    <div className="text-sm">Available on</div>
+                    <div className="font-bold -mt-1 text-2xl">Github</div>
+                  </div>
+                </a>}
+              </div>
+            </div>}
           </div>
-          {initBrowser && <div className="mockup-show mockup-browser h-60 max-w-[80%] absolute top-[45%] -translate-y-1/2 bg-opacity-95 shrink-[2] border-none flex flex-col self-center bg-base-100 md:translate-y-10 md:bg-opacity-60 md:static md:self-start">
-            <div className="mockup-browser-toolbar">
-              <div className="input">{loadURL && <TypingEffect text={['https://github.com/Taihenc']} isPlainText onCharTyped={keyboardRef.press} />}</div>
-            </div>
-            <div className="w-full h-full flex items-center justify-center">
-              {loadURL && <a href="https://github.com/Taihenc" className="github-show w-fit h-0 p-2 pt-3 pl-4 pr-4 flex justify-center items-center gap-2 bg-black text-white rounded-md text-lg opacity-70 hover:text-red-200">
-                <FontAwesomeIcon icon={['fab', 'github']} className="text-4xl animate-bounce" />
-                <div className="flex flex-col justify-center align-middle text-center gap-0">
-                  <div className="text-sm">Available on</div>
-                  <div className="font-bold -mt-1 text-2xl">Github</div>
-                </div>
-              </a>}
-            </div>
-          </div>}
           <div className="w-[70%] max-w-xl aspect-[2/1] absolute bottom-5 md:right-4 md:bottom-8">
             <Canvas
               camera={{ position: [-2, 2, 2], rotation: [0, 0, 0], fov: 30 }}
