@@ -38,7 +38,11 @@ export default function Home() {
                 "BTW I usually go by the name 'Taihen' when surfing the internet",
                 " ",
                 "I'm a 1st year student at Chulalongkorn University",
-              ]} endRemoveCursor onCharTypedEnd={() => setFinished(true)} onCharTyped={keyboardRef.press} />
+              ]} endRemoveCursor onCharTypedEnd={() => setFinished(true)} onCharTyped={keyboardRef.press} textHighlight={[
+                { word: "Peerapat Pacharamontree", className: 'text-red-200' },
+                { word: "Atom", className: 'text-red-200' },
+                { word: "Taihen", className: 'text-pink-300' },
+              ]} />
               <pre><code></code></pre>
               <pre><code></code></pre>
               <pre><code></code></pre>

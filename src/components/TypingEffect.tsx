@@ -8,9 +8,15 @@ interface TypingEffectProps {
   onCharTypedEnd?: () => void;
   onCharTyped?: (char: string) => void;
   isPlainText?: boolean;
+  textHighlight?: WordWithClassName[];
 }
 
-const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTerminal, onCharTypedEnd, onCharTyped, isPlainText }) => {
+type WordWithClassName = {
+  word: string,
+  className: string,
+};
+
+const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTerminal, onCharTypedEnd, onCharTyped, isPlainText, textHighlight }) => {
   const [typedText, setTypedText] = useState<string[]>([]);
   const codeRefs = Array.from({ length: text.length }, () => useRef<HTMLElement>(null));
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -36,6 +42,17 @@ const TypingEffect: React.FC<TypingEffectProps> = ({ text, endRemoveCursor, isTe
             onCharTyped(char);
           }
         } else {
+          if (textHighlight) {
+            textHighlight.forEach((wordWithColor) => {
+              const word = wordWithColor.word;
+              const className = wordWithColor.className;
+              const regex = new RegExp(word, 'g');
+              const codeRef = codeRefs[currentIndex]?.current;
+              if (codeRef) {
+                codeRef.innerHTML = codeRef.innerHTML.replace(regex, `<span class="${className}">${word}</span>`);
+              }
+            });
+          }
           if (onCharTyped) {
             onCharTyped('Enter');
           }
