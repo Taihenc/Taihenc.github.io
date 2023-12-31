@@ -21,7 +21,7 @@ function classNames(...classes: any) {
 
 export default function NavBar() {
   return (
-    <Disclosure as="nav" className="bg-transpalent fixed w-full top-0 flex justify-end md:justify-center md:pt-4">
+    <Disclosure as="nav" className="bg-transpalent fixed z-10 w-full top-0 flex justify-end md:justify-center md:pt-4">
       {({ open }) => (
         <>
           <div className=" max-w-7xl px-2 sm:px-6 lg:px-8 mr-12 md:mr-0">
