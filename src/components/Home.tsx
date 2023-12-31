@@ -28,8 +28,8 @@ export default function Home() {
       </div> */}
       <div className="relative w-full h-full">
         <div className="absolute bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-full h-full overflow-hidden"> </div>
-        <div className="w-full h-full backdrop-blur-sm">
-          <div className="relative pt-14 flex items-start justify-center md:items-center md:pt-20 md:p-16 ">
+        <div className="w-full h-full backdrop-blur-sm flex justify-center items-center">
+          <div className="pt-14 flex items-start justify-center md:items-center md:pt-20 md:p-16 ">
             <div className="flex md:gap-4 w-full justify-center">
               <div className="transition-all mockup-code h-[70vh] bg-opacity-60 w-[90%] md:static md:w-[40rem] shrink-[1] flex flex-col max-w-[50rem] bg-base-100">
                 <div className="transition-all w-fit overflow-y-auto" ref={scrollingDivRef}>
