@@ -41,7 +41,8 @@ export default function Home() {
               ]} endRemoveCursor onCharTypedEnd={() => setFinished(true)} onCharTyped={keyboardRef.press} textHighlight={[
                 { word: "Peerapat Pacharamontree", className: 'text-red-200' },
                 { word: "Atom", className: 'text-red-200' },
-                { word: "Taihen", className: 'text-pink-300' },
+                { word: "Taihen", className: 'text-yellow-300' },
+                { word: "Chulalongkorn University", className: 'text-pink-300' },
               ]} />
               <pre><code></code></pre>
               <pre><code></code></pre>
