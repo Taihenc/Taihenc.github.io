@@ -26,8 +26,8 @@ export default function Home() {
           <span className="absolute top-[1.75em] right-0 text-xs font-bold">Dec 8, 2023, by <span className="text-red-900">Taihenc</span></span>
         </span>
       </div> */}
-      <div className="relative w-full h-full">
-        <div className="absolute bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-full h-full overflow-hidden"> </div>
+      <div id="home" className="relative w-full h-full">
+        <div className="fixed z-[-1] bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-full h-full overflow-hidden"> </div>
         <div className="w-full h-full backdrop-blur-sm flex justify-center items-center">
           <div className="pt-14 flex items-start justify-center md:items-center md:pt-20 md:p-16 ">
             <div className="flex md:gap-4 w-full justify-center">
