@@ -8,10 +8,10 @@ export default function ContactMe() {
           <div className="w-full h-full p-28">
             <div className="hero relative flex justify-center w-full h-full rounded-xl bg-opacity-[80%] bg-base-200">
               <div className="absolute w-full h-full bg-transparent -z-10 rounded-[inherit] shadow-2xl shadow-[rgba(97,97,170,0.5)] animate-pulse"></div>
-              <div className="mockup-phone border-green-300 border-opacity-20 m-0 mr-20">
+              <div className="mockup-phone max-h-[90%] border-green-300 border-opacity-20 m-0 mr-20">
                 <div className="camera"></div>
-                <div className="display">
-                  <div className="artboard artboard-demo phone-1">
+                <div className="display max-h-[90%]">
+                  <div className="artboard max-h-[90%] artboard-demo phone-1">
                     <div className="flex h-full w-full p-10 flex-col">
                       <div className="rounded-xl h-[10rem] overflow-hidden opacity-75">
                         <img className="w-full origin-bottom -translate-y-[33%]" src="https://i.redd.it/xte6gka2ghj91.gif" alt="" />

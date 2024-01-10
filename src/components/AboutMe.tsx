@@ -13,10 +13,11 @@ export default function AboutMe() {
                 <div className="flex flex-col justify-center items-center">
                   <div className="stack relative w-72 rounded-lg shadow-2xl">
                     <div className="w-full h-full rounded bg-secondary text-secondary-content place-content-center overflow-hidden">
-                      <img src="https://dthezntil550i.cloudfront.net/sp/latest/sp2210222307207530022116305/1280_960/7c9ef945-f10b-4c00-beba-a53c8aa2a12b.png" className="w-full h-full bg-cover" />
+                      {/* <img src="https://dthezntil550i.cloudfront.net/sp/latest/sp2210222307207530022116305/1280_960/7c9ef945-f10b-4c00-beba-a53c8aa2a12b.png" className="w-full h-full bg-cover" /> */}
+                      <img src="https://github.com/Taihenc.png" className="w-full h-full bg-cover" />
                     </div>
                     <div className="w-full h-full rounded bg-red-200 text-secondary-content place-content-center">3</div>
-                    <div className="absolute w-fit top-[-1em] right-[-2em] opacity-100 badge badge-secondary z-10 bg-red-200 border-red-200">Coding...</div>
+                    <div className="absolute w-fit top-[-1em] right-[-2em] opacity-100 badge badge-secondary z-10 bg-red-200 border-red-200">Staring...</div>
                     <div className="w-full h-full rounded bg-[#223b93] text-primary-content place-content-center">1</div>
                     <div className="w-full h-full rounded bg-green-200 text-accent-content place-content-center">2</div>
                   </div>
