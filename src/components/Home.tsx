@@ -26,12 +26,12 @@ export default function Home() {
           <span className="absolute top-[1.75em] right-0 text-xs font-bold">Dec 8, 2023, by <span className="text-red-900">Taihenc</span></span>
         </span>
       </div> */}
-      <div id="home" className="relative w-full h-full">
-        <div className="fixed z-[-1] bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-full h-full overflow-hidden"> </div>
-        <div className="w-full h-full backdrop-blur-sm flex justify-center items-start md:items-center">
-          <div className="pt-14 flex max-w-full items-start justify-center md:items-center md:pt-20 md:p-16 ">
-            <div className="flex gap-6 w-full justify-center flex-col md:flex-row">
-              <div className="transition-all mockup-code md:h-[70vh] bg-opacity-60 w-[90%] md:static md:w-[40rem] shrink-[1] flex flex-col self-center max-w-[50rem] bg-base-100">
+      <div id="home" className="relative">
+        <div className="fixed z-[-1] bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-full h-full overflow-hidden"></div>
+        <div className="backdrop-blur-sm flex justify-center items-start md:items-center">
+          <div className="flex max-h-full max-w-full overflow-hidden items-start justify-center md:items-center">
+            <div className="flex gap-6 justify-start md:justify-center items-center h-[100vh] w-[100vw] flex-col pt-14 pl-2 pr-2 md:flex-row md:pt-20 md:p-16">
+              <div className="transition-all mockup-code max-h-[50rem] md:h-[70vh] max-w-[50rem] min-w-0 md:w-[40rem] bg-opacity-60 w-[90%] shrink-[1] flex flex-col self-center bg-base-100 md:self-start">
                 <div className="transition-all w-fit overflow-y-auto" ref={scrollingDivRef}>
                   <TypingEffect text={[
                     "Hello, My name's Peerapat Pacharamontree",
@@ -56,7 +56,7 @@ export default function Home() {
                   ]} isTerminal onCharTypedEnd={() => setLoadURL(true)} onCharTyped={keyboardRef.press} />}
                 </div>
               </div>
-              {initBrowser && <div className="mockup-show mockup-browser h-60 max-w-[80%] bg-opacity-60 shrink-[2] border-none flex flex-col bg-base-100 self-center md:translate-y-0 md:static md:self-start">
+              {initBrowser && <div className="mockup-show mockup-browser h-60 min-h-[9rem] max-w-[80%] min-w-[1rem] w-[5rem] mb-28 bg-opacity-60 shrink-[2] border-none flex flex-col bg-base-100 md:self-start">
                 <div className="mockup-browser-toolbar">
                   <div className="input">{loadURL && <TypingEffect text={['https://github.com/Taihenc']} isPlainText onCharTyped={keyboardRef.press} />}</div>
                 </div>
