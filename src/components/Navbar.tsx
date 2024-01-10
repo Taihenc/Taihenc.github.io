@@ -11,7 +11,7 @@ const handleClickScrollAboutMe = () => {
 };
 
 const handleClickScrollContactMe = () => {
-
+  scrollToSection("contact-me");
 };
 
 type NavigationItem = {
@@ -19,12 +19,6 @@ type NavigationItem = {
   href: () => void;
   current: boolean;
 };
-
-const navigation: NavigationItem[] = [
-  { name: "Home", href: handleClickScrollHome, current: true },
-  { name: "About me", href: handleClickScrollAboutMe, current: false },
-  { name: "Contact me", href: handleClickScrollContactMe, current: false },
-];
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -125,7 +119,7 @@ export default function NavBar() {
   );
 }
 
-function scrollToSection(sectionId: string): void {
+export function scrollToSection(sectionId: string): void {
   const sectionElement: HTMLElement | null = document.getElementById(sectionId);
 
   if (sectionElement) {

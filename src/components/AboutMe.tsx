@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { scrollToSection } from "./Navbar"
 
 export default function AboutMe() {
   return (
@@ -20,7 +21,7 @@ export default function AboutMe() {
                     <div className="w-full h-full rounded bg-green-200 text-accent-content place-content-center">2</div>
                   </div>
                   <div className="w-full pt-10">
-                    <p className="w-max text-center">"If you gaze for long into an abyss, nothing happens."</p>
+                    <p className="w-max text-center font-serif">"If you gaze for long into an abyss, nothing happens."</p>
                     <p className="pt-5 text-center text-yellow-300">Peerapat Patcharamontree</p>
                   </div>
                 </div>
@@ -34,7 +35,7 @@ export default function AboutMe() {
                     myself.. Now, let's see what else I can make this calculator machine do
                     at <a href="https://github.com/Taihenc" target="_blank">Github</a>.
                   </p>
-                  <button className="btn mt-3 text-white bg-[#223b93]">
+                  <button onClick={() => scrollToSection('contact-me')} className="btn mt-3 text-white bg-[#223b93]">
                     Contact Me
                     <FontAwesomeIcon icon={['fas', 'paper-plane']} />
                   </button>
