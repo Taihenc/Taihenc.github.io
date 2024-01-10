@@ -6,7 +6,7 @@ export default function ContactMe() {
       <div id="contact-me" className="w-full h-full bg-[#1a252f] bg-opacity-75">
         <div className="w-full h-full backdrop-blur-sm flex justify-center items-center">
           <div className="w-full h-full p-6 lg:p-28 flex justify-center items-center">
-            <div className="w-full h-fit lg:h-full relative flex flex-col lg:flex-row p-4 lg:gap-20 justify-center items-center rounded-xl bg-opacity-[80%] bg-base-200">
+            <div className="w-full h-fit max-h-[80vh] md:max-h-full lg:h-full relative flex flex-col lg:flex-row p-4 lg:gap-20 justify-center items-center rounded-xl bg-opacity-[80%] bg-base-200">
               <div className="absolute w-full h-full bg-transparent -z-10 rounded-[inherit] shadow-2xl shadow-[rgba(97,97,170,0.5)] animate-pulse"></div>
               <div className="max-h-[37rem] lg:min-h-[20rem] lg:h-full min-w-[17rem] shrink-0 lg:mockup-phone lg:m-0 order-3 lg:order-1 border-green-300 border-opacity-20">
                 <div className="camera"></div>
@@ -47,7 +47,7 @@ export default function ContactMe() {
                   </div>
                 </div>
               </div>
-              <div className="h-full max-h-[10rem] w-full lg:hidden shrink-[1] order-2"></div>
+              <div className="h-[5rem] max-h-[10rem] w-full lg:hidden shrink-[1] order-2"></div>
               <div className="lg:mb-24 shrink-0 md:shrink order-1 px-5 mt-10 lg:block">
                 <h1 className="lg:mb-5 text-4xl lg:text-5xl font-bold text-red-200">Let's Connect😇</h1>
                 <p className="my-2 mt-6 overflow-auto">
