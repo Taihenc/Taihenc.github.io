@@ -1,0 +1,40 @@
+/* SVG RULES */
+.arrow-up-1,
+.arrow-up-2,
+.arrow-up-3 {
+    fill: transparent;
+    stroke: white;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.arrow-up-2 {
+    opacity: 0.5;
+}
+
+.arrow-up-1 {
+    opacity: 0.25;
+}
+
+.arrow-up-3 {
+    opacity: 0.75;
+}
+@keyframes flick-fade {
+    0% {
+        opacity: 0;
+    }
+    25% {
+        opacity: 1;
+    }
+}
+/* SVG ANIMATION */
+.wrapper * {
+    transform-origin: 50% 50%;
+    perspective: 100px;
+}
+.arrows {
+    opacity: 0;
+    animation: flick-fade 1.25s ease-out backwards;
+    animation-iteration-count: infinite;
+}

@@ -8,6 +8,7 @@ import { Model } from "./KeyboardModel"
 import { IdleAnimation, createKeyboardController } from "./KeyboardConrtoller"
 import * as THREE from 'three'
 import { useRef } from "react"
+import '../styles/arrow-up.css'
 
 export default function Home() {
   const [finished, setFinished] = useState(false);
@@ -27,10 +28,10 @@ export default function Home() {
       </div> */}
       <div id="home" className="relative w-full h-full">
         <div className="fixed z-[-1] bg-cover bg-center bg-[url('/assets/home_bg.gif')] w-full h-full overflow-hidden"> </div>
-        <div className="w-full h-full backdrop-blur-sm flex justify-center items-center">
+        <div className="w-full h-full backdrop-blur-sm flex justify-center items-start md:items-center">
           <div className="pt-14 flex items-start justify-center md:items-center md:pt-20 md:p-16 ">
-            <div className="flex md:gap-4 w-full justify-center">
-              <div className="transition-all mockup-code h-[70vh] bg-opacity-60 w-[90%] md:static md:w-[40rem] shrink-[1] flex flex-col max-w-[50rem] bg-base-100">
+            <div className="flex gap-6 w-full justify-center flex-col md:flex-row">
+              <div className="transition-all mockup-code md:h-[70vh] bg-opacity-60 w-[90%] md:static md:w-[40rem] shrink-[1] flex flex-col self-center max-w-[50rem] bg-base-100">
                 <div className="transition-all w-fit overflow-y-auto" ref={scrollingDivRef}>
                   <TypingEffect text={[
                     "Hello, My name's Peerapat Pacharamontree",
@@ -55,7 +56,7 @@ export default function Home() {
                   ]} isTerminal onCharTypedEnd={() => setLoadURL(true)} onCharTyped={keyboardRef.press} />}
                 </div>
               </div>
-              {initBrowser && <div className="mockup-show mockup-browser h-60 max-w-[80%] absolute top-[45%] -translate-y-1/2 bg-opacity-95 shrink-[2] border-none flex flex-col self-center bg-base-100 md:translate-y-0 md:bg-opacity-60 md:static md:self-start">
+              {initBrowser && <div className="mockup-show mockup-browser h-60 max-w-[80%] bg-opacity-60 shrink-[2] border-none flex flex-col bg-base-100 self-center md:translate-y-0 md:static md:self-start">
                 <div className="mockup-browser-toolbar">
                   <div className="input">{loadURL && <TypingEffect text={['https://github.com/Taihenc']} isPlainText onCharTyped={keyboardRef.press} />}</div>
                 </div>
@@ -70,7 +71,7 @@ export default function Home() {
                 </div>
               </div>}
             </div>
-            <div className="w-[70%] max-w-xl aspect-[2/1] absolute bottom-5 md:right-4 md:bottom-8">
+            <div className="md:block hidden w-[70%] max-w-xl aspect-[2/1] absolute bottom-5 md:right-4 md:bottom-8">
               <Canvas
                 camera={{ position: [-2, 2, 2], rotation: [0, 0, 0], fov: 30 }}
               >
@@ -80,6 +81,16 @@ export default function Home() {
                 <OrbitControls />
               </Canvas>
             </div>
+          </div>
+          <div className="md:hidden w-[5rem] h-[10rem absolute bottom-5 wrapper opacity-60">
+            <svg className="" id="Flick_1" data-name="Flick 1" xmlns="http://www.w3.org/2000/svg" viewBox="30 50 35 60">
+              <g className="arrows" transform="translate(7, 5)">
+                <polyline className="arrow-up-3" points="34.7 64.95 40.73 58.79 40.75 58.8 46.91 64.83" />
+                <polyline className="arrow-up-2" points="34.7 74.99 40.73 68.83 40.75 68.85 46.91 74.88" />
+                <polyline className="arrow-up-1" points="34.7 85.04 40.73 78.88 40.75 78.89 46.91 84.92" />
+              </g>
+            </svg>
+
           </div>
         </div >
       </div >
