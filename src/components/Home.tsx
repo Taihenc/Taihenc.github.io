@@ -1,4 +1,3 @@
-import NavBar from "./Navbar"
 import { useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TypingEffect from "./TypingEffect"
