@@ -81,22 +81,41 @@ export default function NavBar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-transpalent fixed z-10 w-full top-0 flex justify-end md:justify-center md:pt-4">
+    <Disclosure as="nav" className="bg-transpalent fixed z-10 w-full top-0 flex justify-end sm:justify-center md:pt-4">
       {({ open }) => (
-        <div className="max-w-7xl px-2 sm:px-6 lg:px-8 mr-12 md:mr-0 relative flex h-16 items-center justify-between">
+        <div className="max-w-7xl px-2 sm:px-6 lg:px-8 mr-12 sm:mr-0 relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white">
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
-              {open ? (
-                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+              {!open ? (
+                <>
+                  <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  <div className="absolute top-16 flex flex-col bg-[#1a252f] bg-opacity-50 rounded-lg gap-3">
+                    <div className="absolute w-full h-full bg-transparent -z-10 rounded-[inherit] shadow-2xl shadow-[rgba(97,97,170,0.8)] animate-pulse"></div>
+
+                    {navigation.map((item) => (
+                      <button
+                        key={item.name}
+                        onClick={() => handleItemClick(item)}
+                        className={classNames(
+                          item.current ? "bg-[#223b93] text-white" : "text-gray-300 hover:text-white hover:bg-[#433969] bg-transparent",
+                          "rounded-md px-3 py-2 text-sm font-medium transition-all duration-150 focus:outline-none"
+                        )}
+                        aria-current={item.current ? "page" : undefined}
+                      >
+                        {item.name}
+                      </button>
+                    ))}
+                  </div>
+                </>
               ) : (
                 <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
               )}
             </Disclosure.Button>
           </div>
-          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="hidden sm:ml-6 sm:block flex space-x-4">
+          <div className="hidden sm:flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="space-x-4">
               {navigation.map((item) => (
                 <button
                   key={item.name}
