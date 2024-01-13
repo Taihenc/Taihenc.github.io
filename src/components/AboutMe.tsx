@@ -12,10 +12,10 @@ export default function AboutMe() {
               <div className="w-full h-full p-3 md:p-6 md:py-[5%] md:px-[7%] flex justify-center items-center">
                 <div className="w-full h-full max-h-[80vh] flex flex-col lg:flex-row justify-center items-center">
                   <div className="max-h-full min-h-[10rem] w-[20rem] mb-5 lg:mt-16 flex flex-col shrink-[20] justify-center items-center order-3">
-                    <div className="stack max-w-[18rem] lg:w-3/4 w-[40%] relative shrink-[2] rounded-lg shadow-2xl">
-                      <div className="w-full h-full rounded bg-secondary text-secondary-content place-content-center overflow-hidden">
+                    <div className="stack aspect-square lg:w-3/4 w-[40%] relative shrink-[2] rounded-lg shadow-2xl">
+                      <div className="w-full h-full rounded bg-secondary overflow-hidden">
                         {/* <img src="https://dthezntil550i.cloudfront.net/sp/latest/sp2210222307207530022116305/1280_960/7c9ef945-f10b-4c00-beba-a53c8aa2a12b.png" className="w-full h-full bg-cover" /> */}
-                        <img src="https://github.com/Taihenc.png" className="w-full h-full bg-cover" />
+                        <img src="https://github.com/Taihenc.png" className="w-full h-full object-cover bg-cover" />
                       </div>
                       <div className="w-full h-full rounded bg-red-200 text-secondary-content place-content-center">3</div>
                       <div className="absolute w-fit top-[-1em] right-[-2em] opacity-100 badge badge-secondary z-10 bg-red-200 border-red-200">Staring...</div>
