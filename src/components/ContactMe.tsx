@@ -4,7 +4,7 @@ export default function ContactMe() {
   return (
     <>
       <div id="contact-me" className="w-full h-full bg-[#1a252f] bg-opacity-75">
-        <div className="w-full h-full backdrop-blur-sm flex justify-center items-center">
+        <div className="w-full h-full flex justify-center items-center">
           <div className="w-full h-full p-6 lg:p-28 flex justify-center items-center">
             <div className="w-full h-fit max-h-[80vh] md:max-h-full lg:h-full relative flex flex-col lg:flex-row p-4 lg:gap-20 justify-center items-center rounded-xl bg-opacity-[80%] bg-base-200">
               <div className="absolute w-full h-full bg-transparent -z-10 rounded-[inherit] shadow-2xl shadow-[rgba(97,97,170,0.5)] animate-pulse"></div>

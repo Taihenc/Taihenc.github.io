@@ -5,7 +5,7 @@ export default function AboutMe() {
   return (
     <>
       <div id="about-me" className="w-full h-full bg-[#1a252f] bg-opacity-75">
-        <div className="w-full h-full backdrop-blur-sm flex justify-center items-center overflow-hidden">
+        <div className="w-full h-full flex justify-center items-center overflow-hidden">
           <div className="w-full h-full md:p-28 p-6 flex justify-center items-center">
             <div className="w-full h-fit max-w-[100rem] max-h-[50rem] relative rounded-xl bg-opacity-[80%] bg-base-200">
               <div className="w-full h-full absolute -z-10 bg-transparent rounded-[inherit] shadow-2xl shadow-[rgba(252,225,7,0.4)] animate-pulse"></div>

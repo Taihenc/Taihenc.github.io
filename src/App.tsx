@@ -7,6 +7,7 @@ import './styles/custom-3dot-color.css'
 export default function App() {
   return (
     <>
+      <div className="w-[100vw] h-[100vh] blur-sm fixed z-[-1] bg-cover bg-center bg-[url('/assets/home_bg.gif')]"></div>
       <NavBar />
       <Home />
       <AboutMe />
