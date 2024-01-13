@@ -11,7 +11,7 @@ export default function AboutMe() {
               <div className="w-full h-full absolute -z-10 bg-transparent rounded-[inherit] shadow-2xl shadow-[rgba(252,225,7,0.4)] animate-pulse"></div>
               <div className="w-full h-full p-3 md:p-6 md:py-[5%] md:px-[7%] flex justify-center items-center">
                 <div className="w-full h-full max-h-[80vh] flex flex-col lg:flex-row justify-center items-center">
-                  <div className="max-h-full min-h-[10rem] w-[20rem] mb-5 lg:mt-16 flex flex-col shrink-[20] justify-center items-center order-3">
+                  <div className="max-h-full min-h-[10rem] w-[20rem] mb-5 lg:mt-16 flex flex-col shrink-0 justify-center items-center order-3">
                     <div className="stack aspect-square lg:w-3/4 w-[40%] relative shrink-[2] rounded-lg shadow-2xl">
                       <div className="w-full h-full rounded bg-secondary overflow-hidden">
                         {/* <img src="https://dthezntil550i.cloudfront.net/sp/latest/sp2210222307207530022116305/1280_960/7c9ef945-f10b-4c00-beba-a53c8aa2a12b.png" className="w-full h-full bg-cover" /> */}
@@ -27,7 +27,7 @@ export default function AboutMe() {
                       <p className="pt-2 lg:pt-5 text-center text-xs md:text-sm text-yellow-300">Peerapat Patcharamontree</p>
                     </div>
                   </div>
-                  <div className="h-[5rem] max-h-[10rem] w-full lg:hidden shrink-[1] order-2"></div>
+                  <div className="h-[5rem] max-h-[10rem] w-full lg:hidden shrink-[10] order-2"></div>
                   <div className="w-full max-w-[55rem] p-5 lg:pr-[7rem] md:pb-16 flex flex-col max-h-full shrink overflow-hidden order-1">
                     <h1 className="w-full mb-5 text-4xl lg:text-5xl font-bold text-red-200">Greeting!! 👋 I'm Atom</h1>
                     <h1 className="text-lg lg:text-2xl lg:pt-6 font-bold">About me</h1>

@@ -48,10 +48,10 @@ export default function ContactMe() {
                   </div>
                 </div>
               </div>
-              <div className="h-[5rem] max-h-[10rem] w-full lg:hidden shrink-[1] order-2"></div>
-              <div className="lg:mb-24 shrink-0 md:shrink order-1 px-5 mt-10 lg:block">
-                <h1 className="lg:mb-5 text-4xl lg:text-5xl font-bold text-red-200">Let's Connect😇</h1>
-                <p className="my-2 mt-6 overflow-auto">
+              <div className="h-[5rem] max-h-[10rem] w-full lg:hidden shrink-[10] order-2"></div>
+              <div className="min-h-0 px-5 mt-5 lg:mt-10 lg:mb-24 flex flex-col shrink md:shrink order-1 lg:block">
+                <h1 className="lg:mb-5 text-4xl lg:text-5xl shrink-0 font-bold text-red-200">Let's Connect😇</h1>
+                <p className="my-2 sm:mt-6 shrink overflow-auto">
                   - Feel free to contact me if you have any questions or suggestions. <br />
                   - I'm always open to new ideas and <span className="text-green-300">opportunities</span>. <br />
                   ( I may not be quick to respond, but I will do my best to reply to you as soon as possible. )
