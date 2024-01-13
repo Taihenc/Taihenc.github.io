@@ -39,6 +39,8 @@
     transform: translateX(var(--tw-translate-x, 0))
         translateY(var(--tw-translate-y))
         scale(var(--tw-scale-x, 1), var(--tw-scale-y, 1)) !important;
+    /* fix magify stretch in Ipad */
+    max-width: fit-content;
 }
 
 @keyframes mockup-show {
