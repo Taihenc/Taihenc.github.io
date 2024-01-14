@@ -24,7 +24,7 @@ export default function AboutMe() {
                       <div className="w-full h-full rounded bg-green-200 text-accent-content place-content-center">2</div>
                     </div>
                     <div className="w-fit mt-2 lg:mt-16 flex flex-col">
-                      <p className="md:w-max text-sm md:text-base text-center font-serif">"If you gaze f or long into an abyss, nothing happens."</p>
+                      <p className="md:w-max text-sm md:text-base text-center font-serif">"If you gaze for long into an abyss, nothing happens."</p>
                       <p className="pt-2 lg:pt-5 text-center text-xs md:text-sm text-yellow-300">Peerapat Patcharamontree</p>
                     </div>
                   </div>
