@@ -3,11 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faFacebookSquare, faInstagramSquare, faLine, faLinkedin, fab } from '@fortawesome/free-brands-svg-icons'
-import { faArrowUpRightFromSquare, faPaperPlane, faPhone } from '@fortawesome/free-solid-svg-icons'
-
-library.add(fab, faArrowUpRightFromSquare, faPaperPlane, faFacebookSquare, faLine, faPhone, faInstagramSquare, faLinkedin)
+// icons
+import './assets/icon'
 
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

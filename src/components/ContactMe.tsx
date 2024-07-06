@@ -23,25 +23,20 @@ export default function ContactMe() {
                       </div>
                       <div className="flex flex-col lg:mb-10">
                         <div>
-                          <FontAwesomeIcon icon={['fab', 'facebook-square']} />
-                          <a className="pl-2 link-primary" href="https://fb.com/profile.php?id=100007253977880" target="_blank">Peerapat Patcharamontree</a>
-                        </div>
-                        <div>
-                          <FontAwesomeIcon icon={['fab', 'instagram-square']} />
-                          <a className="pl-2 link-primary" href="https://www.instagram.com/_taihenc/" target="_blank">_taihenc</a>
-                        </div>
-                        <div>
                           <FontAwesomeIcon icon={['fab', 'linkedin']} />
                           <a className="pl-2 link-primary" href="https://linkedin.com/in/peerapat-patcharamontree-138a8b229" target="_blank">Peerapat Patcharamontree</a>
                         </div>
                         <div>
-                          <FontAwesomeIcon icon={['fab', 'line']} />
-                          {/* <span className="pl-2 link-primary">atomlove12345</span> */}
-                          <a className="pl-2 link-primary" href="https://line.me/ti/p/ghXc7yr84q" target="_blank">line.me</a>
+                          <FontAwesomeIcon icon={['fas', 'square-envelope']} />
+                          <a className="pl-2 link-primary" href="mailto:taihennah@gmail.com" target="_blank">taihennah@gmail.com</a>
                         </div>
                         <div>
-                          <FontAwesomeIcon icon={['fas', 'phone']} />
-                          <span className="pl-2">0801154802</span>
+                          <FontAwesomeIcon icon={['fab', 'square-github']} />
+                          <a className="pl-2 link-primary" href="https://www.instagram.com/_taihenc/" target="_blank">Taihenc</a>
+                        </div>
+                        <div>
+                          <FontAwesomeIcon icon={['fab', 'instagram-square']} />
+                          <a className="pl-2 link-primary" href="https://www.instagram.com/_taihenc/" target="_blank">_taihenc</a>
                         </div>
                       </div>
                     </div>
