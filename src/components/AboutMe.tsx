@@ -30,8 +30,8 @@ export default function AboutMe() {
                   </div>
                   <div className="h-[5rem] max-h-[10rem] w-full lg:hidden shrink-[10] order-2"></div>
                   <div className="w-full max-w-[55rem] p-5 lg:pr-[7rem] md:pb-16 flex flex-col max-h-full shrink overflow-hidden order-1">
-                    <h1 className="w-full mb-5 text-4xl lg:text-5xl font-bold text-red-200">
-                      Greeting!! 👋 I'm&nbsp;
+                    <h1 className="w-full mb-5 text-4xl !leading-normal lg:text-5xl font-bold text-red-200">
+                      Greeting!!&nbsp;👋 I'm&nbsp;
                       <TypingEffect
                         text={["Atom", "Taihenc"]}
                         deleteAndReType={true}
