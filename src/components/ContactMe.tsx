@@ -1,4 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { contactInfo } from "../constants/contact";
 
 export default function ContactMe() {
   return (
@@ -24,19 +25,19 @@ export default function ContactMe() {
                       <div className="flex flex-col lg:mb-10">
                         <div>
                           <FontAwesomeIcon icon={['fab', 'linkedin']} />
-                          <a className="pl-2 link-primary" href="https://linkedin.com/in/peerapat-patcharamontree-138a8b229" target="_blank">Peerapat Patcharamontree</a>
+                          <a className="pl-2 link-primary" href={contactInfo.linkedin_url} target="_blank">{contactInfo.linkedin_name}</a>
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fas', 'square-envelope']} />
-                          <a className="pl-2 link-primary" href="mailto:taihennah@gmail.com" target="_blank">taihennah@gmail.com</a>
+                          <a className="pl-2 link-primary" href={`mailto:${contactInfo.email_address}`} target="_blank">{contactInfo.email_address}</a>
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fab', 'square-github']} />
-                          <a className="pl-2 link-primary" href="https://github.com/Taihenc" target="_blank">Taihenc</a>
+                          <a className="pl-2 link-primary" href={contactInfo.github_url} target="_blank">{contactInfo.github_id}</a>
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fab', 'instagram-square']} />
-                          <a className="pl-2 link-primary" href="https://www.instagram.com/atom.taihen/" target="_blank">_taihenc</a>
+                          <a className="pl-2 link-primary" href={contactInfo.instagram_url} target="_blank">{contactInfo.instagram_id}</a>
                         </div>
                       </div>
                     </div>
