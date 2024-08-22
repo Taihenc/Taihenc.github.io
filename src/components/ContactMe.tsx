@@ -32,11 +32,11 @@ export default function ContactMe() {
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fab', 'square-github']} />
-                          <a className="pl-2 link-primary" href="https://www.instagram.com/_taihenc/" target="_blank">Taihenc</a>
+                          <a className="pl-2 link-primary" href="https://github.com/Taihenc" target="_blank">Taihenc</a>
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fab', 'instagram-square']} />
-                          <a className="pl-2 link-primary" href="https://www.instagram.com/_taihenc/" target="_blank">_taihenc</a>
+                          <a className="pl-2 link-primary" href="https://www.instagram.com/atom.taihen/" target="_blank">_taihenc</a>
                         </div>
                       </div>
                     </div>
