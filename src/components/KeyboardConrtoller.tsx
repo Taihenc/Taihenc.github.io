@@ -77,6 +77,10 @@ const keyMap: { [key: string]: string } = {
   'Alt': 'AltLeft',
   'CapsLock': 'CapsLock',
   'Escape': 'Escape',
+  'ArrowUp': 'Slash',
+  'ArrowDown': 'fn1',
+  'ArrowLeft': 'AltRight',
+  'ArrowRight': 'fn2',
 };
 
 const keyStatus: { [key: string]: boolean } = {};
@@ -163,8 +167,11 @@ export const createKeyboardController = (): KeyboardController => {
     'Backspace': useRef<THREE.Mesh>(null),
     'Tab': useRef<THREE.Mesh>(null),
     'ShiftLeft': useRef<THREE.Mesh>(null),
+    'ShiftRight': useRef<THREE.Mesh>(null),
     'ControlLeft': useRef<THREE.Mesh>(null),
+    'ControlRight': useRef<THREE.Mesh>(null),
     'AltLeft': useRef<THREE.Mesh>(null),
+    'AltRight': useRef<THREE.Mesh>(null),
     'CapsLock': useRef<THREE.Mesh>(null),
     'Escape': useRef<THREE.Mesh>(null),
     'Period': useRef<THREE.Mesh>(null),
@@ -178,17 +185,21 @@ export const createKeyboardController = (): KeyboardController => {
     'Semicolon': useRef<THREE.Mesh>(null),
     'Quote': useRef<THREE.Mesh>(null),
     'Backquote': useRef<THREE.Mesh>(null),
+    'fn1': useRef<THREE.Mesh>(null),
+    'fn2': useRef<THREE.Mesh>(null),
   });
 
   const keyboardGroupRef = useRef<THREE.Group>(null);
 
   const press = (key: string): void => {
-    if (key != 'Enter' && key != ' ') { key = key.toLowerCase(); }
-    if (keyboardRef.current[keyMap[key]] == undefined) {
-      console.log(key);
+    // if key is alphabet, convert to lowercase
+    if (key.length == 1 && key.match(/[A-Z]/)) key = key.toLowerCase();
+    const _key = keyMap[key] ?? key;
+    if (keyboardRef.current[_key] == undefined) {
+      console.log('unknow key:', _key);
       return;
     }
-    const mesh = keyboardRef.current[keyMap[key]].current;
+    const mesh = keyboardRef.current[_key].current;
 
     if (mesh) {
       keyDefaultY[key] = keyDefaultY[key] ?? mesh.position.y;

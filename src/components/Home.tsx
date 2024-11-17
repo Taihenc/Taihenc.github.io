@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import TypingEffect from "./TypingEffect"
 import '../styles/mockup-animate.css'
@@ -18,6 +18,16 @@ export default function Home() {
   const keyboardRef = createKeyboardController();
   const scrollingDivRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    const keydown = (e: KeyboardEvent) => {
+      keyboardRef.press(e.code);
+    }
+    window.addEventListener('keydown', keydown);
+    return () => {
+      window.removeEventListener('keydown', keydown);
+    }
+  }, []);
+
   return (
     <>
       {/* <div role="alert" className="absolute z-10 max-w-fit right-0 top-0 m-10 alert alert-warning animate-pulse duration-75">
@@ -31,7 +41,7 @@ export default function Home() {
           <div className="flex max-h-full max-w-full overflow-hidden items-start justify-center md:items-center">
             <div className="flex gap-6 justify-start md:justify-center items-center h-[100vh] w-[100vw] flex-col pt-14 pl-2 pr-2 md:flex-row md:pt-20 md:p-16">
               <div className="transition-all mockup-code max-h-[50rem] md:h-[70vh] max-w-[50rem] min-w-0 md:w-[40rem] bg-opacity-60 w-[90%] shrink-[1] flex flex-col self-center bg-base-100 md:self-start">
-                <div className="transition-all w-fit overflow-y-auto" ref={scrollingDivRef}>
+                <div className="transition-all w-fit overflow-y-auto" >
                   <TypingEffect text={[
                     "Hello, My name's Peerapat Pacharamontree",
                     "My nickname is Atom.",
