@@ -1,22 +1,11 @@
+import { faL } from "@fortawesome/free-solid-svg-icons";
 import { Disclosure } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 
-const handleClickScrollHome = () => {
-  scrollToSection("home");
-}
-
-const handleClickScrollAboutMe = () => {
-  scrollToSection("about-me");
-};
-
-const handleClickScrollContactMe = () => {
-  scrollToSection("contact-me");
-};
-
 type NavigationItem = {
   name: string;
-  href: () => void;
+  href: string;
   current: boolean;
 };
 
@@ -27,44 +16,58 @@ function classNames(...classes: any) {
 export default function NavBar() {
 
   const [navigation, setNavigation] = useState([
-    { name: "Home", href: handleClickScrollHome, current: false },
-    { name: "About me", href: handleClickScrollAboutMe, current: false },
-    { name: "Contact me", href: handleClickScrollContactMe, current: false },
+    { name: "Home", href: "#home", current: false },
+    { name: "About me", href: "#about-me", current: false },
+    { name: "Contact me", href: "#contact-me", current: false },
   ]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        let updatedNavigation = [...navigation]; // Copy of the current navigation state
 
-      const updatedNavigation = navigation.map((item) => {
-        const section = document.getElementById(item.name.replace(/\s/g, '-').toLowerCase());
+        entries.forEach((entry) => {
 
-        if (section) {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.offsetHeight;
+          const navItemIndex = updatedNavigation.findIndex((navItem) => navItem.href === `#${entry.target.id}`);
 
-          return {
-            ...item,
-            current: (sectionHeight - Math.abs(scrollPosition - sectionTop)) / sectionHeight > 0.5,
-          };
-        }
+          if (entry.isIntersecting) {
+            if (navItemIndex !== -1) {
+              updatedNavigation[navItemIndex] = {
+                ...updatedNavigation[navItemIndex],
+                current: true,
+              };
+            }
+          } else {
+            if (navItemIndex !== -1) {
+              updatedNavigation[navItemIndex] = {
+                ...updatedNavigation[navItemIndex],
+                current: false,
+              };
+            }
+          }
+        });
 
-        return item;
-      });
+        // Only update the state once after all entries have been processed
+        setNavigation(updatedNavigation);
+      },
+      {
+        root: document.querySelector("main"), // Observe sections within <main>
+        threshold: 0.5, // 50% visibility for active state
+      }
+    );
 
-      setNavigation(updatedNavigation);
-    };
+    // Get all sections to observe
+    const sections = document.querySelectorAll("main > div");
 
-    window.addEventListener('scroll', handleScroll);
+    sections.forEach((section) => observer.observe(section));
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [navigation]);
+    // Cleanup observer on unmount
+    return () => observer.disconnect();
+  }, [navigation]); // Depend on the navigation state to re-run if needed
+
 
   const handleItemClick = (item: NavigationItem) => {
-    item.href();
+    scrollToSection(item.href.replace('#', ''));
     setNavigation(navigation.map((navItem) => {
       if (navItem.name === item.name) {
         return {
@@ -81,7 +84,7 @@ export default function NavBar() {
   }
 
   return (
-    <Disclosure as="nav" className="bg-transpalent fixed z-10 w-full top-0 flex justify-end sm:justify-center md:pt-4">
+    <Disclosure as="nav" id="navbar" className="bg-transpalent fixed z-10 w-full top-0 flex justify-end sm:justify-center md:pt-4">
       {({ open }) => (
         <div className="max-w-7xl px-2 sm:px-6 lg:px-8 mr-12 sm:mr-0 relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -95,9 +98,10 @@ export default function NavBar() {
                     <div className="absolute w-full h-full bg-transparent -z-10 rounded-[inherit] shadow-2xl shadow-[rgba(97,97,170,0.8)] animate-pulse"></div>
 
                     {navigation.map((item) => (
-                      <button
+                      <a
+                        href={item.href}
                         key={item.name}
-                        onClick={() => handleItemClick(item)}
+                        onClick={(e) => { e.preventDefault(); handleItemClick(item) }}
                         className={classNames(
                           item.current ? "bg-[#223b93] text-white" : "text-gray-300 hover:text-white hover:bg-[#433969] bg-transparent",
                           "rounded-md px-3 py-2 text-sm font-medium transition-all duration-150 focus:outline-none"
@@ -105,7 +109,7 @@ export default function NavBar() {
                         aria-current={item.current ? "page" : undefined}
                       >
                         {item.name}
-                      </button>
+                      </a>
                     ))}
                   </div>
                 </>
@@ -117,9 +121,10 @@ export default function NavBar() {
           <div className="hidden sm:flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="space-x-4">
               {navigation.map((item) => (
-                <button
+                <a
+                  href={item.href}
                   key={item.name}
-                  onClick={() => handleItemClick(item)}
+                  onClick={(e) => { e.preventDefault(); handleItemClick(item) }}
                   className={classNames(
                     item.current ? "bg-[#223b93] text-white" : "text-gray-300 hover:text-white hover:bg-[#433969] bg-transparent",
                     "rounded-md px-3 py-2 text-sm font-medium transition-all duration-150 focus:outline-none"
@@ -127,43 +132,53 @@ export default function NavBar() {
                   aria-current={item.current ? "page" : undefined}
                 >
                   {item.name}
-                </button>
+                </a>
               ))}
             </div>
           </div>
         </div>
-      )}
-    </Disclosure>
+      )
+      }
+    </Disclosure >
 
   );
 }
 
 export function scrollToSection(sectionId: string): void {
   const sectionElement: HTMLElement | null = document.getElementById(sectionId);
+  const main = document.getElementById('main-content');
 
-  if (sectionElement) {
-    const start: number = window.scrollY;
-    const target: number = sectionElement.offsetTop;
-    const duration: number = 500; // milliseconds
-    const startTime: number = performance.now();
+  if (sectionElement && main) {
+    // Disable scroll snapping during the animation
+    const originalScrollSnapType = main.style.scrollSnapType;
+    main.style.scrollSnapType = 'none';
+
+    const start: number = main.scrollTop; // Current scroll position of the main container
+    const target: number = sectionElement.offsetTop - main.offsetTop; // Position of the section relative to the main container
+    const duration: number = 500; // duration of the scroll in milliseconds
+    const startTime: number = performance.now(); // Start time of the animation
 
     function animateScroll(time: number): void {
       const elapsed: number = time - startTime;
-      const progress: number = Math.min(elapsed / duration, 1);
-      const easing: number = easeInOutQuad(progress);
+      const progress: number = Math.min(elapsed / duration, 1); // Progress of the animation (0 to 1)
+      const easing: number = easeInOutQuad(progress); // Easing function for smooth scroll
 
-      const newScrollTop: number = start + (target - start) * easing;
-      window.scroll(0, newScrollTop);
+      const newScrollTop: number = start + (target - start) * easing; // New scroll position of main
+      main!.scrollTo(0, newScrollTop); // Scroll the main container
       if (elapsed < duration) {
-        requestAnimationFrame(animateScroll);
+        requestAnimationFrame(animateScroll); // Continue the animation
+      } else {
+        // Re-enable scroll snapping after the animation completes
+        main!.style.scrollSnapType = originalScrollSnapType;
       }
     }
 
     function easeInOutQuad(t: number): number {
+      // Easing function for smooth scroll
       return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
     }
 
-    requestAnimationFrame(animateScroll);
+    requestAnimationFrame(animateScroll); // Start the scroll animation
   }
 }
 

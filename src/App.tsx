@@ -9,9 +9,11 @@ export default function App() {
     <>
       <div className="w-[100vw] h-[100vh] blur-sm fixed z-[-1] bg-cover bg-center bg-[url('/assets/home_bg.gif')]"></div>
       <NavBar />
-      <Home />
-      <AboutMe />
-      <ContactMe />
+      <main id="main-content" className='w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth'>
+        <Home />
+        <AboutMe />
+        <ContactMe />
+      </main>
     </>
   )
 }

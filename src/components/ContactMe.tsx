@@ -4,7 +4,7 @@ import { contactInfo } from "../constants/contact";
 export default function ContactMe() {
   return (
     <>
-      <div id="contact-me" className="w-full h-full bg-[#1a252f] bg-opacity-75">
+      <div id="contact-me" className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center">
         <div className="w-full h-full flex justify-center items-center">
           <div className="w-full h-full p-6 lg:p-28 flex justify-center items-center">
             <div className="w-full h-fit max-h-[80vh] md:max-h-full lg:h-full relative flex flex-col lg:flex-row p-4 lg:gap-20 justify-center items-center rounded-xl bg-opacity-[80%] bg-base-200">

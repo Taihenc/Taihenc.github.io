@@ -5,7 +5,7 @@ import TypingEffect from "./TypingEffect"
 export default function AboutMe() {
   return (
     <>
-      <div id="about-me" className="w-full h-full bg-[#1a252f] bg-opacity-75">
+      <div id="about-me" className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center">
         <div className="w-full h-full flex justify-center items-center overflow-hidden">
           <div className="w-full h-full md:p-28 p-6 flex justify-center items-center">
             <div className="w-full h-fit max-w-[100rem] max-h-[50rem] relative rounded-xl bg-opacity-[80%] bg-base-200">
