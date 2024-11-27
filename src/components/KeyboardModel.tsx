@@ -11,9 +11,9 @@ import { useEffect } from 'react'
 import { ModelProps } from './KeyboardConrtoller'
 
 // Hot fix unkonwn type
-interface CustomMesh extends THREE.Mesh {
-  instanceMatrix?: THREE.InstancedBufferAttribute
-}
+// interface CustomMesh extends THREE.Mesh {
+//   instanceMatrix?: THREE.InstancedBufferAttribute
+// }
 
 type GLTFResult = GLTF & {
   nodes: {

@@ -7,7 +7,6 @@ import { OrbitControls } from '@react-three/drei'
 import { Model } from './KeyboardModel'
 import { IdleAnimation, createKeyboardController } from './KeyboardConrtoller'
 import * as THREE from 'three'
-import { useRef } from 'react'
 import '../styles/arrow-up.css'
 
 export default function Home() {
@@ -16,7 +15,6 @@ export default function Home() {
   const [loadURL, setLoadURL] = useState(false)
 
   const keyboardRef = createKeyboardController()
-  const scrollingDivRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const keydown = (e: KeyboardEvent) => {
