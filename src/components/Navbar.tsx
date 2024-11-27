@@ -17,6 +17,7 @@ export default function NavBar() {
 
   const [navigation, setNavigation] = useState([
     { name: "Home", href: "#home", current: false },
+    { name: "Works", href: "#works", current: false },
     { name: "About me", href: "#about-me", current: false },
     { name: "Contact me", href: "#contact-me", current: false },
   ]);
