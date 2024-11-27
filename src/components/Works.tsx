@@ -7,11 +7,6 @@ import { workExperiences } from '../data/works-experience'
 import { WorkExperience } from '../interfaces/WorkExperience'
 
 export default function Works() {
-  const handleContactClick = () => {
-    // Scroll or navigate to the contact section
-    // document.getElementById("contact-me").scrollIntoView({ behavior: "smooth" });
-  }
-
   const [selectedWork, setSelectedWork] = useState(workExperiences[0])
 
   const handleLogoClick = (work: WorkExperience) => {
@@ -31,7 +26,7 @@ export default function Works() {
         id="works"
         className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center overflow-hidden p-6 pt-[3rem] md:pt-[7rem] pb-[5rem] md:px-[7rem] flex justify-center items-center"
       >
-        <div className="w-full h-full gap-3 lg:gap-6 max-w-[100rem] flex flex-col lg:flex-row justify-center items-center">
+        <div className="w-full h-full gap-3 z-0 lg:gap-6 max-w-[100rem] flex flex-col lg:flex-row justify-center items-center relative">
           {/* Aside for Logos */}
           <motion.aside
             className="h-fit max-h-full max-w-full mb-auto p-4 relative rounded-xl bg-opacity-[80%] bg-base-200"
@@ -39,7 +34,7 @@ export default function Works() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
           >
-            <ul className="h-full w-full gap-5 flex flex-row lg:flex-col justify-start items-center overflow-y-auto overflow-x-hidden">
+            <ul className="h-full w-full gap-5 z-[2] flex flex-row lg:flex-col justify-start items-center overflow-y-auto overflow-x-hidden">
               {workExperiences.map((work) => (
                 <motion.li
                   key={work.logo}
@@ -57,6 +52,7 @@ export default function Works() {
                 </motion.li>
               ))}
             </ul>
+            <div className="w-full h-full absolute -z-10 top-0 left-0 bg-transparent rounded-[inherit] shadow-2xl shadow-[rgba(134,150,230,0.5)] animate-pulse"></div>
           </motion.aside>
 
           {/* Article for Content */}
