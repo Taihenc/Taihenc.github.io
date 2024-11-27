@@ -8,6 +8,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* For Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: #4d5357 rgba(18, 33, 47, 0.7);
 }
 
 html,
@@ -22,21 +25,21 @@ body,
 }
 
 ::-webkit-scrollbar {
-    width: 0.25em;
-    background-color: transparent;
+    width: 0.25em !important;
+    background-color: transparent !important;
 }
 
 ::-webkit-scrollbar-track {
-    background-color: rgba(18, 33, 47, 0.7);
+    background-color: rgba(18, 33, 47, 0.7) !important;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: #4d5357;
-    border-radius: 0.5em;
+    background-color: #4d5357 !important;
+    border-radius: 0.5em !important;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
+    background-color: #555 !important;
 }
 :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
