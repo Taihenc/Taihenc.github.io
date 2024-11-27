@@ -105,7 +105,7 @@ export default function Works() {
                       // onClick={handleContactClick}
                       href={selectedWork.link}
                       target="_blank"
-                      className="md:w-fit btn mt-3 text-white bg-primary"
+                      className="md:w-fit btn mt-3 text-white bg-[#223b93]"
                     >
                       Check it out!
                       <FontAwesomeIcon icon={['fas', 'paper-plane']} />
