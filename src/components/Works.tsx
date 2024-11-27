@@ -24,7 +24,7 @@ export default function Works() {
     <>
       <section
         id="works"
-        className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center overflow-hidden p-6 pt-[3rem] md:pt-[7rem] pb-[5rem] md:px-[7rem] flex justify-center items-center"
+        className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center overflow-hidden p-6 pt-[3.25rem] md:pt-[5rem] lg:pt-[7rem] lg:pb-[5rem] md:px-[7rem] flex justify-center items-center"
       >
         <div className="w-full h-full gap-3 z-0 lg:gap-6 max-w-[100rem] flex flex-col lg:flex-row justify-center items-center relative">
           {/* Aside for Logos */}
@@ -38,11 +38,11 @@ export default function Works() {
               {workExperiences.map((work) => (
                 <motion.li
                   key={work.logo}
-                  className="w-12 lg:w-20 aspect-square rounded-md overflow-hidden flex-shrink-0 cursor-pointer"
+                  className="w-12 lg:w-16 aspect-square rounded-md overflow-hidden flex-shrink-0 cursor-pointer"
                   onClick={() => handleLogoClick(work)}
                 >
                   <motion.img
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover opacity-80"
                     src={work.logo}
                     alt={`Logo of ${getLogoName(work.title)}`}
                     loading="lazy"
@@ -57,7 +57,7 @@ export default function Works() {
 
           {/* Article for Content */}
           <motion.article
-            className="h-full sm:max-h-[50rem] md:max-h-full w-full p-6 relative md:p-10 xl:py-[4rem] xl:px-[5rem] flex flex-col justify-between items-center bg-opacity-[80%] bg-base-200 rounded-xl"
+            className="min-h-0 h-full sm:max-h-[50rem] md:max-h-full w-full p-6 relative md:p-10 xl:py-[4rem] xl:px-[5rem] flex flex-col justify-between items-center bg-opacity-[80%] bg-base-200 rounded-xl"
             initial="hidden"
             animate="visible"
             exit="exit"
