@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { motion, AnimatePresence } from 'framer-motion'
 import ImageCarousel from './ImageCarousel'
@@ -45,14 +45,14 @@ export default function Works() {
                   key={work.logo}
                   className="w-12 lg:w-20 aspect-square rounded-md overflow-hidden flex-shrink-0 cursor-pointer"
                   onClick={() => handleLogoClick(work)}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
                 >
-                  <img
+                  <motion.img
                     className="h-full w-full object-cover"
                     src={work.logo}
                     alt={`Logo of ${getLogoName(work.title)}`}
                     loading="lazy"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                   />
                 </motion.li>
               ))}
@@ -81,13 +81,16 @@ export default function Works() {
                 <h1 className="w-full mb-5 text-4xl !leading-normal lg:text-5xl font-bold text-red-200">
                   {selectedWork.title} {/* Dynamic Title */}
                 </h1>
-                <div className="w-full max-h-full min-h-0 flex-1 flex flex-col lg:flex-row gap-6">
+                <div className="w-full max-h-full lg:h-fit lg:aspect-video min-h-0 flex-1 flex flex-col lg:flex-row gap-6">
                   <div className="w-full h-1/2 lg:h-auto md:w-[90%] md:min-w-[22em] flex flex-col justify-center items-center">
-                    <ImageCarousel images={selectedWork.images} />
+                    <ImageCarousel
+                      key={selectedWork.title}
+                      images={selectedWork.images}
+                    />
                   </div>
                   <div className="shrink-[1] min-w-0 w-full min-h-0 max-h-full flex flex-col">
-                    <h1 className="text-lg lg:text-2xl lg:pt-6 font-bold">
-                      What I've learned
+                    <h1 className="text-lg lg:text-2xl lg:pt-6 font-bold text-green-200">
+                      {selectedWork.subtitle}
                     </h1>
                     <p className="h-auto max-h-full py-2 indent-6 overflow-y-auto break-words">
                       {selectedWork.description}
