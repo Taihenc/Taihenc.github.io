@@ -77,7 +77,7 @@ const ImageCarousel: React.FC<ImageGalleryProps> = ({ images }) => {
   }, [images]) // Re-run the effect when images change
 
   return (
-    <div id="default-carousel" className="relative w-full h-full">
+    <div id="default-carousel" className="relative w-full h-full z-0">
       {/* Carousel wrapper */}
       <div className="w-full h-full relative overflow-hidden rounded-lg">
         {images.map((src, index) => (
