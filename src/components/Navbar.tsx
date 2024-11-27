@@ -58,7 +58,7 @@ export default function NavBar() {
     )
 
     // Get all sections to observe
-    const sections = document.querySelectorAll('main > div')
+    const sections = document.querySelectorAll('main > section')
 
     sections.forEach((section) => observer.observe(section))
 

@@ -4,7 +4,7 @@ import { contactInfo } from '../data/contact'
 export default function ContactMe() {
   return (
     <>
-      <div
+      <section
         id="contact-me"
         className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center"
       >
@@ -91,7 +91,7 @@ export default function ContactMe() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   )
 }

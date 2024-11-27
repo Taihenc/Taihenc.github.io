@@ -5,7 +5,7 @@ import TypingEffect from './TypingEffect'
 export default function AboutMe() {
   return (
     <>
-      <div
+      <section
         id="about-me"
         className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center"
       >
@@ -94,7 +94,7 @@ export default function AboutMe() {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   )
 }
