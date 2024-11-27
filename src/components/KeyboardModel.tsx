@@ -108,99 +108,733 @@ type GLTFResult = GLTF & {
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function Model(props: ModelProps) {
-  const { nodes, materials } = useGLTF('/assets/keyboard-transformed.glb') as GLTFResult
+  const { nodes, materials } = useGLTF(
+    '/assets/keyboard-transformed.glb'
+  ) as GLTFResult
 
   const meshRefs = props.controller.keyboardRef
 
   useEffect(() => {
-    props.keyboardGroupRefCallback ? props.keyboardGroupRefCallback(props.controller.keyboardGroupRef) : null
-  }, []);
+    props.keyboardGroupRefCallback
+      ? props.keyboardGroupRefCallback(props.controller.keyboardGroupRef)
+      : null
+  }, [])
 
   return (
     <group {...props} ref={props.controller.keyboardGroupRef} dispose={null}>
       <group name="Scene">
-        <mesh ref={meshRefs.current.Backslash} name="Backslash" geometry={nodes.Backslash.geometry} material={materials.PaletteMaterial001} position={[0.097, 0.002, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Tab} name="Tab" geometry={nodes.Tab.geometry} material={materials.PaletteMaterial001} position={[-0.095, 0.002, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Backspace} name="Backspace" geometry={nodes.Backspace.geometry} material={materials.PaletteMaterial001} position={[0.094, 0.003, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.BracketLeft} name="BracketLeft" geometry={nodes.BracketLeft.geometry} material={materials.PaletteMaterial001} position={[0.066, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit0} name="Digit0" geometry={nodes.Digit0.geometry} material={materials.PaletteMaterial001} position={[0.046, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Quote} name="Quote" geometry={nodes.Quote.geometry} material={materials.PaletteMaterial001} position={[0.071, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.BracketRight} name="BracketRight" geometry={nodes.BracketRight.geometry} material={materials.PaletteMaterial001} position={[0.08, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Equal} name="Equal" geometry={nodes.Equal.geometry} material={materials.PaletteMaterial001} position={[0.074, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Minus} name="Minus" geometry={nodes.Minus.geometry} material={materials.PaletteMaterial001} position={[0.06, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.CapsLock} name="CapsLock" geometry={nodes.CapsLock.geometry} material={materials.PaletteMaterial001} position={[-0.092, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Comma} name="Comma" geometry={nodes.Comma.geometry} material={materials.PaletteMaterial001} position={[0.033, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit7} name="Digit7" geometry={nodes.Digit7.geometry} material={materials.PaletteMaterial001} position={[0.003, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyI} name="KeyI" geometry={nodes.KeyI.geometry} material={materials.PaletteMaterial001} position={[0.023, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyK} name="KeyK" geometry={nodes.KeyK.geometry} material={materials.PaletteMaterial001} position={[0.028, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.ControlLeft} name="ControlLeft" geometry={nodes.ControlLeft.geometry} material={materials.PaletteMaterial001} position={[-0.096, -0.001, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh name="Cube019" geometry={nodes.Cube019.geometry} material={materials.PaletteMaterial001} position={[-0.077, -0.006, -0.016]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube026" geometry={nodes.Cube026.geometry} material={materials.PaletteMaterial001} position={[-0.097, -0.005, -0.03]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube027" geometry={nodes.Cube027.geometry} material={materials.PaletteMaterial001} position={[-0.072, -0.007, -0.001]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube028" geometry={nodes.Cube028.geometry} material={materials.PaletteMaterial001} position={[-0.067, -0.007, 0.014]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.ControlRight} name="ControlRight" geometry={nodes.ControlRight.geometry} material={materials.PaletteMaterial001} position={[0.096, -0.001, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit1} name="Digit1" geometry={nodes.Digit1.geometry} material={materials.PaletteMaterial001} position={[-0.083, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyS} name="KeyS" geometry={nodes.KeyS.geometry} material={materials.PaletteMaterial001} position={[-0.058, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyW} name="KeyW" geometry={nodes.KeyW.geometry} material={materials.PaletteMaterial001} position={[-0.063, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyX} name="KeyX" geometry={nodes.KeyX.geometry} material={materials.PaletteMaterial001} position={[-0.053, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit2} name="Digit2" geometry={nodes.Digit2.geometry} material={materials.PaletteMaterial001} position={[-0.069, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit8} name="Digit8" geometry={nodes.Digit8.geometry} material={materials.PaletteMaterial001} position={[0.017, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyC} name="KeyC" geometry={nodes.KeyC.geometry} material={materials.PaletteMaterial001} position={[-0.039, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyD} name="KeyD" geometry={nodes.KeyD.geometry} material={materials.PaletteMaterial001} position={[-0.044, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyE} name="KeyE" geometry={nodes.KeyE.geometry} material={materials.PaletteMaterial001} position={[-0.049, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyL} name="KeyL" geometry={nodes.KeyL.geometry} material={materials.PaletteMaterial001} position={[0.042, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyO} name="KeyO" geometry={nodes.KeyO.geometry} material={materials.PaletteMaterial001} position={[0.037, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Period} name="Period" geometry={nodes.Period.geometry} material={materials.PaletteMaterial001} position={[0.047, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit3} name="Digit3" geometry={nodes.Digit3.geometry} material={materials.PaletteMaterial001} position={[-0.054, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyF} name="KeyF" geometry={nodes.KeyF.geometry} material={materials.PaletteMaterial001} position={[-0.029, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyR} name="KeyR" geometry={nodes.KeyR.geometry} material={materials.PaletteMaterial001} position={[-0.034, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyV} name="KeyV" geometry={nodes.KeyV.geometry} material={materials.PaletteMaterial001} position={[-0.024, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit4} name="Digit4" geometry={nodes.Digit4.geometry} material={materials.PaletteMaterial001} position={[-0.04, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyB} name="KeyB" geometry={nodes.KeyB.geometry} material={materials.PaletteMaterial001} position={[-0.01, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyG} name="KeyG" geometry={nodes.KeyG.geometry} material={materials.PaletteMaterial001} position={[-0.015, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyT} name="KeyT" geometry={nodes.KeyT.geometry} material={materials.PaletteMaterial001} position={[-0.02, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit9} name="Digit9" geometry={nodes.Digit9.geometry} material={materials.PaletteMaterial001} position={[0.031, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyP} name="KeyP" geometry={nodes.KeyP.geometry} material={materials.PaletteMaterial001} position={[0.051, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Semicolon} name="Semicolon" geometry={nodes.Semicolon.geometry} material={materials.PaletteMaterial001} position={[0.056, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Slash} name="Slash" geometry={nodes.Slash.geometry} material={materials.PaletteMaterial001} position={[0.061, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Enter} name="Enter" geometry={nodes.Enter.geometry} material={materials.PaletteMaterial001} position={[0.093, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Escape} name="Escape" geometry={nodes.Escape.geometry} material={materials.PaletteMaterial001} position={[-0.097, 0.002, -0.029]} rotation={[0.052, -0.017, 0.001]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyA} name="KeyA" geometry={nodes.KeyA.geometry} material={materials.PaletteMaterial001} position={[-0.072, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyQ} name="KeyQ" geometry={nodes.KeyQ.geometry} material={materials.PaletteMaterial001} position={[-0.077, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyZ} name="KeyZ" geometry={nodes.KeyZ.geometry} material={materials.PaletteMaterial001} position={[-0.067, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.plate} name="plate" geometry={nodes.plate.geometry} material={materials.PaletteMaterial001} position={[0.001, -0.013, -0.001]} />
-        <mesh ref={meshRefs.current.ShiftLeft} name="ShiftLeft" geometry={nodes.ShiftLeft.geometry} material={materials.PaletteMaterial001} position={[-0.09, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.ShiftRight} name="ShiftRight" geometry={nodes.ShiftRight.geometry} material={materials.PaletteMaterial001} position={[0.088, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Space} name="Space" geometry={nodes.Space.geometry} material={materials.PaletteMaterial001} position={[-0.01, 0, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh name="Cube001" geometry={nodes.Cube001.geometry} material={materials.PaletteMaterial001} position={[-0.08, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube002" geometry={nodes.Cube002.geometry} material={materials.PaletteMaterial001} position={[-0.096, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube003" geometry={nodes.Cube003.geometry} material={materials.PaletteMaterial001} position={[-0.09, -0.007, 0.014]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube004" geometry={nodes.Cube004.geometry} material={materials.PaletteMaterial001} position={[-0.092, -0.007, -0.001]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube005" geometry={nodes.Cube005.geometry} material={materials.PaletteMaterial001} position={[-0.094, -0.006, -0.016]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube006" geometry={nodes.Cube006.geometry} material={materials.PaletteMaterial001} position={[-0.045, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube007" geometry={nodes.Cube007.geometry} material={materials.PaletteMaterial001} position={[0.024, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube008" geometry={nodes.Cube008.geometry} material={materials.PaletteMaterial001} position={[0.043, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube009" geometry={nodes.Cube009.geometry} material={materials.PaletteMaterial001} position={[0.06, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube010" geometry={nodes.Cube010.geometry} material={materials.PaletteMaterial001} position={[0.076, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube011" geometry={nodes.Cube011.geometry} material={materials.PaletteMaterial001} position={[0.096, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube012" geometry={nodes.Cube012.geometry} material={materials.PaletteMaterial001} position={[0.088, -0.007, 0.014]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube013" geometry={nodes.Cube013.geometry} material={materials.PaletteMaterial001} position={[0.093, -0.007, -0.001]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube014" geometry={nodes.Cube014.geometry} material={materials.PaletteMaterial001} position={[0.097, -0.006, -0.016]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube015" geometry={nodes.Cube015.geometry} material={materials.PaletteMaterial001} position={[0.095, -0.005, -0.03]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh name="Cube070" geometry={nodes.Cube070.geometry} material={materials.PaletteMaterial001} position={[-0.063, -0.008, 0.029]} rotation={[-3.089, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.AltLeft} name="AltLeft" geometry={nodes.AltLeft.geometry} material={materials.PaletteMaterial001} position={[-0.063, -0.001, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.AltRight} name="AltRight" geometry={nodes.AltRight.geometry} material={materials.PaletteMaterial001} position={[0.043, -0.001, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.fn1} name="fn1" geometry={nodes.fn1.geometry} material={materials.PaletteMaterial001} position={[0.06, -0.001, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.fn2} name="fn2" geometry={nodes.fn2.geometry} material={materials.PaletteMaterial001} position={[0.076, -0.001, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.MetaLeft} name="MetaLeft" geometry={nodes.MetaLeft.geometry} material={materials.PaletteMaterial001} position={[-0.08, -0.001, 0.03]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh name="Cube023" geometry={nodes.Cube023.geometry} material={materials.PaletteMaterial001} position={[-0.001, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh name="Cube024" geometry={nodes.Cube024.geometry} material={materials.PaletteMaterial001} position={[0.014, 0.001, 0]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh name="Cube030" geometry={nodes.Cube030.geometry} material={materials.PaletteMaterial001} position={[-0.006, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh name="Cube031" geometry={nodes.Cube031.geometry} material={materials.PaletteMaterial001} position={[0.009, 0.001, -0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit5} name="Digit5" geometry={nodes.Digit5.geometry} material={materials.PaletteMaterial001} position={[-0.026, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.Digit6} name="Digit6" geometry={nodes.Digit6.geometry} material={materials.PaletteMaterial001} position={[-0.011, 0.002, -0.029]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyM} name="KeyM" geometry={nodes.KeyM.geometry} material={materials.PaletteMaterial001} position={[0.019, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
-        <mesh ref={meshRefs.current.KeyN} name="KeyN" geometry={nodes.KeyN.geometry} material={materials.PaletteMaterial001} position={[0.004, 0, 0.015]} rotation={[0.052, 0, 0]} scale={0.5} />
+        <mesh
+          ref={meshRefs.current.Backslash}
+          name="Backslash"
+          geometry={nodes.Backslash.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.097, 0.002, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Tab}
+          name="Tab"
+          geometry={nodes.Tab.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.095, 0.002, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Backspace}
+          name="Backspace"
+          geometry={nodes.Backspace.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.094, 0.003, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.BracketLeft}
+          name="BracketLeft"
+          geometry={nodes.BracketLeft.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.066, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit0}
+          name="Digit0"
+          geometry={nodes.Digit0.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.046, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Quote}
+          name="Quote"
+          geometry={nodes.Quote.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.071, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.BracketRight}
+          name="BracketRight"
+          geometry={nodes.BracketRight.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.08, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Equal}
+          name="Equal"
+          geometry={nodes.Equal.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.074, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Minus}
+          name="Minus"
+          geometry={nodes.Minus.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.06, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.CapsLock}
+          name="CapsLock"
+          geometry={nodes.CapsLock.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.092, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Comma}
+          name="Comma"
+          geometry={nodes.Comma.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.033, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit7}
+          name="Digit7"
+          geometry={nodes.Digit7.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.003, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyI}
+          name="KeyI"
+          geometry={nodes.KeyI.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.023, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyK}
+          name="KeyK"
+          geometry={nodes.KeyK.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.028, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.ControlLeft}
+          name="ControlLeft"
+          geometry={nodes.ControlLeft.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.096, -0.001, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube019"
+          geometry={nodes.Cube019.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.077, -0.006, -0.016]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube026"
+          geometry={nodes.Cube026.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.097, -0.005, -0.03]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube027"
+          geometry={nodes.Cube027.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.072, -0.007, -0.001]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube028"
+          geometry={nodes.Cube028.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.067, -0.007, 0.014]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.ControlRight}
+          name="ControlRight"
+          geometry={nodes.ControlRight.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.096, -0.001, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit1}
+          name="Digit1"
+          geometry={nodes.Digit1.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.083, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyS}
+          name="KeyS"
+          geometry={nodes.KeyS.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.058, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyW}
+          name="KeyW"
+          geometry={nodes.KeyW.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.063, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyX}
+          name="KeyX"
+          geometry={nodes.KeyX.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.053, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit2}
+          name="Digit2"
+          geometry={nodes.Digit2.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.069, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit8}
+          name="Digit8"
+          geometry={nodes.Digit8.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.017, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyC}
+          name="KeyC"
+          geometry={nodes.KeyC.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.039, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyD}
+          name="KeyD"
+          geometry={nodes.KeyD.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.044, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyE}
+          name="KeyE"
+          geometry={nodes.KeyE.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.049, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyL}
+          name="KeyL"
+          geometry={nodes.KeyL.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.042, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyO}
+          name="KeyO"
+          geometry={nodes.KeyO.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.037, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Period}
+          name="Period"
+          geometry={nodes.Period.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.047, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit3}
+          name="Digit3"
+          geometry={nodes.Digit3.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.054, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyF}
+          name="KeyF"
+          geometry={nodes.KeyF.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.029, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyR}
+          name="KeyR"
+          geometry={nodes.KeyR.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.034, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyV}
+          name="KeyV"
+          geometry={nodes.KeyV.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.024, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit4}
+          name="Digit4"
+          geometry={nodes.Digit4.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.04, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyB}
+          name="KeyB"
+          geometry={nodes.KeyB.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.01, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyG}
+          name="KeyG"
+          geometry={nodes.KeyG.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.015, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyT}
+          name="KeyT"
+          geometry={nodes.KeyT.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.02, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit9}
+          name="Digit9"
+          geometry={nodes.Digit9.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.031, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyP}
+          name="KeyP"
+          geometry={nodes.KeyP.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.051, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Semicolon}
+          name="Semicolon"
+          geometry={nodes.Semicolon.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.056, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Slash}
+          name="Slash"
+          geometry={nodes.Slash.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.061, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Enter}
+          name="Enter"
+          geometry={nodes.Enter.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.093, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Escape}
+          name="Escape"
+          geometry={nodes.Escape.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.097, 0.002, -0.029]}
+          rotation={[0.052, -0.017, 0.001]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyA}
+          name="KeyA"
+          geometry={nodes.KeyA.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.072, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyQ}
+          name="KeyQ"
+          geometry={nodes.KeyQ.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.077, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyZ}
+          name="KeyZ"
+          geometry={nodes.KeyZ.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.067, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.plate}
+          name="plate"
+          geometry={nodes.plate.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.001, -0.013, -0.001]}
+        />
+        <mesh
+          ref={meshRefs.current.ShiftLeft}
+          name="ShiftLeft"
+          geometry={nodes.ShiftLeft.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.09, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.ShiftRight}
+          name="ShiftRight"
+          geometry={nodes.ShiftRight.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.088, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Space}
+          name="Space"
+          geometry={nodes.Space.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.01, 0, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube001"
+          geometry={nodes.Cube001.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.08, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube002"
+          geometry={nodes.Cube002.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.096, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube003"
+          geometry={nodes.Cube003.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.09, -0.007, 0.014]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube004"
+          geometry={nodes.Cube004.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.092, -0.007, -0.001]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube005"
+          geometry={nodes.Cube005.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.094, -0.006, -0.016]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube006"
+          geometry={nodes.Cube006.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.045, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube007"
+          geometry={nodes.Cube007.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.024, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube008"
+          geometry={nodes.Cube008.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.043, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube009"
+          geometry={nodes.Cube009.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.06, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube010"
+          geometry={nodes.Cube010.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.076, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube011"
+          geometry={nodes.Cube011.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.096, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube012"
+          geometry={nodes.Cube012.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.088, -0.007, 0.014]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube013"
+          geometry={nodes.Cube013.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.093, -0.007, -0.001]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube014"
+          geometry={nodes.Cube014.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.097, -0.006, -0.016]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube015"
+          geometry={nodes.Cube015.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.095, -0.005, -0.03]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube070"
+          geometry={nodes.Cube070.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.063, -0.008, 0.029]}
+          rotation={[-3.089, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.AltLeft}
+          name="AltLeft"
+          geometry={nodes.AltLeft.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.063, -0.001, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.AltRight}
+          name="AltRight"
+          geometry={nodes.AltRight.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.043, -0.001, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.fn1}
+          name="fn1"
+          geometry={nodes.fn1.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.06, -0.001, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.fn2}
+          name="fn2"
+          geometry={nodes.fn2.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.076, -0.001, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.MetaLeft}
+          name="MetaLeft"
+          geometry={nodes.MetaLeft.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.08, -0.001, 0.03]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube023"
+          geometry={nodes.Cube023.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.001, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube024"
+          geometry={nodes.Cube024.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.014, 0.001, 0]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube030"
+          geometry={nodes.Cube030.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.006, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          name="Cube031"
+          geometry={nodes.Cube031.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.009, 0.001, -0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit5}
+          name="Digit5"
+          geometry={nodes.Digit5.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.026, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.Digit6}
+          name="Digit6"
+          geometry={nodes.Digit6.geometry}
+          material={materials.PaletteMaterial001}
+          position={[-0.011, 0.002, -0.029]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyM}
+          name="KeyM"
+          geometry={nodes.KeyM.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.019, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
+        <mesh
+          ref={meshRefs.current.KeyN}
+          name="KeyN"
+          geometry={nodes.KeyN.geometry}
+          material={materials.PaletteMaterial001}
+          position={[0.004, 0, 0.015]}
+          rotation={[0.052, 0, 0]}
+          scale={0.5}
+        />
       </group>
     </group>
   )

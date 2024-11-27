@@ -1,10 +1,13 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { contactInfo } from "../constants/contact";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { contactInfo } from '../data/contact'
 
 export default function ContactMe() {
   return (
     <>
-      <div id="contact-me" className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center">
+      <div
+        id="contact-me"
+        className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center"
+      >
         <div className="w-full h-full flex justify-center items-center">
           <div className="w-full h-full p-6 lg:p-28 flex justify-center items-center">
             <div className="w-full h-fit max-h-[80vh] md:max-h-full lg:h-full relative flex flex-col lg:flex-row p-4 lg:gap-20 justify-center items-center rounded-xl bg-opacity-[80%] bg-base-200">
@@ -15,7 +18,11 @@ export default function ContactMe() {
                   <div className="lg:h-full max-w-[20rem] lg:artboard lg:artboard-demo">
                     <div className="lg:h-fit flex gap-6 p-3 lg:p-[10%] flex-col justify-center">
                       <div className="rounded-xl h-[8rem] lg:h-[10rem] overflow-hidden  mb-5 order-2 lg:order-1 opacity-75">
-                        <img className="object-cover bg-center origin-bottom -translate-y-[38%] lg:-translate-y-[33%]" src="https://i.redd.it/xte6gka2ghj91.gif" alt="" />
+                        <img
+                          className="object-cover bg-center origin-bottom -translate-y-[38%] lg:-translate-y-[33%]"
+                          src="https://i.redd.it/xte6gka2ghj91.gif"
+                          alt=""
+                        />
                       </div>
                       <div className="w-full mb-5 mt-5 hidden lg:flex gap-2 justify-center">
                         <div className="w-full shrink h-[60%] border-b-2 border-b-red-200"></div>
@@ -25,19 +32,43 @@ export default function ContactMe() {
                       <div className="flex flex-col lg:mb-10">
                         <div>
                           <FontAwesomeIcon icon={['fab', 'linkedin']} />
-                          <a className="pl-2 link-primary" href={contactInfo.linkedin_url} target="_blank">{contactInfo.linkedin_name}</a>
+                          <a
+                            className="pl-2 link-primary"
+                            href={contactInfo.linkedin_url}
+                            target="_blank"
+                          >
+                            {contactInfo.linkedin_name}
+                          </a>
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fas', 'square-envelope']} />
-                          <a className="pl-2 link-primary" href={`mailto:${contactInfo.email_address}`} target="_blank">{contactInfo.email_address}</a>
+                          <a
+                            className="pl-2 link-primary"
+                            href={`mailto:${contactInfo.email_address}`}
+                            target="_blank"
+                          >
+                            {contactInfo.email_address}
+                          </a>
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fab', 'square-github']} />
-                          <a className="pl-2 link-primary" href={contactInfo.github_url} target="_blank">{contactInfo.github_id}</a>
+                          <a
+                            className="pl-2 link-primary"
+                            href={contactInfo.github_url}
+                            target="_blank"
+                          >
+                            {contactInfo.github_id}
+                          </a>
                         </div>
                         <div>
                           <FontAwesomeIcon icon={['fab', 'instagram-square']} />
-                          <a className="pl-2 link-primary" href={contactInfo.instagram_url} target="_blank">{contactInfo.instagram_id}</a>
+                          <a
+                            className="pl-2 link-primary"
+                            href={contactInfo.instagram_url}
+                            target="_blank"
+                          >
+                            {contactInfo.instagram_id}
+                          </a>
                         </div>
                       </div>
                     </div>
@@ -46,11 +77,15 @@ export default function ContactMe() {
               </div>
               <div className="h-[5rem] max-h-[10rem] w-full lg:hidden shrink-[10] order-2"></div>
               <div className="min-h-0 px-5 mt-5 lg:mt-10 lg:mb-24 flex flex-col shrink md:shrink order-1 lg:block">
-                <h1 className="lg:mb-5 text-4xl lg:text-5xl shrink-0 font-bold text-red-200">Let's Connect😇</h1>
+                <h1 className="lg:mb-5 text-4xl lg:text-5xl shrink-0 font-bold text-red-200">
+                  Let's Connect😇
+                </h1>
                 <p className="my-2 sm:mt-6 shrink overflow-auto">
-                  - Feel free to contact me if you have any questions or suggestions. <br />
-                  - I'm always open to new ideas and <span className="text-green-300">opportunities</span>. <br />
-                  ( I may not be quick to respond, but I will do my best to reply to you as soon as possible. )
+                  - Feel free to contact me if you have any questions or
+                  suggestions. <br />- I'm always open to new ideas and{' '}
+                  <span className="text-green-300">opportunities</span>. <br />(
+                  I may not be quick to respond, but I will do my best to reply
+                  to you as soon as possible. )
                 </p>
               </div>
             </div>
@@ -58,5 +93,5 @@ export default function ContactMe() {
         </div>
       </div>
     </>
-  );
+  )
 }
