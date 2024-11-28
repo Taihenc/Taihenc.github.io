@@ -46,7 +46,7 @@ export default function Home() {
                       'My nickname is Atom.',
                       "BTW I usually go by the name 'Taihen' when surfing the internet",
                       ' ',
-                      "I'm a 1st year student at Chulalongkorn University",
+                      "Currently, I'm pursuing a bachelor's degree at Chulalongkorn University.",
                     ]}
                     endRemoveCursor
                     onCharTypedEnd={() => setFinished(true)}
