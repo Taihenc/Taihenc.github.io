@@ -5,9 +5,12 @@ import ImageCarousel from './ImageCarousel'
 import { getLogoName } from '../utils/utils'
 import { workExperiences } from '../data/works-experience'
 import { WorkExperience } from '../interfaces/WorkExperience'
+import { PortfolioGraph } from './PortfolioGraph'
+import { Network, LayoutGrid } from 'lucide-react'
 
 export default function Works() {
   const [selectedWork, setSelectedWork] = useState(workExperiences[0])
+  const [viewMode, setViewMode] = useState<'graph' | 'cards'>('graph')
 
   const handleLogoClick = (work: WorkExperience) => {
     setSelectedWork(work)
@@ -24,9 +27,50 @@ export default function Works() {
     <>
       <section
         id="works"
-        className="w-full h-full bg-[#1a252f] bg-opacity-75 snap-center overflow-hidden p-6 pt-[3.25rem] md:pt-[5rem] lg:pt-[7rem] lg:pb-[5rem] md:px-[7rem] flex justify-center items-center"
+        className="w-full h-full bg-[#080c14]/90 bg-opacity-90 snap-center overflow-hidden p-4 pt-[3.25rem] md:pt-[4.5rem] lg:pt-[5rem] lg:pb-[3rem] md:px-[4rem] flex flex-col justify-center items-center font-mono"
       >
-        <div className="w-full h-full gap-3 z-0 lg:gap-6 max-w-[100rem] flex flex-col lg:flex-row justify-center items-center relative">
+        {/* Header Toggle Controls: Graph vs Classic View */}
+        <div className="w-full max-w-[100rem] mb-3 flex items-center justify-between px-2 text-xs">
+          <div className="flex items-center gap-2 text-slate-300">
+            <span className="text-emerald-400 font-bold">~</span>
+            <span className="text-slate-500">/</span>
+            <span className="text-cyan-400 font-semibold">taihen</span>
+            <span className="text-slate-500">/</span>
+            <span className="text-slate-200">works-graph</span>
+          </div>
+
+          <div className="flex items-center gap-1 rounded-lg border border-white/10 bg-[#0f1523] p-1 text-[11px]">
+            <button
+              onClick={() => setViewMode('graph')}
+              className={`flex items-center gap-1.5 rounded px-2.5 py-1 transition-all ${
+                viewMode === 'graph'
+                  ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Network size={13} />
+              Obsidian Graph
+            </button>
+            <button
+              onClick={() => setViewMode('cards')}
+              className={`flex items-center gap-1.5 rounded px-2.5 py-1 transition-all ${
+                viewMode === 'cards'
+                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <LayoutGrid size={13} />
+              Classic Cards
+            </button>
+          </div>
+        </div>
+
+        {viewMode === 'graph' ? (
+          <div className="w-full h-[calc(100%-4rem)] max-w-[100rem] flex-1">
+            <PortfolioGraph />
+          </div>
+        ) : (
+          <div className="w-full h-[calc(100%-4rem)] gap-3 z-0 lg:gap-6 max-w-[100rem] flex flex-col lg:flex-row justify-center items-center relative">
           {/* Aside for Logos */}
           <motion.aside
             className="h-fit max-h-full max-w-full mb-auto p-4 relative rounded-xl bg-opacity-[80%] bg-base-200"
@@ -115,6 +159,7 @@ export default function Works() {
             </AnimatePresence>
           </motion.article>
         </div>
+        )}
       </section>
     </>
   )

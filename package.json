@@ -24,9 +24,13 @@
     "install": "^0.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.159.0"
+    "three": "^0.159.0",
+    "react-force-graph-2d": "^1.25.7",
+    "d3-force": "^3.0.0",
+    "lucide-react": "^0.475.0"
   },
   "devDependencies": {
+    "@types/d3-force": "^3.0.10",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@typescript-eslint/eslint-plugin": "^6.10.0",

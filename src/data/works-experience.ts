@@ -77,10 +77,10 @@ export const workExperiences: WorkExperience[] = [
   },
   {
     logo: './works-experience/chula/logo.png',
-    title: 'University stuff🤓',
-    subtitle: 'As a student only coding is not an ideal life~!',
+    title: 'University & Research🤓',
+    subtitle: 'Chulalongkorn University & AI Research in Tokyo',
     description:
-      'Technical skills can be improved through coding (e.g., working on side projects), but soft skills require a different approach. I like to push myself into various situations where I can meet new people and learn new things. so I give it a try—for example, as a Teaching Assistant (TA), ICPC Thailand 2024 Staff, and @rubpuenkaomai Staff. I’m looking forward to taking on even more opportunities in the future. :)',
+      'Computer Engineering at Chulalongkorn University, Teaching Assistant (TA) in Algorithms, ICPC Thailand Staff, and currently pursuing AI research as an intern in Tokyo. Actively blending deep technical foundations with collaborative community building.',
     link: 'https://www.chula.ac.th/',
     images: [
       './works-experience/chula/logo.png',
@@ -88,5 +88,14 @@ export const workExperiences: WorkExperience[] = [
       './works-experience/chula/icpc.jpg',
       './works-experience/chula/aaum.jpg',
     ],
+  },
+  {
+    logo: 'https://raw.githubusercontent.com/docker/compose/master/logo.png',
+    title: 'Home Lab & Systems 🛠️',
+    subtitle: 'Bare-metal Unix, Docker, IaC & Networking',
+    description:
+      'Self-hosted multi-node Linux infrastructure running Docker Compose, Traefik reverse proxy, WireGuard VPN mesh, automated monitoring, and Infrastructure-as-Code. Engineered for 99.9% uptime and high reliability.',
+    link: 'https://github.com/Taihenc',
+    images: ['https://raw.githubusercontent.com/docker/compose/master/logo.png'],
   },
 ]
