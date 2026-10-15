@@ -1,128 +1,183 @@
-import React from 'react'
-import { ExternalLink, GitBranch, Terminal, X } from 'lucide-react'
-import { CATEGORY_CONFIG, GraphNode } from '../types/graph'
+import { motion } from 'framer-motion'
+import {
+  ArrowTopRightOnSquareIcon,
+  XMarkIcon,
+} from '@heroicons/react/24/outline'
+import type { KnowledgeNode } from '../types/graph'
+import type { GraphIndex } from '../utils/graph'
 
-interface WorkDetailCardProps {
-  node: GraphNode
-  position: { left: number; top: number }
+interface DetailCardProps {
+  node: KnowledgeNode
+  index: GraphIndex
+  onSelect: (id: string) => void
   onClose: () => void
 }
 
-export const WorkDetailCard: React.FC<WorkDetailCardProps> = ({ node, position, onClose }) => {
-  const categoryMeta = CATEGORY_CONFIG[node.category]
+/**
+ * Detail panel for the selected node. Docked to the right on wide screens,
+ * a bottom sheet on small ones.
+ */
+export function WorkDetailCard({
+  node,
+  index,
+  onSelect,
+  onClose,
+}: DetailCardProps) {
+  const color = index.groupColor.get(node.group) ?? '#cbd5e1'
+  const neighbors = index.neighbors.get(node.id) ?? []
 
   return (
-    <div
-      style={{
-        left: `${position.left}px`,
-        top: `${position.top}px`,
-        borderColor: 'rgba(255, 255, 255, 0.14)',
-      }}
-      className="absolute z-50 w-[340px] max-w-[calc(100vw-32px)] select-none rounded-lg border bg-[#0f1523]/95 p-0 font-mono text-[#cbd5e1] shadow-2xl backdrop-blur-xl transition-all duration-150 animate-in fade-in zoom-in-95"
+    <motion.aside
+      key={node.id}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 24 }}
+      transition={{ duration: 0.22, ease: 'easeOut' }}
+      className="absolute z-20 inset-x-2 bottom-2 max-h-[62%] md:inset-x-auto md:right-3 md:top-3 md:bottom-3 md:max-h-none md:w-[23rem] flex flex-col rounded-xl border border-white/10 bg-[#0d131d]/95 text-slate-300 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-md overflow-hidden"
+      aria-label={`Details: ${node.label}`}
     >
-      {/* Terminal Title Bar */}
-      <div className="flex items-center justify-between border-b border-white/10 bg-[#080c14]/80 px-3 py-2 text-xs">
-        <div className="flex items-center gap-2">
-          <div className="flex gap-1.5">
-            <span className="h-2.5 w-2.5 rounded-full bg-[#ef4444]/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#eab308]/80" />
-            <span className="h-2.5 w-2.5 rounded-full bg-[#22c55e]/80" />
-          </div>
-          <span className="truncate text-slate-400">
-            cat {categoryMeta.pathPrefix}/{node.id}.nfo
-          </span>
+      <div className="h-[3px] w-full shrink-0" style={{ background: color }} />
+      <header className="flex items-start gap-3 px-4 pt-4 pb-3 shrink-0">
+        {node.kind === 'work' && node.logo && (
+          <img
+            src={node.logo}
+            alt=""
+            className="w-11 h-11 rounded-lg object-cover bg-white/5 shrink-0"
+          />
+        )}
+        <div className="min-w-0 flex-1">
+          <h3 className="text-lg font-semibold leading-tight text-slate-50">
+            {node.kind === 'work' ? node.title : node.label}
+          </h3>
+          {node.kind === 'work' && node.organization && (
+            <p className="text-xs text-slate-400 mt-0.5">{node.organization}</p>
+          )}
+          {node.kind === 'topic' && (
+            <p className="text-xs mt-0.5" style={{ color }}>
+              {neighbors.length} connected{' '}
+              {neighbors.length === 1 ? 'work' : 'works'}
+            </p>
+          )}
         </div>
         <button
           onClick={onClose}
-          className="rounded p-0.5 text-slate-400 hover:bg-white/10 hover:text-white transition-colors"
+          className="p-1 -mr-1 rounded-md text-slate-400 hover:text-white hover:bg-white/10"
+          aria-label="Close details"
         >
-          <X size={14} />
+          <XMarkIcon className="w-5 h-5" />
         </button>
-      </div>
+      </header>
 
-      {/* Card Content Body */}
-      <div className="space-y-3 p-4 text-xs">
-        {/* Title & Status Badge */}
-        <div className="flex items-start justify-between gap-2">
-          <div>
-            <h3 className="text-base font-bold text-[#e2e8f0]" style={{ color: categoryMeta.color }}>
-              {node.name}
-            </h3>
-            {node.role && <p className="text-[11px] text-slate-400">{node.role}</p>}
-          </div>
-
-          {/* Status Glyphs */}
-          {node.status && (
-            <span
-              className={`inline-flex shrink-0 items-center gap-1 rounded border px-1.5 py-0.5 text-[10px] font-semibold ${
-                node.status === 'finished'
-                  ? 'border-emerald-500/40 bg-emerald-950/40 text-emerald-400'
-                  : node.status === 'dev'
-                  ? 'border-amber-500/40 bg-amber-950/40 text-amber-400'
-                  : 'border-cyan-500/40 bg-cyan-950/40 text-cyan-400'
-              }`}
-            >
-              {node.status === 'finished' && '✓ finished'}
-              {node.status === 'dev' && '● dev'}
-              {node.status === 'lab' && '◈ lab'}
-            </span>
-          )}
-        </div>
-
-        {/* Summary Description */}
-        <p className="leading-relaxed text-[#cbd5e1]">{node.summary}</p>
-
-        {/* Evidence Frequency Counter / Tags */}
-        <div className="space-y-1.5 pt-1">
-          <div className="flex items-center justify-between text-[10px] text-slate-400">
-            <span className="flex items-center gap-1">
-              <Terminal size={11} />
-              ontology evidence
-            </span>
-            {node.evidenceCount && (
-              <span className="text-amber-400 font-semibold">evidence × {node.evidenceCount}</span>
+      <div className="overflow-y-auto overscroll-contain px-4 pb-4 space-y-4 text-sm leading-relaxed">
+        {node.kind === 'work' ? (
+          <>
+            {node.roles && node.roles.length > 0 && (
+              <ul className="space-y-1">
+                {node.roles.map((r) => (
+                  <li
+                    key={r.title}
+                    className="flex flex-wrap justify-between gap-x-3 text-xs"
+                  >
+                    <span className="text-slate-200">{r.title}</span>
+                    {r.period && (
+                      <span className="text-slate-500 tabular-nums">
+                        {r.period}
+                      </span>
+                    )}
+                  </li>
+                ))}
+              </ul>
             )}
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {node.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded border border-white/10 bg-white/5 px-1.5 py-0.5 text-[10px] text-slate-300"
-              >
-                #{tag}
+            {node.status === 'in-progress' && (
+              <span className="inline-block text-[11px] px-2 py-0.5 rounded-full border border-amber-300/30 text-amber-200/90">
+                in progress
               </span>
-            ))}
-          </div>
-        </div>
+            )}
+            <p>{node.summary}</p>
+            {node.highlights && (
+              <ul className="space-y-1.5 text-[13px]">
+                {node.highlights.map((h) => (
+                  <li key={h} className="flex gap-2">
+                    <span
+                      className="mt-[0.55em] w-1 h-1 rounded-full shrink-0"
+                      style={{ background: color }}
+                    />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            {node.images && node.images.length > 0 && (
+              <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x">
+                {node.images.map((src) => (
+                  <img
+                    key={src}
+                    src={src}
+                    alt=""
+                    loading="lazy"
+                    className="h-28 w-auto rounded-md object-cover snap-start bg-white/5"
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        ) : (
+          node.description && <p>{node.description}</p>
+        )}
 
-        {/* Action Links */}
-        {(node.demoUrl || node.repoUrl) && (
-          <div className="flex items-center gap-2 border-t border-white/10 pt-3 text-[11px]">
-            {node.demoUrl && (
+        {neighbors.length > 0 && (
+          <div>
+            <p className="text-[11px] uppercase tracking-wider text-slate-500 mb-1.5">
+              {node.kind === 'work' ? 'Connected to' : 'Works'}
+            </p>
+            <ul className="space-y-1">
+              {neighbors.map(({ node: other, edge }) => (
+                <li key={other.id}>
+                  <button
+                    onClick={() => onSelect(other.id)}
+                    className="w-full text-left rounded-md px-2 py-1.5 -mx-2 hover:bg-white/5 group"
+                  >
+                    <span className="flex items-center gap-2 text-[13px] text-slate-200">
+                      <span
+                        className="w-2 h-2 rounded-full shrink-0"
+                        style={{
+                          background: index.groupColor.get(other.group),
+                        }}
+                      />
+                      {other.label}
+                      {edge.basis === 'inferred' && (
+                        <span className="text-[10px] text-slate-500">
+                          (inferred)
+                        </span>
+                      )}
+                    </span>
+                    <span className="block pl-4 text-xs text-slate-500 group-hover:text-slate-400">
+                      {edge.evidence}
+                    </span>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {node.kind === 'work' && node.links && node.links.length > 0 && (
+          <div className="flex flex-wrap gap-2 pt-1">
+            {node.links.map((l) => (
               <a
-                href={node.demoUrl}
+                key={l.url}
+                href={l.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded border border-cyan-500/30 bg-cyan-950/30 px-2 py-1 text-cyan-300 hover:border-cyan-400 hover:bg-cyan-900/40 transition-colors"
+                className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs text-slate-100 hover:border-white/40 hover:bg-white/5"
               >
-                [ENTER LIVE DEMO →]
-                <ExternalLink size={11} />
+                {l.label}
+                <ArrowTopRightOnSquareIcon className="w-3.5 h-3.5" />
               </a>
-            )}
-            {node.repoUrl && (
-              <a
-                href={node.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 rounded border border-white/10 bg-white/5 px-2 py-1 text-slate-300 hover:border-white/25 hover:bg-white/10 transition-colors"
-              >
-                [VIEW REPO →]
-                <GitBranch size={11} />
-              </a>
-            )}
+            ))}
           </div>
         )}
       </div>
-    </div>
+    </motion.aside>
   )
 }
