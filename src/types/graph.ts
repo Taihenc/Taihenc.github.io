@@ -19,10 +19,15 @@ export interface GraphLinkRef {
   url: string
 }
 
+/** How the work was done; shown as a flag on the detail card. */
+export type Engagement =
+  'internship' | 'part-time' | 'full-time' | 'volunteer' | 'side-project'
+
 export interface WorkRole {
   title: string
   /** Free-form, human readable, e.g. "Jun 2026 - Nov 2026". */
   period?: string
+  engagement?: Engagement
 }
 
 interface GraphNodeBase {
@@ -49,6 +54,9 @@ export interface WorkNode extends GraphNodeBase {
   images?: string[]
   links?: GraphLinkRef[]
   status?: 'in-progress'
+  /** Engagement for works without roles (e.g. side projects). */
+  engagement?: Engagement
+  remote?: boolean
 }
 
 /** A skill, language or domain that groups related works together. */

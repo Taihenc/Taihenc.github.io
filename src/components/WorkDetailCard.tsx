@@ -3,8 +3,51 @@ import {
   ArrowTopRightOnSquareIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
-import type { KnowledgeNode } from '../types/graph'
+import type { Engagement, KnowledgeNode, WorkNode } from '../types/graph'
 import type { GraphIndex } from '../utils/graph'
+
+const ENGAGEMENT_STYLE: Record<
+  Engagement,
+  { label: string; className: string }
+> = {
+  internship: {
+    label: 'Internship',
+    className: 'border-sky-300/30 bg-sky-400/10 text-sky-200',
+  },
+  'part-time': {
+    label: 'Part-time',
+    className: 'border-amber-300/30 bg-amber-400/10 text-amber-200',
+  },
+  'full-time': {
+    label: 'Full-time',
+    className: 'border-emerald-300/30 bg-emerald-400/10 text-emerald-200',
+  },
+  volunteer: {
+    label: 'Volunteer',
+    className: 'border-pink-300/30 bg-pink-400/10 text-pink-200',
+  },
+  'side-project': {
+    label: 'Side project',
+    className: 'border-teal-300/30 bg-teal-400/10 text-teal-200',
+  },
+}
+
+const chip =
+  'inline-flex items-center rounded-full border px-2 py-0.5 text-[10px] font-medium leading-none'
+
+/** Distinct engagements of a work, in role order. */
+function engagementsOf(node: WorkNode): Engagement[] {
+  const all = [
+    ...(node.roles ?? []).map((r) => r.engagement),
+    node.engagement,
+  ].filter((e): e is Engagement => e !== undefined)
+  return [...new Set(all)]
+}
+
+function EngagementChip({ engagement }: { engagement: Engagement }) {
+  const { label, className } = ENGAGEMENT_STYLE[engagement]
+  return <span className={`${chip} ${className}`}>{label}</span>
+}
 
 interface DetailCardProps {
   node: KnowledgeNode
@@ -25,6 +68,7 @@ export function WorkDetailCard({
 }: DetailCardProps) {
   const color = index.groupColor.get(node.group) ?? '#cbd5e1'
   const neighbors = index.neighbors.get(node.id) ?? []
+  const engagements = node.kind === 'work' ? engagementsOf(node) : []
 
   return (
     <motion.aside
@@ -52,6 +96,20 @@ export function WorkDetailCard({
           {node.kind === 'work' && node.organization && (
             <p className="text-xs text-slate-400 mt-0.5">{node.organization}</p>
           )}
+          {node.kind === 'work' && (engagements.length > 0 || node.remote) && (
+            <div className="flex flex-wrap gap-1.5 mt-2">
+              {engagements.map((e) => (
+                <EngagementChip key={e} engagement={e} />
+              ))}
+              {node.remote && (
+                <span
+                  className={`${chip} border-slate-300/25 bg-slate-400/10 text-slate-300`}
+                >
+                  Remote
+                </span>
+              )}
+            </div>
+          )}
           {node.kind === 'topic' && (
             <p className="text-xs mt-0.5" style={{ color }}>
               {neighbors.length} connected{' '}
@@ -78,7 +136,13 @@ export function WorkDetailCard({
                     key={r.title}
                     className="flex flex-wrap justify-between gap-x-3 text-xs"
                   >
-                    <span className="text-slate-200">{r.title}</span>
+                    <span className="flex items-center gap-1.5 text-slate-200">
+                      {r.title}
+                      {/* Per-role flag only when roles differ (e.g. intern, then part-time) */}
+                      {engagements.length > 1 && r.engagement && (
+                        <EngagementChip engagement={r.engagement} />
+                      )}
+                    </span>
                     {r.period && (
                       <span className="text-slate-500 tabular-nums">
                         {r.period}

@@ -28,7 +28,11 @@ const nodes: KnowledgeGraph['nodes'] = [
     organization:
       'The University of Tokyo, Oguchi Lab, Institute of Industrial Science',
     roles: [
-      { title: 'Research Internship Student', period: 'Jun 2026 - Nov 2026' },
+      {
+        title: 'Research Intern',
+        period: 'Jun 2026 - Nov 2026',
+        engagement: 'internship',
+      },
     ],
     summary:
       'Sim-to-real calibration of multi-agent driver-behavior models against real-world drone trajectories. Motorcycles filtering through car queues are something lane-based traffic models cannot represent, so these heterogeneous agents are modeled in SUMO/TraCI and calibrated as a black-box optimization problem.',
@@ -49,8 +53,9 @@ const nodes: KnowledgeGraph['nodes'] = [
     organization: 'SCB TechX',
     roles: [
       {
-        title: 'Technical Lead / Project Manager, Capstone Intern',
+        title: 'Technical Lead / Project Manager (Capstone)',
         period: 'Sep 2025 - May 2026',
+        engagement: 'internship',
       },
     ],
     summary:
@@ -70,8 +75,16 @@ const nodes: KnowledgeGraph['nodes'] = [
     title: 'Skooldio',
     organization: 'Skooldio',
     roles: [
-      { title: 'AI Engineer, Part-time', period: 'Aug 2025 - Dec 2025' },
-      { title: 'Full Stack Developer, Intern', period: 'Jun 2025 - Jul 2025' },
+      {
+        title: 'AI Engineer',
+        period: 'Aug 2025 - Dec 2025',
+        engagement: 'part-time',
+      },
+      {
+        title: 'Full Stack Developer',
+        period: 'Jun 2025 - Jul 2025',
+        engagement: 'internship',
+      },
     ],
     summary:
       'Multi-agent LLM pipelines for an educational product that improves student literacy, after an internship on the platform side of an online learning product.',
@@ -88,12 +101,21 @@ const nodes: KnowledgeGraph['nodes'] = [
     id: 'profluid',
     kind: 'work',
     group: 'experience',
+    remote: true,
     label: 'Profluid',
     title: 'Profluid GmbH',
-    organization: 'Profluid GmbH (Germany, remote, part-time)',
+    organization: 'Profluid GmbH (Germany)',
     roles: [
-      { title: 'Junior Developer', period: 'Jun 2025 - May 2026' },
-      { title: 'Full Stack Developer', period: 'Sep 2024 - May 2025' },
+      {
+        title: 'Junior Developer',
+        period: 'Jun 2025 - May 2026',
+        engagement: 'part-time',
+      },
+      {
+        title: 'Full Stack Developer',
+        period: 'Sep 2024 - May 2025',
+        engagement: 'part-time',
+      },
     ],
     summary:
       'Remote, part-time developer for a German e-commerce company, from the storefront and ERP to product data.',
@@ -113,8 +135,9 @@ const nodes: KnowledgeGraph['nodes'] = [
     organization: 'LINE MAN Wongnai',
     roles: [
       {
-        title: 'Software Engineer Intern, Android',
+        title: 'Software Engineer, Android',
         period: 'May 2024 - Jul 2024',
+        engagement: 'internship',
       },
     ],
     summary:
@@ -146,7 +169,11 @@ const nodes: KnowledgeGraph['nodes'] = [
     title: 'Teaching Assistant & staff',
     organization: 'Chulalongkorn University',
     roles: [
-      { title: 'Teaching Assistant (TA)', period: 'Aug 2024 - Dec 2025' },
+      {
+        title: 'Teaching Assistant (TA)',
+        period: 'Aug 2024 - Dec 2025',
+        engagement: 'volunteer',
+      },
     ],
     summary:
       'TA for Data Structures & Algorithms and Computer Digital Logic. Soft skills need a different approach than coding, so I also staffed ICPC Thailand 2024, supporting competitors at the international collegiate programming contest.',
@@ -165,7 +192,11 @@ const nodes: KnowledgeGraph['nodes'] = [
     title: 'ISD SGCU',
     organization: 'Chula student government IT',
     roles: [
-      { title: 'Senior Frontend Developer', period: 'Jul 2024 - May 2025' },
+      {
+        title: 'Senior Frontend Developer',
+        period: 'Jul 2024 - May 2025',
+        engagement: 'volunteer',
+      },
     ],
     summary:
       'Front end for Chula student government IT, serving 1,000+ concurrent users.',
@@ -181,6 +212,7 @@ const nodes: KnowledgeGraph['nodes'] = [
     id: 'yakiniku',
     kind: 'work',
     group: 'project',
+    engagement: 'side-project',
     label: 'YAKINIKU',
     title: 'YAKINIKU',
     summary:
@@ -199,6 +231,7 @@ const nodes: KnowledgeGraph['nodes'] = [
     id: 'moekot',
     kind: 'work',
     group: 'project',
+    engagement: 'side-project',
     label: 'MoeKot',
     title: 'MoeKot',
     summary:
@@ -212,6 +245,7 @@ const nodes: KnowledgeGraph['nodes'] = [
     id: 'staysleep',
     kind: 'work',
     group: 'project',
+    engagement: 'side-project',
     label: 'StaySleep',
     title: 'StaySleep',
     summary:
@@ -221,6 +255,7 @@ const nodes: KnowledgeGraph['nodes'] = [
     id: 'leaderboard',
     kind: 'work',
     group: 'project',
+    engagement: 'side-project',
     label: 'Real-time Leaderboard',
     title: 'GO Real-time Leaderboard',
     summary:
