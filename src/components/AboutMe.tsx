@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { scrollToSection } from './Navbar'
 import TypingEffect from './TypingEffect'
+import { awards, certificates } from '../data/achievements'
 
 export default function AboutMe() {
   return (
@@ -60,7 +61,7 @@ export default function AboutMe() {
                     <h1 className="text-lg lg:text-2xl lg:pt-6 font-bold">
                       About me
                     </h1>
-                    <p className="md:max-h-[10rem] min-h-[5rem] py-2 indent-6 overflow-auto shrink">
+                    <p className="md:max-h-[12rem] min-h-[5rem] py-2 indent-6 overflow-auto shrink">
                       A Shou-nen who is interested in Computer Programming,
                       now a Software Engineer, AI/ML Engineer and Researcher.
                       I've shipped work at{' '}
@@ -82,6 +83,43 @@ export default function AboutMe() {
                       </a>
                       .
                     </p>
+                    <div className="mt-3 flex flex-row items-center justify-between sm:justify-start gap-3 sm:gap-6 shrink-0">
+                      <ul className="flex flex-col gap-1 text-xs md:text-sm">
+                        {awards.map((a) => (
+                          <li key={a.detail} className="flex gap-2">
+                            <span aria-hidden>🏆</span>
+                            <span className="sm:hidden whitespace-nowrap">
+                              <span className="font-semibold text-yellow-300">
+                                {a.short}
+                              </span>
+                              <span className="text-slate-400"> {a.year}</span>
+                            </span>
+                            <span className="hidden sm:inline">
+                              <span className="font-semibold text-yellow-300">
+                                {a.title}
+                              </span>
+                              <span className="text-slate-400">
+                                {' '}
+                                · {a.detail} {a.year}
+                              </span>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                      <ul className="flex gap-2" aria-label="Certificates">
+                        {certificates.map((c) => (
+                          <li key={c.name}>
+                            <img
+                              src={c.badge}
+                              alt={c.name}
+                              title={c.name}
+                              loading="lazy"
+                              className="h-8 sm:h-10 md:h-12 w-auto transition-transform hover:scale-110"
+                            />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                     <button
                       onClick={() => scrollToSection('contact-me')}
                       className="md:w-fit btn mt-3 text-white bg-[#223b93]"
