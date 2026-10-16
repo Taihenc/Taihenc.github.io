@@ -169,6 +169,8 @@ const nodes: KnowledgeGraph['nodes'] = [
     ],
     summary:
       'Front end for Chula student government IT, serving 1,000+ concurrent users.',
+    logo: './works-experience/isd/logo.png',
+    images: ['./works-experience/isd/banner.jpg'],
     links: [
       { label: 'github.com/isd-sgcu', url: 'https://github.com/isd-sgcu' },
     ],
