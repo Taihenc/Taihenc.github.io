@@ -98,6 +98,9 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   const frame = useRef({ now: performance.now(), dt: 0 })
   // Free pan/zoom. Off by default so the graph never traps page scrolling.
   const [explore, setExplore] = useState(false)
+  // force-graph keeps the first interaction filter it receives, so read live state via a ref.
+  const exploreRef = useRef(explore)
+  exploreRef.current = explore
 
   const index = useMemo(() => indexGraph(graph), [graph])
   const compact = size.width > 0 && size.width < 640
@@ -180,6 +183,28 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
     const canvas = containerRef.current?.querySelector('canvas')
     if (canvas) canvas.style.touchAction = explore ? 'none' : 'pan-y'
   }, [explore, size.width])
+
+  // Trackpad: two-finger swipe pans (pinch / ctrl+scroll still zooms via force-graph).
+  // Locked mode only takes sideways swipes, so vertical scrolling still moves the page.
+  useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const onWheel = (ev: WheelEvent) => {
+      const fg = fgRef.current
+      if (!fg || ev.ctrlKey || ev.metaKey) return
+      const sideways = Math.abs(ev.deltaX) > Math.abs(ev.deltaY)
+      if (!exploreRef.current && !sideways) return
+      ev.preventDefault()
+      const k = fg.zoom()
+      const { x, y } = fg.centerAt()
+      fg.centerAt(
+        x + ev.deltaX / k,
+        exploreRef.current ? y + ev.deltaY / k : y
+      )
+    }
+    el.addEventListener('wheel', onWheel, { passive: false })
+    return () => el.removeEventListener('wheel', onWheel)
+  }, [size.width])
 
   const focusId = hoverId ?? selectedId
   const highlighted = useMemo(() => {
@@ -390,6 +415,9 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
 
   const selected = selectedId ? index.byId.get(selectedId) : undefined
   const isTouchEvent = (ev: Event) => ev.type.startsWith('touch')
+  // Two fingers always move the graph; one finger keeps scrolling the page.
+  const isMultiTouch = (ev: Event) =>
+    'touches' in ev && (ev as TouchEvent).touches.length >= 2
 
   return (
     <div
@@ -440,8 +468,11 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
               setHoverId(null)
             }}
             enableNodeDrag={!coarse || explore}
-            enableZoomInteraction={(ev) => explore || ev.ctrlKey || ev.metaKey}
-            enablePanInteraction={(ev) => explore || !isTouchEvent(ev)}
+            // Wheel without ctrl/⌘ pans (handled above); pinch arrives as ctrl+wheel.
+            enableZoomInteraction={(ev) => ev.ctrlKey || ev.metaKey}
+            enablePanInteraction={(ev) =>
+              exploreRef.current || !isTouchEvent(ev) || isMultiTouch(ev)
+            }
             minZoom={0.4}
             maxZoom={8}
             // With motion on, the simulation never fully cools so the drift force keeps nodes wandering.
@@ -525,11 +556,11 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
         <p className="pb-1 whitespace-nowrap text-[10px] sm:text-[11px] text-slate-500 rounded-full sm:rounded-none bg-[#0b0f17]/70 sm:bg-transparent px-2.5 py-1 sm:p-0 sm:pb-1">
           {explore
             ? coarse
-              ? 'Pinch to zoom · drag to pan'
-              : 'Free mode: scroll / pinch to zoom, drag to pan'
+              ? 'Drag to pan · pinch to zoom'
+              : 'Free mode: scroll or drag to pan, pinch / ctrl+scroll to zoom'
             : coarse
-              ? 'Tap a node for details'
-              : 'Hover to trace links, click for details, ctrl/⌘ + scroll to zoom'}
+              ? 'Tap a node · two fingers to move'
+              : 'Click for details · drag to pan · ctrl/⌘ + scroll to zoom'}
         </p>
       </div>
 
