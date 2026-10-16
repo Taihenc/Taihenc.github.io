@@ -100,6 +100,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   const [explore, setExplore] = useState(false)
 
   const index = useMemo(() => indexGraph(graph), [graph])
+  const compact = size.width > 0 && size.width < 640
 
   useEffect(() => {
     if (import.meta.env.DEV) {
@@ -116,7 +117,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       return {
         id: n.id,
         data: n,
-        radius: n.kind === 'work' ? 9 : 3.5 + Math.sqrt(degree) * 1.6,
+        radius: n.kind === 'work' ? 14 : 3 + Math.sqrt(degree) * 1.3,
         color: index.groupColor.get(n.group) ?? '#94a3b8',
       }
     })
@@ -155,18 +156,24 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   useEffect(() => {
     const fg = fgRef.current
     if (!fg || !size.width) return
-    fg.d3Force('charge')?.strength?.(-220)?.distanceMax?.(260)
+    // Phones are portrait: pull harder sideways so the layout grows tall, not wide.
+    const portrait = size.height > size.width * 1.15
+    fg.d3Force('charge')?.strength?.(portrait ? -260 : -220)?.distanceMax?.(260)
     // Weak gravity keeps disconnected clusters (e.g. Android) on screen.
-    fg.d3Force('x', forceX<SimNode>(0).strength(0.07))
-    fg.d3Force('y', forceY<SimNode>(0).strength(0.07))
+    fg.d3Force('x', forceX<SimNode>(0).strength(portrait ? 0.16 : 0.07))
+    fg.d3Force('y', forceY<SimNode>(0).strength(portrait ? 0.03 : 0.07))
     const link = fg.d3Force('link')
-    link?.distance?.(62)
+    link?.distance?.(74)
     fg.d3Force(
       'collide',
-      forceCollide<SimNode>((n) => n.radius + 14)
+      // Portrait gives labels less room sideways, so works keep a wider berth.
+      forceCollide<SimNode>((n) =>
+        n.radius + (portrait && n.data.kind === 'work' ? 26 : 14)
+      )
     )
     fg.d3Force('drift', reducedMotion ? null : driftForce(0.012))
-  }, [size.width, reducedMotion])
+    fg.d3ReheatSimulation()
+  }, [size.width, size.height, reducedMotion])
 
   // Touch: let vertical swipes scroll the page unless the user unlocked pan/zoom.
   useEffect(() => {
@@ -272,8 +279,15 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
         ctx.fill()
       }
 
+      // Small screens: topic labels only appear around the focused node or when zoomed in.
+      if (compact && d.kind === 'topic' && !isFocus && (highlighted === null || dimmed) && scale < 2.2) {
+        ctx.restore()
+        return
+      }
       // Labels keep a readable on-screen size across zoom levels.
-      const px = Math.min(13, Math.max(10, scale * 3.6))
+      const px = compact
+        ? Math.min(11.5, Math.max(9, scale * 3))
+        : Math.min(13, Math.max(10, scale * 3.6))
       ctx.font = `${d.kind === 'work' ? 600 : 400} ${px / scale}px ui-sans-serif, system-ui, sans-serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'top'
@@ -284,7 +298,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
     },
     // imagesLoaded: redraw once logos arrive
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [focusId, selectedId, highlighted, imagesLoaded, reducedMotion]
+    [focusId, selectedId, highlighted, imagesLoaded, reducedMotion, compact]
   )
 
   const paintPointerArea = useCallback(
@@ -456,7 +470,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       </div>
 
       {/* Legend */}
-      <ul className="pointer-events-none absolute left-3 top-3 z-10 flex flex-wrap gap-x-3 gap-y-1 max-w-[75%] rounded-md bg-[#0b0f17]/80 px-2 py-1 text-[11px] text-slate-400">
+      <ul className="pointer-events-none absolute left-3 top-3 z-10 flex flex-nowrap sm:flex-wrap gap-x-3 gap-y-1 max-w-[calc(100%-1.5rem)] sm:max-w-[75%] overflow-x-auto pointer-events-auto sm:pointer-events-none [scrollbar-width:none] rounded-full sm:rounded-md border border-white/5 sm:border-0 bg-[#0b0f17]/80 backdrop-blur-sm px-3 sm:px-2 py-1 text-[10px] sm:text-[11px] text-slate-400 whitespace-nowrap">
         {graph.groups.map((g) => (
           <li key={g.id} className="flex items-center gap-1.5">
             <span
@@ -469,31 +483,31 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       </ul>
 
       {/* Controls */}
-      <div className="absolute left-3 bottom-3 flex items-end gap-3">
-        <div className="flex rounded-lg border border-white/10 bg-[#0d131d]/90 text-slate-300 overflow-hidden">
+      <div className="absolute inset-x-3 bottom-3 sm:right-auto flex flex-row-reverse sm:flex-row items-end justify-between sm:justify-start gap-3 pointer-events-none">
+        <div className="pointer-events-auto flex rounded-full sm:rounded-lg border border-white/10 bg-[#0d131d]/90 backdrop-blur-sm text-slate-300 overflow-hidden shadow-lg shadow-black/40">
           <button
-            className="p-2 hover:bg-white/10"
+            className="p-3 sm:p-2 hover:bg-white/10"
             onClick={() => zoomBy(1.4)}
             aria-label="Zoom in"
           >
             <PlusIcon className="w-4 h-4" />
           </button>
           <button
-            className="p-2 hover:bg-white/10"
+            className="p-3 sm:p-2 hover:bg-white/10"
             onClick={() => zoomBy(1 / 1.4)}
             aria-label="Zoom out"
           >
             <MinusIcon className="w-4 h-4" />
           </button>
           <button
-            className="p-2 hover:bg-white/10"
+            className="p-3 sm:p-2 hover:bg-white/10"
             onClick={() => fit()}
             aria-label="Fit graph to view"
           >
             <ArrowsPointingInIcon className="w-4 h-4" />
           </button>
           <button
-            className={`p-2 border-l border-white/10 ${explore ? 'bg-white/15 text-white' : 'hover:bg-white/10'}`}
+            className={`p-3 sm:p-2 border-l border-white/10 ${explore ? 'bg-white/15 text-white' : 'hover:bg-white/10'}`}
             onClick={() => setExplore((v) => !v)}
             aria-pressed={explore}
             aria-label={
@@ -508,9 +522,11 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
             )}
           </button>
         </div>
-        <p className="hidden sm:block pb-1 text-[11px] text-slate-500">
+        <p className="pb-1 whitespace-nowrap text-[10px] sm:text-[11px] text-slate-500 rounded-full sm:rounded-none bg-[#0b0f17]/70 sm:bg-transparent px-2.5 py-1 sm:p-0 sm:pb-1">
           {explore
-            ? 'Free mode: scroll / pinch to zoom, drag to pan'
+            ? coarse
+              ? 'Pinch to zoom · drag to pan'
+              : 'Free mode: scroll / pinch to zoom, drag to pan'
             : coarse
               ? 'Tap a node for details'
               : 'Hover to trace links, click for details, ctrl/⌘ + scroll to zoom'}
