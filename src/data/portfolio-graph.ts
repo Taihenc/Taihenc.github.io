@@ -250,6 +250,14 @@ const nodes: KnowledgeGraph['nodes'] = [
     title: 'StaySleep',
     summary:
       'Hotel booking app (auth, search, booking). Led the front end, back end and design. Built with Next.js and MongoDB.',
+    logo: './works-experience/staysleep/logo.png',
+    images: ['./works-experience/staysleep/logo.png'],
+    links: [
+      {
+        label: 'Source',
+        url: 'https://github.com/2110503TACEDT66/cedt-se-project-staysleep',
+      },
+    ],
   },
   {
     id: 'leaderboard',

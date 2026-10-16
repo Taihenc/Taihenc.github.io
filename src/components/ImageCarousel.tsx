@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Carousel } from 'flowbite'
+import SkeletonImage from './SkeletonImage'
 import type {
   CarouselItem,
   CarouselOptions,
@@ -86,10 +87,10 @@ const ImageCarousel: React.FC<ImageGalleryProps> = ({ images }) => {
             className="w-full h-full hidden duration-700 ease-in-out bg-[#1a252f]"
             data-carousel-item
           >
-            `Wait..`
-            <img
+            <SkeletonImage
               src={src}
-              className="w-full h-full absolute block object-cover -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+              wrapperClassName="w-full h-full"
+              className="w-full h-full block object-cover"
               alt={`Image ${index + 1}`}
             />
           </div>

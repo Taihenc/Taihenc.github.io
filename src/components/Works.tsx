@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { motion, AnimatePresence } from 'framer-motion'
 import ImageCarousel from './ImageCarousel'
+import SkeletonImage from './SkeletonImage'
 import { getLogoName } from '../utils/utils'
 import { workExperiences } from '../data/works-experience'
 import { WorkExperience } from '../interfaces/WorkExperience'
@@ -88,14 +89,15 @@ export default function Works() {
                     key={work.logo}
                     className="w-12 lg:w-16 aspect-square rounded-md overflow-hidden flex-shrink-0 cursor-pointer"
                     onClick={() => handleLogoClick(work)}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <motion.img
-                      className="h-full w-full object-cover opacity-80"
+                    <SkeletonImage
+                      wrapperClassName="h-full w-full opacity-80"
+                      className="h-full w-full object-cover"
                       src={work.logo}
                       alt={`Logo of ${getLogoName(work.title)}`}
                       loading="lazy"
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
                     />
                   </motion.li>
                 ))}

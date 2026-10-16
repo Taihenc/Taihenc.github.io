@@ -4,6 +4,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import type { Engagement, KnowledgeNode, WorkNode } from '../types/graph'
+import SkeletonImage from './SkeletonImage'
 import type { GraphIndex } from '../utils/graph'
 
 const ENGAGEMENT_STYLE: Record<
@@ -174,12 +175,12 @@ export function WorkDetailCard({
             {node.images && node.images.length > 0 && (
               <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x">
                 {node.images.map((src) => (
-                  <img
+                  <SkeletonImage
                     key={src}
                     src={src}
-                    alt=""
                     loading="lazy"
-                    className="h-28 w-auto rounded-md object-cover snap-start bg-white/5"
+                    wrapperClassName="h-28 min-w-[9rem] shrink-0 rounded-md snap-start"
+                    className="h-28 w-auto object-cover"
                   />
                 ))}
               </div>
