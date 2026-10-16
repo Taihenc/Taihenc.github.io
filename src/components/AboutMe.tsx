@@ -61,16 +61,17 @@ export default function AboutMe() {
                       About me
                     </h1>
                     <p className="md:max-h-[10rem] min-h-[5rem] py-2 indent-6 overflow-auto shrink">
-                      A Shou-nen who is interested in Computer Programming. I
-                      have gone very wide in the Tech field, but I consider my
-                      main areas of interest to be{' '}
+                      A Shou-nen who is interested in Computer Programming,
+                      now a Software Engineer, AI/ML Engineer and Researcher.
+                      I've shipped work at{' '}
                       <span className="text-green-200">
-                        Web development, Android, Game development, and
-                        Networking (home server)
-                      </span>
-                      . I also have a bit of a background in coding
-                      competitions. ... So far, this is all I know about
-                      myself.. Now, let's see what else I can make this
+                        LINE MAN Wongnai, Profluid GmbH, Skooldio, SCB TechX
+                        and The University of Tokyo
+                      </span>{' '}
+                      across Android, full-stack web, multi-agent LLM systems
+                      and traffic simulation research, while studying
+                      full-time. I also have a bit of a background in coding
+                      competitions. Now, let's see what else I can make this
                       calculator machine do at{' '}
                       <a
                         className="link-primary"

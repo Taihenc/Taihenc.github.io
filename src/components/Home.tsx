@@ -42,18 +42,19 @@ export default function Home() {
                 <div className="transition-all w-fit overflow-y-auto">
                   <TypingEffect
                     text={[
-                      "Hello, My name's Peerapat Pacharamontree",
+                      "Hello, My name's Peerapat Patcharamontree",
                       'My nickname is Atom.',
                       "BTW I usually go by the name 'Taihen' when surfing the internet",
                       ' ',
-                      "Currently, I'm pursuing a bachelor's degree at Chulalongkorn University.",
+                      "Currently, I'm a final-year Computer Engineering student at Chulalongkorn University,",
+                      'and a Research Intern at The University of Tokyo.',
                     ]}
                     endRemoveCursor
                     onCharTypedEnd={() => setFinished(true)}
                     onCharTyped={keyboardRef.press}
                     textHighlight={[
                       {
-                        word: 'Peerapat Pacharamontree',
+                        word: 'Peerapat Patcharamontree',
                         className: 'text-red-200',
                       },
                       { word: 'Atom', className: 'text-red-200' },
@@ -61,6 +62,10 @@ export default function Home() {
                       {
                         word: 'Chulalongkorn University',
                         className: 'text-pink-300',
+                      },
+                      {
+                        word: 'The University of Tokyo',
+                        className: 'text-sky-300',
                       },
                     ]}
                   />

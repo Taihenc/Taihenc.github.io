@@ -2,6 +2,42 @@ import { WorkExperience } from '../interfaces/WorkExperience'
 
 export const workExperiences: WorkExperience[] = [
   {
+    logo: './works-experience/utokyo/logo.png',
+    title: 'UTokyo Research🗼',
+    subtitle: 'Research Intern @ Oguchi Lab, Institute of Industrial Science',
+    description:
+      "I'm a research intern at The University of Tokyo (Jun - Nov 2026), working on sim-to-real calibration of multi-agent driver-behavior models against real-world drone trajectories. Motorcycles filtering through car queues are something lane-based traffic models just can't represent, so I model these heterogeneous agents in SUMO/TraCI and frame calibration as black-box optimization (Nevergrad: CMA-ES, DE, Bayesian) over 55-74 parameters on 16 HPC workers. I also built the data pipeline for 1M+ drone trajectory points and a multi-objective loss. The work became my first-author paper, submitted to ITS Symposium 2026.",
+    link: 'https://www.iis.u-tokyo.ac.jp/en/',
+    images: ['./works-experience/utokyo/logo.png'],
+  },
+  {
+    logo: './works-experience/scbtechx/logo.png',
+    title: 'SCB TechX🧭',
+    subtitle: 'Technical Lead / Project Manager (Capstone Intern)',
+    description:
+      'For my capstone (Sep 2025 - May 2026) I led a team of 5 developers building an internal AI knowledge management system for developers and marketing. I designed the architecture (RAG, LLM, vector DB) and an ingestion pipeline that cleans and structures documents, reviewed backend and AI-pipeline code, and ran sprint planning, code reviews and MVP demos for internal stakeholders.',
+    link: 'https://www.scbtechx.io/',
+    images: ['./works-experience/scbtechx/logo.png'],
+  },
+  {
+    logo: './works-experience/skooldio/logo.png',
+    title: 'Skooldio🤖',
+    subtitle: 'AI Engineer (Part-time) & Full Stack Developer (Intern)',
+    description:
+      'As an AI Engineer (Aug - Dec 2025) I built multi-agent LLM pipelines with crewAI for an educational product that improves student literacy, tracked quality with Langfuse evals and structured outputs with Pydantic. Before that, as a full stack intern (Jun - Jul 2025), I designed a new DB schema with a senior engineer, migrated an online learning platform\'s data, built a new examination system in NestJS (DDD) with hints and multiple attempts, and fixed a legacy notification service for 1,000+ users.',
+    link: 'https://www.skooldio.com/',
+    images: ['./works-experience/skooldio/logo.png'],
+  },
+  {
+    logo: './works-experience/profluid/logo.png',
+    title: 'Profluid GmbH🇩🇪',
+    subtitle: 'Remote, part-time developer for a German e-commerce company',
+    description:
+      'From Sep 2024 to May 2026 I worked remotely for Profluid in Germany. As a full stack developer I migrated the e-commerce store to Odoo, rebuilt the UI and maintained the ERP (PostgreSQL, Python, JS). Later, as a junior developer, I built Python scrapers for manufacturer specs to enrich a 10,000+ product catalog with complex product structures.',
+    link: 'https://www.profluid.de/',
+    images: ['./works-experience/profluid/logo.png'],
+  },
+  {
     logo: './works-experience/lmwn/logo.png',
     title: 'LMWN internship🍾',
     subtitle: "What I've learned^^",
