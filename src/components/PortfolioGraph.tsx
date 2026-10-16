@@ -185,25 +185,40 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   }, [explore, size.width])
 
   // Trackpad: two-finger swipe pans (pinch / ctrl+scroll still zooms via force-graph).
-  // Locked mode only takes sideways swipes, so vertical scrolling still moves the page.
+  // Each swipe is claimed once, at its start: free mode or a sideways start belongs
+  // to the graph for the whole swipe; a vertical start in normal mode scrolls the page.
+  // Touch: once two fingers are down, stop the browser from scrolling the page.
   useEffect(() => {
     const el = containerRef.current
     if (!el) return
+    let owner: 'graph' | 'page' = 'page'
+    let lastWheel = 0
     const onWheel = (ev: WheelEvent) => {
       const fg = fgRef.current
       if (!fg || ev.ctrlKey || ev.metaKey) return
-      const sideways = Math.abs(ev.deltaX) > Math.abs(ev.deltaY)
-      if (!exploreRef.current && !sideways) return
+      const now = performance.now()
+      if (now - lastWheel > 200) {
+        const sideways = Math.abs(ev.deltaX) > Math.abs(ev.deltaY)
+        owner = exploreRef.current || sideways ? 'graph' : 'page'
+      }
+      lastWheel = now
+      if (owner === 'page') return
       ev.preventDefault()
       const k = fg.zoom()
       const { x, y } = fg.centerAt()
-      fg.centerAt(
-        x + ev.deltaX / k,
-        exploreRef.current ? y + ev.deltaY / k : y
-      )
+      fg.centerAt(x + ev.deltaX / k, y + ev.deltaY / k)
+    }
+    const onTouch = (ev: TouchEvent) => {
+      if (ev.touches.length >= 2 && ev.cancelable) ev.preventDefault()
     }
     el.addEventListener('wheel', onWheel, { passive: false })
-    return () => el.removeEventListener('wheel', onWheel)
+    el.addEventListener('touchstart', onTouch, { passive: false })
+    el.addEventListener('touchmove', onTouch, { passive: false })
+    return () => {
+      el.removeEventListener('wheel', onWheel)
+      el.removeEventListener('touchstart', onTouch)
+      el.removeEventListener('touchmove', onTouch)
+    }
   }, [size.width])
 
   const focusId = hoverId ?? selectedId
