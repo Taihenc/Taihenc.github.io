@@ -25,9 +25,31 @@
   <meta name="twitter:description" content="Computer Engineering @ Chulalongkorn University · Research Intern @ The University of Tokyo." />
   <meta name="twitter:image" content="https://taihenc.github.io/og-image.png" />
 
-  <!-- Privacy-friendly analytics (no cookies): Umami Cloud, loaded through the
+  <!-- Privacy-friendly analytics (no cookies): Umami Cloud. Loads directly first
+       (more precise location). If a blocker stops it, falls back to the
        first-party proxy in github.com/Taihenc/stats-proxy. Only counts on the live domain. -->
-  <script defer src="https://stats-proxy-puce.vercel.app/s.js" data-host-url="https://stats-proxy-puce.vercel.app" data-website-id="5f0723a8-a2fb-43ee-89fd-d4fc04755278" data-domains="taihenc.github.io"></script>
+  <script>
+    (function () {
+      var PROXY = 'https://stats-proxy-puce.vercel.app'
+      function load(src, hostUrl, onFail) {
+        var s = document.createElement('script')
+        s.defer = true
+        s.src = src
+        s.setAttribute('data-website-id', '5f0723a8-a2fb-43ee-89fd-d4fc04755278')
+        s.setAttribute('data-domains', 'taihenc.github.io')
+        if (hostUrl) s.setAttribute('data-host-url', hostUrl)
+        if (onFail) {
+          s.onerror = onFail
+          // Some blockers swap in an empty stub instead of failing the request.
+          s.onload = function () { if (!window.umami) onFail() }
+        }
+        document.head.appendChild(s)
+      }
+      load('https://cloud.umami.is/script.js', null, function () {
+        load(PROXY + '/s.js', PROXY)
+      })
+    })()
+  </script>
 </head>
 
 <body>
