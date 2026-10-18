@@ -23,6 +23,13 @@ export interface GraphLinkRef {
 export type Engagement =
   'internship' | 'part-time' | 'full-time' | 'volunteer' | 'side-project'
 
+/** A tag on a work. Works sharing a keyword are linked through one small node. */
+export interface WorkKeyword {
+  label: string
+  /** Why the work carries the keyword; defaults to 'Tagged "<label>"'. */
+  evidence?: string
+}
+
 export interface WorkRole {
   title: string
   /** Free-form, human readable, e.g. "Jun 2026 - Nov 2026". */
@@ -57,6 +64,11 @@ export interface WorkNode extends GraphNodeBase {
   /** Engagement for works without roles (e.g. side projects). */
   engagement?: Engagement
   remote?: boolean
+  /**
+   * Lightweight connections: each distinct keyword becomes a node linked to
+   * every work that lists it, so no node has to be written by hand.
+   */
+  keywords?: (string | WorkKeyword)[]
 }
 
 /** A skill, language or domain that groups related works together. */

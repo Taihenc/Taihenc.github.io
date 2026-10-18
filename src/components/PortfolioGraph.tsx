@@ -5,7 +5,7 @@ import type {
   LinkObject,
   NodeObject,
 } from 'react-force-graph-2d'
-import { forceCollide, forceX, forceY } from 'd3-force'
+import { forceCollide, forceManyBody, forceX, forceY } from 'd3-force'
 import { AnimatePresence } from 'framer-motion'
 import {
   ArrowsPointingInIcon,
@@ -15,7 +15,8 @@ import {
   PlusIcon,
 } from '@heroicons/react/24/outline'
 import type { GraphEdge, KnowledgeGraph, KnowledgeNode } from '../types/graph'
-import { indexGraph, validateGraph } from '../utils/graph'
+import type { Affinity } from '../utils/graph'
+import { indexGraph, validateGraph, workAffinities } from '../utils/graph'
 import { WorkDetailCard } from './WorkDetailCard'
 
 interface NodeDatum {
@@ -74,6 +75,44 @@ function driftForce(strength: number) {
   return force
 }
 
+/**
+ * Invisible springs between related works. Unlike d3's forceLink it resolves
+ * ids on every initialize and skips missing nodes, so it is safe to install
+ * before force-graph has handed the simulation its nodes.
+ */
+function affinityForce(affinities: Affinity[]) {
+  let springs: { s: SimNode; t: SimNode; length: number; k: number }[] = []
+  const force = (alpha: number) => {
+    for (const { s, t, length, k } of springs) {
+      const dx = (t.x ?? 0) + (t.vx ?? 0) - (s.x ?? 0) - (s.vx ?? 0)
+      const dy = (t.y ?? 0) + (t.vy ?? 0) - (s.y ?? 0) - (s.vy ?? 0)
+      const d = Math.hypot(dx, dy) || 1
+      const f = ((d - length) / d) * alpha * k * 0.5
+      t.vx = (t.vx ?? 0) - dx * f
+      t.vy = (t.vy ?? 0) - dy * f
+      s.vx = (s.vx ?? 0) + dx * f
+      s.vy = (s.vy ?? 0) + dy * f
+    }
+  }
+  force.initialize = (ns: SimNode[]) => {
+    const byId = new Map(ns.map((n) => [String(n.id), n]))
+    springs = affinities.flatMap((a) => {
+      const s = byId.get(a.source)
+      const t = byId.get(a.target)
+      if (!s || !t) return []
+      return [
+        {
+          s,
+          t,
+          length: 100 - 60 * a.similarity,
+          k: Math.min(1, 1.5 * a.similarity),
+        },
+      ]
+    })
+  }
+  return force
+}
+
 interface PortfolioGraphProps {
   graph: KnowledgeGraph
 }
@@ -103,6 +142,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   exploreRef.current = explore
 
   const index = useMemo(() => indexGraph(graph), [graph])
+  const affinities = useMemo(() => workAffinities(index, 0.1), [index])
   const compact = size.width > 0 && size.width < 640
 
   useEffect(() => {
@@ -174,9 +214,18 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
         n.radius + (portrait && n.data.kind === 'work' ? 26 : 14)
       )
     )
+    // Related works cluster: invisible springs between works that share
+    // neighbours, plus extra repulsion between works so unrelated ones part.
+    fg.d3Force('affinity', affinityForce(affinities))
+    fg.d3Force(
+      'workRepel',
+      forceManyBody<SimNode>()
+        .strength((n) => (n.data.kind === 'work' ? -300 : 0))
+        .distanceMax(400)
+    )
     fg.d3Force('drift', reducedMotion ? null : driftForce(0.012))
     fg.d3ReheatSimulation()
-  }, [size.width, size.height, reducedMotion])
+  }, [size.width, size.height, reducedMotion, affinities])
 
   // Touch: let vertical swipes scroll the page unless the user unlocked pan/zoom.
   useEffect(() => {

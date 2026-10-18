@@ -1,4 +1,5 @@
-import type { GraphEdge, KnowledgeGraph } from '../types/graph'
+import type { Engagement, GraphEdge, KnowledgeGraph } from '../types/graph'
+import { withKeywords } from '../utils/graph'
 
 /**
  * Portfolio knowledge graph.
@@ -15,6 +16,8 @@ const groups: KnowledgeGraph['groups'] = [
   { id: 'project', label: 'Side projects', color: '#5fd3c6' },
   { id: 'domain', label: 'Domains', color: '#a99cf5' },
   { id: 'language', label: 'Languages', color: '#8fa3bf' },
+  { id: 'job', label: 'Job type', color: '#7cc4f2' },
+  { id: 'keyword', label: 'Keywords', color: '#e6d37a' },
 ]
 
 const nodes: KnowledgeGraph['nodes'] = [
@@ -42,6 +45,11 @@ const nodes: KnowledgeGraph['nodes'] = [
       'Data pipeline for 1M+ drone trajectory points (DataFromSky) and a multi-objective loss.',
     ],
     logo: './works-experience/utokyo/logo.png',
+    images: [
+      './works-experience/utokyo/campus.jpg',
+      './works-experience/utokyo/desk.jpg',
+      './works-experience/utokyo/lab-party.jpg',
+    ],
     links: [{ label: 'IIS, UTokyo', url: 'https://www.iis.u-tokyo.ac.jp/en/' }],
   },
   {
@@ -65,6 +73,12 @@ const nodes: KnowledgeGraph['nodes'] = [
       'Reviewed backend and AI-pipeline code; ran sprint planning, code reviews and MVP demos to internal stakeholders.',
     ],
     logo: './works-experience/scbtechx/logo.png',
+    images: [
+      './works-experience/scbtechx/architecture.jpg',
+      './works-experience/scbtechx/chunking.jpg',
+      './works-experience/scbtechx/lanyard.jpg',
+      './works-experience/scbtechx/office.jpg',
+    ],
     links: [{ label: 'scbtechx.io', url: 'https://www.scbtechx.io/' }],
   },
   {
@@ -95,6 +109,12 @@ const nodes: KnowledgeGraph['nodes'] = [
       'Debugged and revised a legacy notification service that failed to reach some of its 1,000+ users.',
     ],
     logo: './works-experience/skooldio/logo.png',
+    images: [
+      './works-experience/skooldio/demo.jpg',
+      './works-experience/skooldio/kickoff.jpg',
+      './works-experience/skooldio/welcome-kit.jpg',
+      './works-experience/skooldio/plush.jpg',
+    ],
     links: [{ label: 'skooldio.com', url: 'https://www.skooldio.com/' }],
   },
   {
@@ -175,6 +195,7 @@ const nodes: KnowledgeGraph['nodes'] = [
         engagement: 'volunteer',
       },
     ],
+    keywords: [{ label: 'Chula', evidence: 'TA at Chulalongkorn University' }],
     summary:
       'TA for Data Structures & Algorithms and Computer Digital Logic. Soft skills need a different approach than coding, so I also staffed ICPC Thailand 2024, supporting competitors at the international collegiate programming contest.',
     logo: './works-experience/chula/logo.png',
@@ -198,6 +219,7 @@ const nodes: KnowledgeGraph['nodes'] = [
         engagement: 'volunteer',
       },
     ],
+    keywords: [{ label: 'Chula', evidence: 'Chula student government IT' }],
     summary:
       'Front end for Chula student government IT, serving 1,000+ concurrent users.',
     logo: './works-experience/isd/logo.png',
@@ -215,6 +237,7 @@ const nodes: KnowledgeGraph['nodes'] = [
     engagement: 'side-project',
     label: 'YAKINIKU',
     title: 'YAKINIKU',
+    keywords: [{ label: 'Chula', evidence: 'Classwork at Chula' }],
     summary:
       'A website for learning about yakiniku, built with no framework (plain HTML, CSS, JS): cow breeds, details for each cut such as its origin and cooking recommendations, and a mini-game where you pick a cut, read the guide, grill it and get a result.',
     logo: './works-experience/yakiniku/logo.png',
@@ -248,6 +271,7 @@ const nodes: KnowledgeGraph['nodes'] = [
     engagement: 'side-project',
     label: 'StaySleep',
     title: 'StaySleep',
+    keywords: [{ label: 'Chula', evidence: 'Classwork at Chula' }],
     summary:
       'Hotel booking app (auth, search, booking). Led the front end, back end and design. Built with Next.js and MongoDB.',
     logo: './works-experience/staysleep/logo.png',
@@ -324,6 +348,13 @@ const nodes: KnowledgeGraph['nodes'] = [
   { id: 'ts', kind: 'topic', group: 'language', label: 'TypeScript / JS' },
   { id: 'go', kind: 'topic', group: 'language', label: 'Go' },
   { id: 'kotlin', kind: 'topic', group: 'language', label: 'Kotlin' },
+
+  // ----------------------------------------------------------------- job types
+  { id: 'job-internship', kind: 'topic', group: 'job', label: 'Internship' },
+  { id: 'job-part-time', kind: 'topic', group: 'job', label: 'Part-time' },
+  { id: 'job-research', kind: 'topic', group: 'job', label: 'Research' },
+  { id: 'job-volunteer', kind: 'topic', group: 'job', label: 'Volunteer' },
+  { id: 'job-side-project', kind: 'topic', group: 'job', label: 'Side project' },
 ]
 
 const stated = (
@@ -346,6 +377,33 @@ const inferred = (
   evidence,
   basis: 'inferred',
 })
+
+/**
+ * One edge from each work to the job-type node of every engagement it had,
+ * with the matching roles as evidence. Engagements without a node are skipped.
+ */
+function jobTypeEdges(): GraphEdge[] {
+  const jobIds = new Set(nodes.map((n) => n.id))
+  const result: GraphEdge[] = []
+  for (const n of nodes) {
+    if (n.kind !== 'work') continue
+    const evidence = new Map<Engagement, string[]>()
+    for (const r of n.roles ?? []) {
+      if (!r.engagement) continue
+      const list = evidence.get(r.engagement) ?? []
+      list.push(r.period ? `${r.title} (${r.period})` : r.title)
+      evidence.set(r.engagement, list)
+    }
+    if (n.engagement && !evidence.has(n.engagement))
+      evidence.set(n.engagement, [n.title])
+    for (const [engagement, roles] of evidence) {
+      const target = `job-${engagement}`
+      if (jobIds.has(target))
+        result.push(stated(n.id, target, roles.join('; ')))
+    }
+  }
+  return result
+}
 
 const edges: GraphEdge[] = [
   stated(
@@ -406,6 +464,12 @@ const edges: GraphEdge[] = [
   stated('staysleep', 'lead', 'Led front end, back end and design'),
   stated('leaderboard', 'go', 'Written in Go'),
   stated('leaderboard', 'web', 'Real-time backend service on Redis'),
+
+  stated('utokyo', 'job-research', 'Research Intern at Oguchi Lab'),
+  ...jobTypeEdges(),
 ]
 
-export const portfolioGraph: KnowledgeGraph = { groups, nodes, edges }
+export const portfolioGraph: KnowledgeGraph = withKeywords(
+  { groups, nodes, edges },
+  'keyword'
+)
