@@ -234,6 +234,9 @@ export function WorkDetailCard({
                 href={l.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-umami-event="work-link"
+                data-umami-event-work={node.label}
+                data-umami-event-link={l.label}
                 className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs text-slate-100 hover:border-white/40 hover:bg-white/5"
               >
                 {l.label}

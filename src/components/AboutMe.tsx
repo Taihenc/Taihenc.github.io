@@ -78,6 +78,8 @@ export default function AboutMe() {
                         className="link-primary"
                         href="https://github.com/Taihenc"
                         target="_blank"
+                        data-umami-event="contact"
+                        data-umami-event-channel="github-about"
                       >
                         Github
                       </a>

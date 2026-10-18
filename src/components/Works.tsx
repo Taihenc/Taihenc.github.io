@@ -7,6 +7,7 @@ import { getLogoName } from '../utils/utils'
 import { workExperiences } from '../data/works-experience'
 import { WorkExperience } from '../interfaces/WorkExperience'
 import { portfolioGraph } from '../data/portfolio-graph'
+import { track } from '../utils/analytics'
 
 // Canvas + force simulation live in their own chunk.
 const PortfolioGraph = lazy(() => import('./PortfolioGraph'))
@@ -23,6 +24,7 @@ export default function Works() {
 
   const handleLogoClick = (work: WorkExperience) => {
     setSelectedWork(work)
+    track('work-card', { work: work.title })
   }
 
   // Animation Variants
@@ -52,7 +54,10 @@ export default function Works() {
                 key={v.id}
                 role="tab"
                 aria-selected={view === v.id}
-                onClick={() => setView(v.id)}
+                onClick={() => {
+                  setView(v.id)
+                  track('works-view', { view: v.id })
+                }}
                 className={`px-3 py-1 rounded-md transition-colors ${
                   view === v.id
                     ? 'bg-white/15 text-white'
@@ -154,6 +159,9 @@ export default function Works() {
                         // onClick={handleContactClick}
                         href={selectedWork.link}
                         target="_blank"
+                        data-umami-event="work-link"
+                        data-umami-event-work={selectedWork.title}
+                        data-umami-event-link="Check it out"
                         className="md:w-fit btn mt-3 text-white bg-[#223b93]"
                       >
                         Check it out!

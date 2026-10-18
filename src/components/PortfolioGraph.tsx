@@ -17,6 +17,7 @@ import {
 import type { GraphEdge, KnowledgeGraph, KnowledgeNode } from '../types/graph'
 import type { Affinity } from '../utils/graph'
 import { indexGraph, validateGraph, workAffinities } from '../utils/graph'
+import { track } from '../utils/analytics'
 import { WorkDetailCard } from './WorkDetailCard'
 
 interface NodeDatum {
@@ -283,6 +284,9 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       setSelectedId(id)
       const fg = fgRef.current
       const node = data.nodes.find((n) => n.id === id)
+      if (node) {
+        track('graph-node', { node: node.data.label, kind: node.data.kind })
+      }
       if (!fg || !node || node.x === undefined || node.y === undefined) return
       // Keep the node visible next to the detail card.
       const k = fg.zoom()
