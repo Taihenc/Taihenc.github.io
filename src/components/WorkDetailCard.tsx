@@ -81,6 +81,7 @@ export function WorkDetailCard({
       transition={{ duration: 0.22, ease: 'easeOut' }}
       className="absolute z-20 inset-x-2 bottom-2 max-h-[62%] md:inset-x-auto md:right-3 md:top-3 md:bottom-3 md:max-h-none md:w-[23rem] flex flex-col rounded-xl border border-white/10 bg-[#0d131d]/95 text-slate-300 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)] backdrop-blur-md overflow-hidden"
       aria-label={`Details: ${node.label}`}
+      data-detail-panel={node.id}
     >
       <div className="h-[3px] w-full shrink-0" style={{ background: color }} />
       <header className="flex items-start gap-3 px-4 pt-4 pb-3 shrink-0">

@@ -97,36 +97,40 @@ export default function NavBar() {
               <span className="absolute -inset-0.5" />
               <span className="sr-only">Open main menu</span>
               {open ? (
-                <>
-                  <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-                  <div className="absolute top-16 flex flex-col bg-[#1a252f] bg-opacity-50 rounded-lg gap-3">
-                    <div className="absolute w-full h-full bg-transparent -z-10 rounded-[inherit] shadow-2xl shadow-[rgba(97,97,170,0.8)] animate-pulse"></div>
-
-                    {navigation.map((item) => (
-                      <a
-                        href={item.href}
-                        key={item.name}
-                        onClick={(e) => {
-                          e.preventDefault()
-                          handleItemClick(item)
-                        }}
-                        className={classNames(
-                          item.current
-                            ? 'bg-[#223b93] text-white'
-                            : 'text-gray-300 hover:text-white hover:bg-[#433969] bg-transparent',
-                          'rounded-md px-3 py-2 text-sm font-medium transition-all duration-150 focus:outline-none'
-                        )}
-                        aria-current={item.current ? 'page' : undefined}
-                      >
-                        {item.name}
-                      </a>
-                    ))}
-                  </div>
-                </>
+                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
               ) : (
                 <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
               )}
             </Disclosure.Button>
+            {/* Kept outside the button: links nested in a <button> are unreliable on iOS. */}
+            <Disclosure.Panel className="absolute left-0 top-16 flex flex-col bg-[#1a252f] bg-opacity-50 rounded-lg gap-3">
+              {({ close }) => (
+                <>
+                  <div className="absolute w-full h-full bg-transparent -z-10 rounded-[inherit] shadow-2xl shadow-[rgba(97,97,170,0.8)] animate-pulse"></div>
+
+                  {navigation.map((item) => (
+                    <a
+                      href={item.href}
+                      key={item.name}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        handleItemClick(item)
+                        close()
+                      }}
+                      className={classNames(
+                        item.current
+                          ? 'bg-[#223b93] text-white'
+                          : 'text-gray-300 hover:text-white hover:bg-[#433969] bg-transparent',
+                        'rounded-md px-3 py-2 text-sm font-medium transition-all duration-150 focus:outline-none'
+                      )}
+                      aria-current={item.current ? 'page' : undefined}
+                    >
+                      {item.name}
+                    </a>
+                  ))}
+                </>
+              )}
+            </Disclosure.Panel>
           </div>
           <div className="hidden sm:flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="space-x-4">
@@ -158,39 +162,14 @@ export default function NavBar() {
 }
 
 export function scrollToSection(sectionId: string): void {
-  const sectionElement: HTMLElement | null = document.getElementById(sectionId)
+  const section = document.getElementById(sectionId)
   const main = document.getElementById('main-content')
-
-  if (sectionElement && main) {
-    // Disable scroll snapping during the animation
-    const originalScrollSnapType = main.style.scrollSnapType
-    main.style.scrollSnapType = 'none'
-
-    const start: number = main.scrollTop // Current scroll position of the main container
-    const target: number = sectionElement.offsetTop - main.offsetTop // Position of the section relative to the main container
-    const duration: number = 500 // duration of the scroll in milliseconds
-    const startTime: number = performance.now() // Start time of the animation
-
-    function animateScroll(time: number): void {
-      const elapsed: number = time - startTime
-      const progress: number = Math.min(elapsed / duration, 1) // Progress of the animation (0 to 1)
-      const easing: number = easeInOutQuad(progress) // Easing function for smooth scroll
-
-      const newScrollTop: number = start + (target - start) * easing // New scroll position of main
-      main!.scrollTo(0, newScrollTop) // Scroll the main container
-      if (elapsed < duration) {
-        requestAnimationFrame(animateScroll) // Continue the animation
-      } else {
-        // Re-enable scroll snapping after the animation completes
-        main!.style.scrollSnapType = originalScrollSnapType
-      }
-    }
-
-    function easeInOutQuad(t: number): number {
-      // Easing function for smooth scroll
-      return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-    }
-
-    requestAnimationFrame(animateScroll) // Start the scroll animation
-  }
+  if (!section || !main) return
+  // Native smooth scrolling lands on the snap point in every engine. The old
+  // hand-rolled rAF loop fought Safari's scroll snapping and stopped short.
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  main.scrollTo({
+    top: section.offsetTop - main.offsetTop,
+    behavior: reduce ? 'auto' : 'smooth',
+  })
 }

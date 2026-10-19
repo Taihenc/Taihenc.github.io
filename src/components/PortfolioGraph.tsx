@@ -282,7 +282,6 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   const select = useCallback(
     (id: string | null) => {
       setSelectedId(id)
-      const fg = fgRef.current
       const node = data.nodes.find((n) => n.id === id)
       if (node) {
         track('graph_node_selected', {
@@ -290,17 +289,8 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
           node_label: node.data.label,
         })
       }
-      if (!fg || !node || node.x === undefined || node.y === undefined) return
-      // Keep the node visible next to the detail card.
-      const k = fg.zoom()
-      const narrow = size.width < 768
-      fg.centerAt(
-        narrow ? node.x : node.x + 190 / k,
-        narrow ? node.y + (size.height * 0.28) / k : node.y,
-        500
-      )
     },
-    [data.nodes, size]
+    [data.nodes]
   )
 
   const drawNode = useCallback(
@@ -466,23 +456,64 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
     const fg = fgRef.current
     if (fg) fg.zoom(fg.zoom() * factor, 250)
   }
+  /** The part of the canvas the detail card leaves uncovered, in canvas pixels. */
+  const viewport = useCallback(() => {
+    const full = { left: 0, top: 0, width: size.width, height: size.height }
+    if (!selectedId) return full
+    const panel = containerRef.current?.parentElement?.querySelector<HTMLElement>(
+      `[data-detail-panel="${CSS.escape(selectedId)}"]`
+    )
+    if (!panel) return full
+    const gap = 12
+    // offsetLeft/offsetTop ignore the card's enter transform, so this is where it comes to rest.
+    return panel.offsetLeft > size.width / 3
+      ? { ...full, width: panel.offsetLeft - gap } // docked right (desktop)
+      : { ...full, height: panel.offsetTop - gap } // docked bottom (phone)
+  }, [size, selectedId])
+
+  /** Eases the camera so graph point (x, y) sits in the middle of the visible area. */
+  const lookAt = useCallback(
+    (x: number, y: number, k: number, ms: number) => {
+      const fg = fgRef.current
+      if (!fg) return
+      const v = viewport()
+      fg.centerAt(
+        x + (size.width / 2 - (v.left + v.width / 2)) / k,
+        y + (size.height / 2 - (v.top + v.height / 2)) / k,
+        ms
+      )
+      fg.zoom(k, ms)
+    },
+    [size, viewport]
+  )
+
   /** Eases the camera to frame the whole graph (never snaps). */
   const fit = useCallback(
     (ms = 700) => {
       const fg = fgRef.current
       if (!fg || !size.width) return
       const { x, y } = fg.getGraphBbox()
+      const v = viewport()
       const pad = 48
       const k = Math.min(
         MAX_FIT_ZOOM, // small graphs would otherwise be blown up on large screens
-        (size.width - pad * 2) / Math.max(1, x[1] - x[0]),
-        (size.height - pad * 2) / Math.max(1, y[1] - y[0])
+        (v.width - pad * 2) / Math.max(1, x[1] - x[0]),
+        (v.height - pad * 2) / Math.max(1, y[1] - y[0])
       )
-      fg.centerAt((x[0] + x[1]) / 2, (y[0] + y[1]) / 2, ms)
-      fg.zoom(k, ms)
+      lookAt((x[0] + x[1]) / 2, (y[0] + y[1]) / 2, Math.max(0.4, k), ms)
     },
-    [size]
+    [size, viewport, lookAt]
   )
+
+  // Centre the selected node in the space beside (or above) the detail card. Runs
+  // after the card mounts so its real size is known.
+  useEffect(() => {
+    const fg = fgRef.current
+    const node = selectedId ? data.nodes.find((n) => n.id === selectedId) : undefined
+    if (!fg || node?.x === undefined || node.y === undefined) return
+    lookAt(node.x, node.y, fg.zoom(), 500)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedId])
 
   const selected = selectedId ? index.byId.get(selectedId) : undefined
   const isTouchEvent = (ev: Event) => ev.type.startsWith('touch')

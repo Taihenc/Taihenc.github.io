@@ -12,7 +12,7 @@ export default function App() {
       <NavBar />
       <main
         id="main-content"
-        className="w-[100vw] h-[100vh] overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth"
+        className="w-[100vw] h-[100dvh] overflow-x-hidden overflow-y-auto snap-y snap-mandatory scroll-smooth"
       >
         <Home />
         <Works />
