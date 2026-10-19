@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
 import 'flowbite'
+import './posthog'
 
 // icons
 import './assets/icon'

@@ -6,6 +6,7 @@ import {
 import type { Engagement, KnowledgeNode, WorkNode } from '../types/graph'
 import SkeletonImage from './SkeletonImage'
 import type { GraphIndex } from '../utils/graph'
+import { track } from '../utils/analytics'
 
 const ENGAGEMENT_STYLE: Record<
   Engagement,
@@ -234,9 +235,12 @@ export function WorkDetailCard({
                 href={l.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-umami-event="work-link"
-                data-umami-event-work={node.label}
-                data-umami-event-link={l.label}
+                onClick={() =>
+                  track('work_external_link_clicked', {
+                    link_label: l.label,
+                    work_title: node.title,
+                  })
+                }
                 className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs text-slate-100 hover:border-white/40 hover:bg-white/5"
               >
                 {l.label}

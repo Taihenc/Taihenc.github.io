@@ -1,8 +1,9 @@
 /**
- * Umami custom events. The script in index.html only loads on
- * taihenc.github.io (data-domains), so these are no-ops locally.
- * Link clicks use `data-umami-event` attributes instead of this helper.
+ * Custom analytics events for Umami and PostHog. The Umami script in index.html
+ * only loads on taihenc.github.io (data-domains), so its calls are no-ops locally.
  */
+
+import posthog, { isPostHogEnabled } from '../posthog'
 
 type EventData = Record<string, string | number | boolean>
 
@@ -16,6 +17,7 @@ export function track(event: string, data?: EventData) {
   try {
     window.umami?.track(event, data)
   } catch {
-    // Analytics must never break the page.
+    // Umami failures must not block PostHog.
   }
+  if (isPostHogEnabled) posthog.capture(event, data)
 }

@@ -8,6 +8,7 @@ import { Model } from './KeyboardModel'
 import { IdleAnimation, createKeyboardController } from './KeyboardConrtoller'
 import * as THREE from 'three'
 import '../styles/arrow-up.css'
+import { track } from '../utils/analytics'
 
 export default function Home() {
   const [finished, setFinished] = useState(false)
@@ -114,8 +115,11 @@ export default function Home() {
                     {loadURL && (
                       <a
                         href="https://github.com/Taihenc"
-                        data-umami-event="contact"
-                        data-umami-event-channel="github-home"
+                        onClick={() =>
+                          track('contact_link_clicked', {
+                            channel: 'github_home',
+                          })
+                        }
                         className="github-show w-fit h-0 p-2 pt-3 pl-4 pr-4 flex justify-center items-center gap-2 bg-black text-white rounded-md text-lg opacity-70 hover:text-red-200"
                       >
                         <FontAwesomeIcon

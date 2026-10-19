@@ -24,7 +24,7 @@ export default function Works() {
 
   const handleLogoClick = (work: WorkExperience) => {
     setSelectedWork(work)
-    track('work-card', { work: work.title })
+    track('work_card_selected', { work_title: work.title })
   }
 
   // Animation Variants
@@ -56,7 +56,7 @@ export default function Works() {
                 aria-selected={view === v.id}
                 onClick={() => {
                   setView(v.id)
-                  track('works-view', { view: v.id })
+                  track('works_view_selected', { view: v.id })
                 }}
                 className={`px-3 py-1 rounded-md transition-colors ${
                   view === v.id
@@ -159,9 +159,12 @@ export default function Works() {
                         // onClick={handleContactClick}
                         href={selectedWork.link}
                         target="_blank"
-                        data-umami-event="work-link"
-                        data-umami-event-work={selectedWork.title}
-                        data-umami-event-link="Check it out"
+                        onClick={() =>
+                          track('work_external_link_clicked', {
+                            link_label: 'check_it_out',
+                            work_title: selectedWork.title,
+                          })
+                        }
                         className="md:w-fit btn mt-3 text-white bg-[#223b93]"
                       >
                         Check it out!

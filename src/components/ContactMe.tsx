@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { contactInfo } from '../data/contact'
+import { track } from '../utils/analytics'
 
 export default function ContactMe() {
   return (
@@ -36,8 +37,11 @@ export default function ContactMe() {
                             className="pl-2 link-primary"
                             href={contactInfo.linkedin_url}
                             target="_blank"
-                            data-umami-event="contact"
-                            data-umami-event-channel="linkedin"
+                            onClick={() =>
+                              track('contact_link_clicked', {
+                                channel: 'linkedin',
+                              })
+                            }
                           >
                             {contactInfo.linkedin_name}
                           </a>
@@ -48,8 +52,11 @@ export default function ContactMe() {
                             className="pl-2 link-primary"
                             href={`mailto:${contactInfo.email_address}`}
                             target="_blank"
-                            data-umami-event="contact"
-                            data-umami-event-channel="email"
+                            onClick={() =>
+                              track('contact_link_clicked', {
+                                channel: 'email',
+                              })
+                            }
                           >
                             {contactInfo.email_address}
                           </a>
@@ -60,8 +67,11 @@ export default function ContactMe() {
                             className="pl-2 link-primary"
                             href={contactInfo.github_url}
                             target="_blank"
-                            data-umami-event="contact"
-                            data-umami-event-channel="github"
+                            onClick={() =>
+                              track('contact_link_clicked', {
+                                channel: 'github',
+                              })
+                            }
                           >
                             {contactInfo.github_id}
                           </a>
@@ -72,8 +82,11 @@ export default function ContactMe() {
                             className="pl-2 link-primary"
                             href={contactInfo.instagram_url}
                             target="_blank"
-                            data-umami-event="contact"
-                            data-umami-event-channel="instagram"
+                            onClick={() =>
+                              track('contact_link_clicked', {
+                                channel: 'instagram',
+                              })
+                            }
                           >
                             {contactInfo.instagram_id}
                           </a>

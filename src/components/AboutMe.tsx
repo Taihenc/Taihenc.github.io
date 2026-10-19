@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { scrollToSection } from './Navbar'
 import TypingEffect from './TypingEffect'
 import { awards, certificates } from '../data/achievements'
+import { track } from '../utils/analytics'
 
 export default function AboutMe() {
   return (
@@ -78,8 +79,7 @@ export default function AboutMe() {
                         className="link-primary"
                         href="https://github.com/Taihenc"
                         target="_blank"
-                        data-umami-event="contact"
-                        data-umami-event-channel="github-about"
+                        onClick={() => track('contact_link_clicked', { channel: 'github_about' })}
                       >
                         Github
                       </a>

@@ -285,7 +285,10 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       const fg = fgRef.current
       const node = data.nodes.find((n) => n.id === id)
       if (node) {
-        track('graph-node', { node: node.data.label, kind: node.data.kind })
+        track('graph_node_selected', {
+          node_kind: node.data.kind,
+          node_label: node.data.label,
+        })
       }
       if (!fg || !node || node.x === undefined || node.y === undefined) return
       // Keep the node visible next to the detail card.
