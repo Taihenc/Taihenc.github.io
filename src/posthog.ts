@@ -19,7 +19,13 @@ if (isPostHogEnabled) {
     },
     session_recording: {
       // The works graph is a <canvas>; without this replays show an empty box.
-      captureCanvas: { recordCanvas: true, canvasFps: 4, canvasQuality: '0.4' },
+      // Snapshots are costly (4fps took ~6x the page's own script time), so keep
+      // them sparse, and skip them on phones where that cost shows as lag.
+      captureCanvas: {
+        recordCanvas: !window.matchMedia('(pointer: coarse)').matches,
+        canvasFps: 1,
+        canvasQuality: '0.3',
+      },
     },
   })
 } else if (import.meta.env.DEV) {

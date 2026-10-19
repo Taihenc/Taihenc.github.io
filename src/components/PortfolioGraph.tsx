@@ -118,6 +118,8 @@ interface PortfolioGraphProps {
   graph: KnowledgeGraph
 }
 
+type Camera = { x: number; y: number; k: number }
+
 /** Canvas renderer for a `KnowledgeGraph`. All content comes from props. */
 export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -136,6 +138,10 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   const nodeAlpha = useRef(new Map<string, number>())
   const linkLit = useRef(new WeakMap<SimLink, number>())
   const frame = useRef({ now: performance.now(), dt: 0 })
+  const glide = useRef<{ from: Camera; to: Camera; start: number; ms: number } | null>(null)
+  // Live hit test and click handler, read from native listeners that are bound once.
+  const nodeAtRef = useRef<(ev: PointerEvent) => SimNode | undefined>(() => undefined)
+  const clickAtRef = useRef<(ev: PointerEvent) => void>(() => {})
   // Free pan/zoom. Off by default so the graph never traps page scrolling.
   const [explore, setExplore] = useState(false)
   // force-graph keeps the first interaction filter it receives, so read live state via a ref.
@@ -254,6 +260,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       lastWheel = now
       if (owner === 'page') return
       ev.preventDefault()
+      glide.current = null
       const k = fg.zoom()
       const { x, y } = fg.centerAt()
       fg.centerAt(x + ev.deltaX / k, y + ev.deltaY / k)
@@ -261,10 +268,44 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
     const onTouch = (ev: TouchEvent) => {
       if (ev.touches.length >= 2 && ev.cancelable) ev.preventDefault()
     }
+    // Clicks are detected here rather than by force-graph, which drops any click
+    // whose press overlaps a camera step (it reads that as a drag).
+    let down: { x: number; y: number; t: number } | null = null
+    const onDown = (ev: PointerEvent) => {
+      glide.current = null // any press hands the camera back to the user
+      // A second finger makes it a pinch / pan, not a tap.
+      down = ev.isPrimary ? { x: ev.clientX, y: ev.clientY, t: performance.now() } : null
+    }
+    const onUp = (ev: PointerEvent) => {
+      if (!down || !ev.isPrimary) return
+      const tap =
+        Math.hypot(ev.clientX - down.x, ev.clientY - down.y) < 6 &&
+        performance.now() - down.t < 600
+      down = null
+      if (tap) clickAtRef.current(ev)
+    }
+    const onCancel = () => (down = null) // the browser took the touch for scrolling
+    const onMove = (ev: PointerEvent) => {
+      if (ev.pointerType !== 'mouse' || ev.buttons) return
+      const n = nodeAtRef.current(ev)
+      setHoverId(n ? String(n.id) : null)
+      el.style.cursor = n ? 'pointer' : ''
+    }
+    const onLeave = () => setHoverId(null)
+    el.addEventListener('pointerdown', onDown)
+    el.addEventListener('pointerup', onUp)
+    el.addEventListener('pointercancel', onCancel)
+    el.addEventListener('pointermove', onMove)
+    el.addEventListener('pointerleave', onLeave)
     el.addEventListener('wheel', onWheel, { passive: false })
     el.addEventListener('touchstart', onTouch, { passive: false })
     el.addEventListener('touchmove', onTouch, { passive: false })
     return () => {
+      el.removeEventListener('pointerdown', onDown)
+      el.removeEventListener('pointerup', onUp)
+      el.removeEventListener('pointercancel', onCancel)
+      el.removeEventListener('pointermove', onMove)
+      el.removeEventListener('pointerleave', onLeave)
       el.removeEventListener('wheel', onWheel)
       el.removeEventListener('touchstart', onTouch)
       el.removeEventListener('touchmove', onTouch)
@@ -429,12 +470,39 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
     [isLinkLit]
   )
 
+  // force-graph's own zoom transitions flag the canvas as dragging, which
+  // swallows clicks until they end, so camera glides are stepped per frame instead.
+  const moveCamera = useCallback(
+    (to: Camera, ms: number) => {
+      const fg = fgRef.current
+      if (!fg) return
+      if (ms <= 0 || reducedMotion) {
+        glide.current = null
+        fg.zoom(to.k)
+        fg.centerAt(to.x, to.y)
+        return
+      }
+      const { x, y } = fg.centerAt()
+      glide.current = { from: { x, y, k: fg.zoom() }, to, start: performance.now(), ms }
+    },
+    [reducedMotion]
+  )
+
   // Idle links fade further back while something is focused, and ease back.
   const idleLinkAlpha = useRef(0.28)
   const onFramePre = useCallback(() => {
     const now = performance.now()
     // Clamp so a backgrounded tab doesn't snap everything on return.
     frame.current = { now, dt: Math.min(0.05, (now - frame.current.now) / 1000) }
+    const g = glide.current
+    const fg = fgRef.current
+    if (g && fg) {
+      const t = Math.min(1, (now - g.start) / g.ms)
+      const e = t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2 // ease-in-out cubic
+      fg.zoom(g.from.k + (g.to.k - g.from.k) * e)
+      fg.centerAt(g.from.x + (g.to.x - g.from.x) * e, g.from.y + (g.to.y - g.from.y) * e)
+      if (t === 1) glide.current = null
+    }
     idleLinkAlpha.current = ease(
       idleLinkAlpha.current,
       highlighted ? 0.06 : 0.28,
@@ -454,7 +522,9 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
 
   const zoomBy = (factor: number) => {
     const fg = fgRef.current
-    if (fg) fg.zoom(fg.zoom() * factor, 250)
+    if (!fg) return
+    const { x, y } = fg.centerAt()
+    moveCamera({ x, y, k: Math.min(8, Math.max(0.4, fg.zoom() * factor)) }, 250)
   }
   /** The part of the canvas the detail card leaves uncovered, in canvas pixels. */
   const viewport = useCallback(() => {
@@ -477,14 +547,16 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       const fg = fgRef.current
       if (!fg) return
       const v = viewport()
-      fg.centerAt(
-        x + (size.width / 2 - (v.left + v.width / 2)) / k,
-        y + (size.height / 2 - (v.top + v.height / 2)) / k,
+      moveCamera(
+        {
+          x: x + (size.width / 2 - (v.left + v.width / 2)) / k,
+          y: y + (size.height / 2 - (v.top + v.height / 2)) / k,
+          k,
+        },
         ms
       )
-      fg.zoom(k, ms)
     },
-    [size, viewport]
+    [size, viewport, moveCamera]
   )
 
   /** Eases the camera to frame the whole graph (never snaps). */
@@ -514,6 +586,41 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
     lookAt(node.x, node.y, fg.zoom(), 500)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedId])
+
+  /**
+   * The node under a pointer event, tested against live positions. force-graph's
+   * own hit map is repainted at most every 800ms, so with drifting nodes and a
+   * moving camera it often points at where a node used to be.
+   */
+  const nodeAt = useCallback(
+    (ev: { clientX: number; clientY: number }) => {
+      const fg = fgRef.current
+      const rect = containerRef.current?.getBoundingClientRect()
+      if (!fg || !rect) return undefined
+      const p = fg.screen2GraphCoords(ev.clientX - rect.left, ev.clientY - rect.top)
+      const slop = (coarse ? 10 : 4) / fg.zoom()
+      let best: SimNode | undefined
+      let bestDist = Infinity
+      for (const n of data.nodes) {
+        const d = Math.hypot((n.x ?? 0) - p.x, (n.y ?? 0) - p.y)
+        if (d <= n.radius + slop && d < bestDist) {
+          best = n
+          bestDist = d
+        }
+      }
+      return best
+    },
+    [coarse, data.nodes]
+  )
+  nodeAtRef.current = nodeAt
+
+  const clickAt = (ev: PointerEvent) => {
+    const n = nodeAt(ev)
+    if (n) return select(String(n.id))
+    setSelectedId(null)
+    setHoverId(null)
+  }
+  clickAtRef.current = clickAt
 
   const selected = selectedId ? index.byId.get(selectedId) : undefined
   const isTouchEvent = (ev: Event) => ev.type.startsWith('touch')
@@ -563,12 +670,6 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
             // Keep redrawing after the layout settles so motion and fades continue.
             autoPauseRedraw={false}
             linkLineDash={(l) => (l.edge.basis === 'inferred' ? [3, 3] : null)}
-            onNodeHover={(n) => setHoverId(n ? String(n.id) : null)}
-            onNodeClick={(n) => select(String(n.id))}
-            onBackgroundClick={() => {
-              setSelectedId(null)
-              setHoverId(null)
-            }}
             enableNodeDrag={!coarse || explore}
             // Wheel without ctrl/⌘ pans (handled above); pinch arrives as ctrl+wheel.
             enableZoomInteraction={(ev) => ev.ctrlKey || ev.metaKey}
@@ -680,7 +781,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       <AnimatePresence>
         {selected && (
           <WorkDetailCard
-            key={selected.id}
+            key="detail" // one panel; switching nodes swaps its content instead of stacking exits
             node={selected}
             index={index}
             onSelect={select}
