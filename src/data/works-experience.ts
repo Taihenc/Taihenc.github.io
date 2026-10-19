@@ -6,7 +6,7 @@ export const workExperiences: WorkExperience[] = [
     title: 'UTokyo Research🗼',
     subtitle: 'Research Intern @ Oguchi Lab, Institute of Industrial Science',
     description:
-      "I'm a research intern at The University of Tokyo (Jun - Nov 2026), working on sim-to-real calibration of multi-agent driver-behavior models against real-world drone trajectories. Motorcycles filtering through car queues are something lane-based traffic models just can't represent, so I model these heterogeneous agents in SUMO/TraCI and frame calibration as black-box optimization (Nevergrad: CMA-ES, DE, Bayesian) over 55-74 parameters on 16 HPC workers. I also built the data pipeline for 1M+ drone trajectory points and a multi-objective loss. The work became my first-author paper, submitted to ITS Symposium 2026.",
+      "I'm a research intern at The University of Tokyo (Jun - Nov 2026), applying black-box optimization and data-driven modeling to calibrate multi-agent simulations against real-world behavior. I model heterogeneous driver agents, such as motorcycles filtering through car queues, that traditional methods cannot represent, and optimize 55-74 parameters with Nevergrad (CMA-ES, DE, Bayesian) running in parallel across multiple HPC workers. I also built the data pipeline for 1M+ drone trajectory points, and the work led to my first-author paper, submitted to ITS Symposium 2026.",
     link: 'https://www.iis.u-tokyo.ac.jp/en/',
     images: [
       './works-experience/utokyo/campus.jpg',

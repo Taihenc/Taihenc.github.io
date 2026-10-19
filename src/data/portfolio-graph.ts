@@ -38,10 +38,10 @@ const nodes: KnowledgeGraph['nodes'] = [
       },
     ],
     summary:
-      'Sim-to-real calibration of multi-agent driver-behavior models against real-world drone trajectories. Motorcycles filtering through car queues are something lane-based traffic models cannot represent, so these heterogeneous agents are modeled in SUMO/TraCI and calibrated as a black-box optimization problem.',
+      'Applying black-box optimization and data-driven modeling to calibrate multi-agent simulations against real-world behavior. Heterogeneous driver agents, such as motorcycles filtering through car queues, are something traditional methods cannot represent, so I model them in SUMO/TraCI and calibrate them as a black-box optimization problem.',
     highlights: [
       'First-author paper submitted to ITS Symposium 2026: a method to simulate and evaluate complex mixed traffic.',
-      'Black-box optimization with Nevergrad (CMA-ES, DE, Bayesian) over 55-74 parameters on 16 HPC workers.',
+      'Black-box optimization with Nevergrad (CMA-ES, DE, Bayesian) over 55-74 parameters, running in parallel across multiple HPC workers.',
       'Data pipeline for 1M+ drone trajectory points (DataFromSky) and a multi-objective loss.',
     ],
     logo: './works-experience/utokyo/logo.png',
