@@ -16,6 +16,7 @@ export interface GraphIndex {
   byId: Map<string, KnowledgeNode>
   neighbors: Map<string, Neighbor[]>
   groupColor: Map<string, string>
+  groupWeight: Map<string, number>
 }
 
 /** Returns human-readable problems (duplicate ids, dangling edges, unknown groups). */
@@ -83,11 +84,16 @@ export interface Affinity {
 
 /**
  * Pairs of works that share neighbours, scored by weighted Jaccard. A shared
- * neighbour weighs 1/degree, so a niche keyword says more than "Python".
+ * neighbour weighs weight/degree: a niche keyword says more than "Python", and
+ * a heavy group (e.g. job type) says more than any single skill.
  */
 export function workAffinities(index: GraphIndex, min = 0.15): Affinity[] {
   const works = [...index.byId.values()].filter((n) => n.kind === 'work')
-  const weight = (id: string) => 1 / (index.neighbors.get(id)?.length || 1)
+  const weight = (id: string) => {
+    const node = index.byId.get(id)
+    const w = node?.weight ?? index.groupWeight.get(node?.group ?? '') ?? 1
+    return w / (index.neighbors.get(id)?.length || 1)
+  }
   const around = new Map(
     works.map((w) => [
       w.id,
@@ -132,5 +138,6 @@ export function indexGraph(graph: KnowledgeGraph): GraphIndex {
     byId,
     neighbors,
     groupColor: new Map(graph.groups.map((g) => [g.id, g.color])),
+    groupWeight: new Map(graph.groups.map((g) => [g.id, g.weight ?? 1])),
   }
 }

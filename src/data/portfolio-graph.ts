@@ -16,7 +16,8 @@ const groups: KnowledgeGraph['groups'] = [
   { id: 'project', label: 'Side projects', color: '#5fd3c6' },
   { id: 'domain', label: 'Domains', color: '#a99cf5' },
   { id: 'language', label: 'Languages', color: '#8fa3bf' },
-  { id: 'job', label: 'Job type', color: '#7cc4f2' },
+  // Heavy: works with the same job type (e.g. internships) cluster together.
+  { id: 'job', label: 'Job type', color: '#7cc4f2', weight: 8 },
   { id: 'keyword', label: 'Keywords', color: '#e6d37a' },
 ]
 

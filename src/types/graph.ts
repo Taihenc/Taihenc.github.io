@@ -12,6 +12,12 @@ export interface GraphGroup {
   label: string
   /** CSS colour used for nodes of this group. */
   color: string
+  /**
+   * How strongly sharing a node of this group pulls two works together in the
+   * layout (default 1). E.g. 4 on job types keeps all internships in one area
+   * even when their topics differ.
+   */
+  weight?: number
 }
 
 export interface GraphLinkRef {
@@ -44,6 +50,8 @@ interface GraphNodeBase {
   label: string
   /** Id of a `GraphGroup`. */
   group: string
+  /** Overrides the group's layout weight for this node. */
+  weight?: number
 }
 
 /** Something that was done: a job, a project, an activity. Opens a detail card. */

@@ -105,7 +105,7 @@ function affinityForce(affinities: Affinity[]) {
         {
           s,
           t,
-          length: 100 - 60 * a.similarity,
+          length: 100 - 40 * a.similarity, // never closer than 60, so clustered labels stay readable
           k: Math.min(1, 1.5 * a.similarity),
         },
       ]
