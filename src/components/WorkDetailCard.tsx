@@ -175,16 +175,17 @@ export function WorkDetailCard({
               </ul>
             )}
             {node.images && node.images.length > 0 && (
-              <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 snap-x">
+              // Wrapped rows, so every photo is visible without a hidden sideways scroll.
+              <div className="flex flex-wrap gap-2">
                 {node.images.map((src) => (
                   <SkeletonImage
                     key={src}
                     src={src}
                     loading="lazy"
                     // Placeholder width only while loading; afterwards the frame hugs the image.
-                    wrapperClassName="h-28 shrink-0 rounded-md snap-start"
+                    wrapperClassName="h-24 max-w-full rounded-md"
                     loadingClassName="w-36"
-                    className="h-28 w-auto object-cover"
+                    className="h-24 w-auto object-cover"
                   />
                 ))}
               </div>

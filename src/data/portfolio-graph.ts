@@ -171,6 +171,8 @@ const nodes: KnowledgeGraph['nodes'] = [
       './works-experience/lmwn/image1.jpg',
       './works-experience/lmwn/image5.jpg',
       './works-experience/lmwn/image2.jpg',
+      './works-experience/lmwn/image3.jpg',
+      './works-experience/lmwn/image4.jpg',
     ],
     links: [
       {
@@ -243,6 +245,8 @@ const nodes: KnowledgeGraph['nodes'] = [
     logo: './works-experience/yakiniku/logo.png',
     images: [
       './works-experience/yakiniku/home.jpg',
+      './works-experience/yakiniku/phone.jpg',
+      './works-experience/yakiniku/cut.jpg',
       './works-experience/yakiniku/yaki.jpg',
     ],
     links: [
