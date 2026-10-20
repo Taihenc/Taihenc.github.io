@@ -131,6 +131,8 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   const [size, setSize] = useState({ width: 0, height: 0 })
   const [hoverId, setHoverId] = useState<string | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
+  // Legend filter: lights up every node in one group (hover and selection still win).
+  const [groupFilter, setGroupFilter] = useState<string | null>(null)
   const [imagesLoaded, setImagesLoaded] = useState(0)
   const coarse = useMediaQuery('(pointer: coarse)')
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)')
@@ -314,11 +316,15 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
 
   const focusId = hoverId ?? selectedId
   const highlighted = useMemo(() => {
-    if (!focusId) return null
-    const set = new Set([focusId])
-    index.neighbors.get(focusId)?.forEach((n) => set.add(n.node.id))
-    return set
-  }, [focusId, index])
+    if (focusId) {
+      const set = new Set([focusId])
+      index.neighbors.get(focusId)?.forEach((n) => set.add(n.node.id))
+      return set
+    }
+    if (groupFilter)
+      return new Set(graph.nodes.filter((n) => n.group === groupFilter).map((n) => n.id))
+    return null
+  }, [focusId, index, groupFilter, graph.nodes])
 
   const select = useCallback(
     (id: string | null) => {
@@ -480,10 +486,17 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
   )
 
   const isLinkLit = useCallback(
-    (l: SimLink) =>
-      focusId !== null &&
-      (linkEndId(l.source) === focusId || linkEndId(l.target) === focusId),
-    [focusId]
+    (l: SimLink) => {
+      const a = linkEndId(l.source)
+      const b = linkEndId(l.target)
+      if (focusId !== null) return a === focusId || b === focusId
+      if (groupFilter === null) return false
+      return (
+        index.byId.get(a)?.group === groupFilter ||
+        index.byId.get(b)?.group === groupFilter
+      )
+    },
+    [focusId, groupFilter, index]
   )
 
   /** 1 = link touches the focused node, 0 = idle; eased between frames. */
@@ -657,6 +670,7 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
     if (n) return select(String(n.id))
     setSelectedId(null)
     setHoverId(null)
+    setGroupFilter(null)
   }
   clickAtRef.current = clickAt
 
@@ -742,16 +756,37 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
       </div>
 
       {/* Legend */}
-      <ul className="pointer-events-none absolute left-3 top-3 z-10 flex flex-nowrap sm:flex-wrap gap-x-3 gap-y-1 max-w-[calc(100%-1.5rem)] sm:max-w-[75%] overflow-x-auto pointer-events-auto sm:pointer-events-none [scrollbar-width:none] rounded-full sm:rounded-md border border-white/5 sm:border-0 bg-[#0b0f17]/80 backdrop-blur-sm px-3 sm:px-2 py-1 text-[10px] sm:text-[11px] text-slate-400 whitespace-nowrap">
-        {graph.groups.map((g) => (
-          <li key={g.id} className="flex items-center gap-1.5">
-            <span
-              className="w-2 h-2 rounded-full"
-              style={{ background: g.color }}
-            />
-            {g.label}
-          </li>
-        ))}
+      <ul className="absolute left-3 top-3 z-10 flex flex-nowrap sm:flex-wrap gap-x-1 gap-y-1 max-w-[calc(100%-1.5rem)] sm:max-w-[75%] overflow-x-auto [scrollbar-width:none] rounded-full sm:rounded-md border border-white/5 sm:border-0 bg-[#0b0f17]/80 sm:bg-transparent backdrop-blur-sm sm:backdrop-blur-none px-1.5 sm:px-0 py-0.5 text-[10px] sm:text-[11px] whitespace-nowrap">
+        {graph.groups.map((g) => {
+          const active = groupFilter === g.id
+          return (
+            <li key={g.id}>
+              <button
+                aria-pressed={active}
+                onClick={() => {
+                  setGroupFilter(active ? null : g.id)
+                  if (!active) track('graph_group_selected', { group: g.id })
+                }}
+                className={`flex items-center gap-1.5 rounded-full px-1.5 sm:px-2 py-0.5 transition-colors ${
+                  active
+                    ? 'bg-white/10 text-slate-100'
+                    : groupFilter
+                      ? 'text-slate-500 hover:text-slate-300'
+                      : 'text-slate-400 hover:text-slate-200 hover:bg-white/5'
+                }`}
+              >
+                <span
+                  className="w-2 h-2 rounded-full transition-shadow"
+                  style={{
+                    background: g.color,
+                    boxShadow: active ? `0 0 0 3px ${g.color}33` : undefined,
+                  }}
+                />
+                {g.label}
+              </button>
+            </li>
+          )
+        })}
       </ul>
 
       {/* Controls */}
