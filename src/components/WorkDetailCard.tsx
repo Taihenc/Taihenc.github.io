@@ -181,7 +181,9 @@ export function WorkDetailCard({
                     key={src}
                     src={src}
                     loading="lazy"
-                    wrapperClassName="h-28 min-w-[9rem] shrink-0 rounded-md snap-start"
+                    // Placeholder width only while loading; afterwards the frame hugs the image.
+                    wrapperClassName="h-28 shrink-0 rounded-md snap-start"
+                    loadingClassName="w-36"
                     className="h-28 w-auto object-cover"
                   />
                 ))}

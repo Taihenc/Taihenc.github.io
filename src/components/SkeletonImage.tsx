@@ -4,11 +4,14 @@ import type { ImgHTMLAttributes } from 'react'
 interface SkeletonImageProps extends ImgHTMLAttributes<HTMLImageElement> {
   /** Classes for the wrapper that holds the skeleton (size/shape/position). */
   wrapperClassName?: string
+  /** Wrapper classes used only until the image loads, e.g. a placeholder width. */
+  loadingClassName?: string
 }
 
 /** Image that shows a shimmering skeleton until it loads, then fades in. */
 export default function SkeletonImage({
   wrapperClassName = '',
+  loadingClassName = '',
   className = '',
   onLoad,
   onError,
@@ -18,7 +21,9 @@ export default function SkeletonImage({
   const [state, setState] = useState<'loading' | 'loaded' | 'error'>('loading')
 
   return (
-    <div className={`relative overflow-hidden ${wrapperClassName}`}>
+    <div
+      className={`relative overflow-hidden ${wrapperClassName} ${state === 'loaded' ? '' : loadingClassName}`}
+    >
       {state !== 'loaded' && (
         <div
           aria-hidden
