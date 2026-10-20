@@ -609,9 +609,17 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
 
   // Centre the selected node in the space beside (or above) the detail card. Runs
   // after the card mounts so its real size is known.
+  // When the card closes, frame the whole graph again.
+  const hadSelection = useRef(false)
   useEffect(() => {
     const fg = fgRef.current
-    const node = selectedId ? data.nodes.find((n) => n.id === selectedId) : undefined
+    if (!selectedId) {
+      if (hadSelection.current) fit()
+      hadSelection.current = false
+      return
+    }
+    hadSelection.current = true
+    const node = data.nodes.find((n) => n.id === selectedId)
     if (!fg || node?.x === undefined || node.y === undefined) return
     lookAt(node.x, node.y, fg.zoom(), 500)
     // eslint-disable-next-line react-hooks/exhaustive-deps
