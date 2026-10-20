@@ -161,6 +161,28 @@ export function WorkDetailCard({
               </span>
             )}
             <p>{node.summary}</p>
+            {node.links && node.links.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {node.links.map((l) => (
+                  <a
+                    key={l.url}
+                    href={l.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() =>
+                      track('work_external_link_clicked', {
+                        link_label: l.label,
+                        work_title: node.title,
+                      })
+                    }
+                    className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs text-slate-100 hover:border-white/40 hover:bg-white/5"
+                  >
+                    {l.label}
+                    <ArrowTopRightOnSquareIcon className="w-3.5 h-3.5" />
+                  </a>
+                ))}
+              </div>
+            )}
             {node.highlights && (
               <ul className="space-y-1.5 text-[13px]">
                 {node.highlights.map((h) => (
@@ -231,28 +253,6 @@ export function WorkDetailCard({
           </div>
         )}
 
-        {node.kind === 'work' && node.links && node.links.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-1">
-            {node.links.map((l) => (
-              <a
-                key={l.url}
-                href={l.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() =>
-                  track('work_external_link_clicked', {
-                    link_label: l.label,
-                    work_title: node.title,
-                  })
-                }
-                className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-3 py-1.5 text-xs text-slate-100 hover:border-white/40 hover:bg-white/5"
-              >
-                {l.label}
-                <ArrowTopRightOnSquareIcon className="w-3.5 h-3.5" />
-              </a>
-            ))}
-          </div>
-        )}
       </div>
     </motion.aside>
   )
