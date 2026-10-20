@@ -305,6 +305,30 @@ const nodes: KnowledgeGraph['nodes'] = [
       },
     ],
   },
+  {
+    id: 'prism',
+    kind: 'work',
+    group: 'project',
+    engagement: 'side-project',
+    label: 'ProjectPrism',
+    title: 'ProjectPrism',
+    summary:
+      'The graph you are looking at, as an open-source component: jobs, projects and skills become nodes, every connection carries the sentence that justifies it, and works that share a lot settle next to each other.',
+    highlights: [
+      'React + canvas (react-force-graph-2d) with custom d3 forces: related works attract through weighted Jaccard similarity.',
+      'Camera, highlight fades and tap detection stepped per frame, tuned for trackpads and touch.',
+      'Data-first schema: the graph is plain TypeScript data, validated and indexed by pure helpers.',
+    ],
+    logo: './works-experience/prism/logo.svg',
+    images: [
+      './works-experience/prism/detail-card.jpg',
+      './works-experience/prism/highlight.jpg',
+    ],
+    links: [
+      { label: 'Live demo', url: 'https://taihenc.github.io/ProjectPrism/' },
+      { label: 'Source', url: 'https://github.com/Taihenc/ProjectPrism' },
+    ],
+  },
 
   // -------------------------------------------------------------------- topics
   {
@@ -469,6 +493,8 @@ const edges: GraphEdge[] = [
   stated('staysleep', 'lead', 'Led front end, back end and design'),
   stated('leaderboard', 'go', 'Written in Go'),
   stated('leaderboard', 'web', 'Real-time backend service on Redis'),
+  stated('prism', 'web', 'React component for portfolio sites'),
+  stated('prism', 'ts', 'TypeScript, React and d3-force'),
 
   stated('utokyo', 'job-research', 'Research Intern at Oguchi Lab'),
   ...jobTypeEdges(),

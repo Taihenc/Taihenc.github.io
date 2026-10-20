@@ -82,6 +82,18 @@ export const workExperiences: WorkExperience[] = [
     ],
   },
   {
+    logo: './works-experience/prism/logo.svg',
+    title: 'ProjectPrism🔺',
+    subtitle: 'The graph view of this site, as an open-source component',
+    description:
+      'ProjectPrism turns a resume into an interactive knowledge graph: jobs, projects and skills are nodes, every connection carries the sentence that justifies it, and works that share a lot settle next to each other. It is built with React and a canvas force graph with custom d3 forces, and it powers the Graph view of this portfolio. The next step is publishing it as a package so anyone can use it on their own site.',
+    link: 'https://taihenc.github.io/ProjectPrism/',
+    images: [
+      './works-experience/prism/detail-card.jpg',
+      './works-experience/prism/highlight.jpg',
+    ],
+  },
+  {
     logo: 'https://github.com/Taihenc/MoeKot/blob/main/app/src/main/ic_launcher-playstore.png?raw=true',
     title: 'MoeKot📱',
     subtitle: "What's MoeKot?",

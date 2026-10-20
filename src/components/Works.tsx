@@ -83,12 +83,12 @@ export default function Works() {
           <div className="w-full flex-1 min-h-0 gap-3 z-0 lg:gap-6 max-w-[100rem] flex flex-col lg:flex-row justify-center items-center relative">
             {/* Aside for Logos */}
             <motion.aside
-              className="h-fit max-h-full max-w-full mb-auto p-4 relative rounded-xl bg-opacity-[80%] bg-base-200"
+              className="h-fit max-h-full max-w-full mb-auto p-4 relative flex flex-col rounded-xl bg-opacity-[80%] bg-base-200"
               initial={{ x: -50, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              <ul className="h-full w-full gap-5 z-[2] flex flex-row lg:flex-col justify-start items-center overflow-y-auto overflow-x-hidden">
+              <ul className="min-h-0 w-full gap-5 z-[2] p-1 -m-1 flex flex-row lg:flex-col justify-start items-center overflow-y-auto overflow-x-auto lg:overflow-x-hidden [scrollbar-width:thin]">
                 {workExperiences.map((work) => (
                   <motion.li
                     key={work.logo}
@@ -132,8 +132,8 @@ export default function Works() {
                   <h1 className="w-full mb-5 text-4xl !leading-normal lg:text-5xl font-bold text-red-200">
                     {selectedWork.title} {/* Dynamic Title */}
                     {selectedWork.current && (
-                      <span className="ml-3 align-middle inline-flex items-center gap-1.5 rounded-full border border-emerald-300/40 bg-emerald-400/15 px-2.5 py-0.5 text-sm font-medium text-emerald-200">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 motion-safe:animate-pulse" />
+                      <span className="ml-3 align-middle inline-flex items-center gap-1.5 rounded-full border border-emerald-600/40 bg-emerald-500/15 px-2.5 py-0.5 text-sm font-semibold text-emerald-700">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 motion-safe:animate-pulse" />
                         Current position
                       </span>
                     )}

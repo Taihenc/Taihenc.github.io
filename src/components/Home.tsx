@@ -138,6 +138,8 @@ export default function Home() {
             </div>
             <div className="md:block hidden w-[70%] max-w-xl aspect-[2/1] absolute bottom-5 md:right-4 md:bottom-8">
               <Canvas
+                // Keep session replay off the WebGL canvas: snapshotting it stalls the GPU.
+                className="ph-no-capture"
                 camera={{ position: [-2, 2, 2], rotation: [0, 0, 0], fov: 30 }}
               >
                 <ambientLight intensity={0.2} />
