@@ -161,6 +161,19 @@ export function WorkDetailCard({
               </span>
             )}
             <p>{node.summary}</p>
+            {node.highlights && (
+              <ul className="space-y-1.5 text-[13px]">
+                {node.highlights.map((h) => (
+                  <li key={h} className="flex gap-2">
+                    <span
+                      className="mt-[0.55em] w-1 h-1 rounded-full shrink-0"
+                      style={{ background: color }}
+                    />
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
             {node.links && node.links.length > 0 && (
               <div className="flex flex-wrap gap-2">
                 {node.links.map((l) => (
@@ -182,19 +195,6 @@ export function WorkDetailCard({
                   </a>
                 ))}
               </div>
-            )}
-            {node.highlights && (
-              <ul className="space-y-1.5 text-[13px]">
-                {node.highlights.map((h) => (
-                  <li key={h} className="flex gap-2">
-                    <span
-                      className="mt-[0.55em] w-1 h-1 rounded-full shrink-0"
-                      style={{ background: color }}
-                    />
-                    <span>{h}</span>
-                  </li>
-                ))}
-              </ul>
             )}
             {node.images && node.images.length > 0 && (
               // Wrapped rows, so every photo is visible without a hidden sideways scroll.
