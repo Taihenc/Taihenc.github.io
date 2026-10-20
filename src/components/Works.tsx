@@ -131,6 +131,12 @@ export default function Works() {
                 >
                   <h1 className="w-full mb-5 text-4xl !leading-normal lg:text-5xl font-bold text-red-200">
                     {selectedWork.title} {/* Dynamic Title */}
+                    {selectedWork.current && (
+                      <span className="ml-3 align-middle inline-flex items-center gap-1.5 rounded-full border border-emerald-300/40 bg-emerald-400/15 px-2.5 py-0.5 text-sm font-medium text-emerald-200">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-300 motion-safe:animate-pulse" />
+                        Current position
+                      </span>
+                    )}
                   </h1>
                   <div className="w-full max-h-full lg:h-fit lg:aspect-video min-h-0 flex-1 flex flex-col lg:flex-row gap-6">
                     <div className="w-full h-1/2 lg:h-auto md:w-[90%] md:min-w-[22em] flex flex-col justify-center items-center">

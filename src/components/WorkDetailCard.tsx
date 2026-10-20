@@ -99,11 +99,29 @@ export function WorkDetailCard({
           {node.kind === 'work' && node.organization && (
             <p className="text-xs text-slate-400 mt-0.5">{node.organization}</p>
           )}
-          {node.kind === 'work' && (engagements.length > 0 || node.remote) && (
+          {node.kind === 'work' && (engagements.length > 0 || node.remote || node.status) && (
             <div className="flex flex-wrap gap-1.5 mt-2">
+              {node.status === 'current' && (
+                <span
+                  className={`${chip} gap-1.5 border-emerald-300/40 bg-emerald-400/15 text-emerald-200`}
+                >
+                  <span className="relative flex w-1.5 h-1.5">
+                    <span className="absolute inset-0 rounded-full bg-emerald-300 motion-safe:animate-ping" />
+                    <span className="relative w-1.5 h-1.5 rounded-full bg-emerald-300" />
+                  </span>
+                  Current position
+                </span>
+              )}
               {engagements.map((e) => (
                 <EngagementChip key={e} engagement={e} />
               ))}
+              {node.status === 'paused' && (
+                <span
+                  className={`${chip} border-slate-300/25 bg-slate-400/10 text-slate-400`}
+                >
+                  On hold
+                </span>
+              )}
               {node.remote && (
                 <span
                   className={`${chip} border-slate-300/25 bg-slate-400/10 text-slate-300`}
@@ -154,11 +172,6 @@ export function WorkDetailCard({
                   </li>
                 ))}
               </ul>
-            )}
-            {node.status === 'in-progress' && (
-              <span className="inline-block text-[11px] px-2 py-0.5 rounded-full border border-amber-300/30 text-amber-200/90">
-                in progress
-              </span>
             )}
             <p>{node.summary}</p>
             {node.highlights && (

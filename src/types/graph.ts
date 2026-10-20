@@ -60,7 +60,8 @@ export interface WorkNode extends GraphNodeBase {
   /** Larger images shown on the detail card. */
   images?: string[]
   links?: GraphLinkRef[]
-  status?: 'in-progress'
+  /** 'current' marks the position held right now; 'paused' an unfinished project on hold. */
+  status?: 'current' | 'paused'
   /** Engagement for works without roles (e.g. side projects). */
   engagement?: Engagement
   remote?: boolean

@@ -4,6 +4,7 @@ export const workExperiences: WorkExperience[] = [
   {
     logo: './works-experience/utokyo/logo.png',
     title: 'UTokyo Research🗼',
+    current: true,
     subtitle: 'Research Intern @ Oguchi Lab, Institute of Industrial Science',
     description:
       "I'm a research intern at The University of Tokyo (Jun - Nov 2026), applying black-box optimization and data-driven modeling to calibrate multi-agent simulations against real-world behavior. I model heterogeneous driver agents, such as motorcycles filtering through car queues, that traditional methods cannot represent, and optimize 55-74 parameters with Nevergrad (CMA-ES, DE, Bayesian) running in parallel across multiple HPC workers. I also built the data pipeline for 1M+ drone trajectory points, and the work led to my first-author paper, submitted to ITS Symposium 2026.",
@@ -85,7 +86,7 @@ export const workExperiences: WorkExperience[] = [
     title: 'MoeKot📱',
     subtitle: "What's MoeKot?",
     description:
-      'MoeKot is your go-to app for exploring, discovering, and curating your favorite manga and anime titles. With an intuitive interface and a touch of "Moe" (cute) inspiration, MoeKot enhances your browsing experience. Not only can you explore a vast collection of content, but future updates will also include a library feature for saving your favorite finds and tracking your reading/watching progress. The app is built using Kotlin and the MVVM architecture. Thanks to the API from AniList, the app provides the latest manga information. Although the app is not yet complete, you can check its progress on the GitHub repository.',
+      'MoeKot is your go-to app for exploring, discovering, and curating your favorite manga and anime titles. With an intuitive interface and a touch of "Moe" (cute) inspiration, MoeKot enhances your browsing experience. Not only can you explore a vast collection of content, but future updates will also include a library feature for saving your favorite finds and tracking your reading/watching progress. The app is built using Kotlin and the MVVM architecture. Thanks to the API from AniList, the app provides the latest manga information. The app is unfinished and on hold for now, but the source is on the GitHub repository.',
     link: 'https://github.com/Taihenc/MoeKot',
     images: ['./works-experience/moekot/image.jpg'],
   },

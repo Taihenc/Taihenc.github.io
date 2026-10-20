@@ -5,4 +5,5 @@ export interface WorkExperience {
   description: string
   link: string // Link to more details
   images: string[] // Related images for the work
+  current?: boolean // The position held right now
 }

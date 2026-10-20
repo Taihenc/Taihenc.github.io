@@ -366,6 +366,36 @@ export default function PortfolioGraph({ graph }: PortfolioGraphProps) {
         ctx.fill()
       }
 
+      // The current position sends out a slow sonar ripple and wears a NOW tag.
+      if (d.kind === 'work' && d.status === 'current') {
+        ctx.lineWidth = 1.4
+        const ripple = reducedMotion ? [] : [0, 0.5].map((o) => (frame.current.now / 2400 + o) % 1)
+        for (const t of ripple) {
+          ctx.beginPath()
+          ctx.arc(x, y, r + 3 + t * 18, 0, 2 * Math.PI)
+          ctx.strokeStyle = `rgba(52,211,153,${(0.55 * (1 - t)).toFixed(3)})`
+          ctx.stroke()
+        }
+        ctx.beginPath()
+        ctx.arc(x, y, r + 2.5, 0, 2 * Math.PI)
+        ctx.strokeStyle = 'rgba(52,211,153,0.9)'
+        ctx.stroke()
+
+        const fs = Math.min(10, Math.max(7.5, scale * 2.6)) / scale
+        ctx.font = `700 ${fs}px ui-sans-serif, system-ui, sans-serif`
+        const w = ctx.measureText('NOW').width + fs * 1.1
+        const h = fs * 1.5
+        const top = y - r - 5 - h
+        ctx.beginPath()
+        ctx.roundRect(x - w / 2, top, w, h, h / 2)
+        ctx.fillStyle = '#34d399'
+        ctx.fill()
+        ctx.fillStyle = '#052e1f'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText('NOW', x, top + h / 2 + fs * 0.05)
+      }
+
       if (isFocus || id === selectedId) {
         ctx.beginPath()
         ctx.arc(x, y, r + 3.5, 0, 2 * Math.PI)

@@ -25,6 +25,7 @@ const nodes: KnowledgeGraph['nodes'] = [
   {
     id: 'utokyo',
     kind: 'work',
+    status: 'current',
     group: 'experience',
     label: 'UTokyo',
     title: 'UTokyo Research',
@@ -262,11 +263,11 @@ const nodes: KnowledgeGraph['nodes'] = [
     label: 'MoeKot',
     title: 'MoeKot',
     summary:
-      'Native Android app for exploring and curating manga and anime titles, using the AniList API. Built with Kotlin, Jetpack Compose and MVVM. Not finished yet; progress is on GitHub.',
+      'Native Android app for exploring and curating manga and anime titles, using the AniList API. Built with Kotlin, Jetpack Compose and MVVM. Unfinished and on hold for now; the source is on GitHub.',
     logo: './works-experience/moekot/logo.png',
     images: ['./works-experience/moekot/image.jpg'],
     links: [{ label: 'Source', url: 'https://github.com/Taihenc/MoeKot' }],
-    status: 'in-progress',
+    status: 'paused',
   },
   {
     id: 'staysleep',
